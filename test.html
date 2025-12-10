@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>WeSellGadgets Homepage</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            primary: "#FF9900",
+            "background-light": "#F9FAFB",
+            "background-dark": "#121212",
+            "surface-dark": "#1E1E1E",
+            "surface-light": "#FFFFFF",
+          },
+          fontFamily: {
+            display: ["Poppins", "sans-serif"],
+          },
+          borderRadius: {
+            DEFAULT: "8px",
+            xl:      "12px",
+            "2xl":   "16px",
+            "3xl":   "24px",
+            "4xl":   "32px",
+            },
+        },
+      },
+    };
+  </script>
+  <style>
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+  <style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-[#121212] dark:bg-gray-900 flex justify-center min-h-screen font-display antialiased selection:bg-primary selection:text-white">
+    <div class="w-full max-w-5xl mx-auto bg-[#121212] 
+    shadow-[0_10px_40px_-10px_rgba(0,0,0,0.5)]
+    overflow-x-hidden min-h-screen flex flex-col 
+    px-4 sm:px-8">
+
+    <header class="w-full max-w-5xl mx-auto bg-[#121212] dark:bg-black text-white p-6 flex justify-between items-center sticky top-0 z-50">
+      <div class="flex items-center gap-2">
+        
+        <div id="logo">
+            <div class="w-6 h-6 rounded-full border-4 border-primary flex items-center justify-center">
+            <div class="w-1 h-3 rounded-full bg-primary rotate-[30deg] -translate-y-2 translate-x-1"></div>
+            </div>
+
+        </div>
+        <span class="font-bold text-[20px] text-primary tracking-wide"><span class="text-[#F4F4F2]">wesell</span>gadgets</span>
+      </div>
+
+      <button class="text-gray-400 hover:text-white">
+        <span class="material-icons">menu</span>
+      </button>
+    </header>
+
+    <div id="body-container" class=" bg-[#2A2A2A] rounded-3xl">
+        <section class="relative mx-3 mt-3 rounded-3xl overflow-hidden h-[250px] shadow-lg group">
+            <img alt="Background of gadgets including laptops and phones" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="hero.jpg"/>
+            <div class="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent"></div>
+            <div class="relative z-10 flex flex-col items-center justify-center h-full px-4 text-center">
+                <h1 class="text-[#FBDDB8] text-[20px] font-bold leading-snug">Authentic and Affordable<br/>Gadgets in Nigeria</h1>
+                <p class="text-gray-300 text-[8px] mt-[16px] mb-4">Phones, Laptops, Gaming, Accessories - Delivered Nationwide</p>
+                <div class="flex items-center bg-white max-w-xs rounded-full p-1 pl-4 shadow-xl h-[38px] w-full">
+                <input class="flex-grow bg-transparent text-[8px] outline-none text-gray-700 placeholder-gray-400 border-none focus:ring-0 p-0" placeholder="brand, model, price..." type="text"/>
+                <button class="btn-1 bg-[#FB8F0D] hover:bg-orange-500 text-[#121212] text-[10px] h-[30px] font-bold px-6 rounded-full ml-2
+                shadow-[0_0_20px_#ff4d00] hover:shadow-[0_0_35px_#ff4d00]
+                transition-all duration-300">
+                    Search
+                </button>
+                </div>
+            </div>
+            
+            <div class="absolute bottom-3 right-3 z-50">
+                <a href="https://wa.me/2348012345678" target="_blank">
+                <i class="fa-brands fa-whatsapp text-3xl text-green-600 hover:text-green-700 transition"></i>
+                </a>
+            </div>
+        </section>
+
+        <section class="mt-6 px-4">
+            <h2 class="text-[#F4F4F2] dark:text-white font-bold text-lg mb-4">Shop by category</h2>
+            <div class="grid grid-cols-3 gap-3">
+                <a class="bg-[#121212] dark:bg-surface-dark rounded-xl p-4 flex flex-col items-center justify-center shadow-sm hover:shadow-md transition gap-2 group" href="#">
+                <span class="material-icons text-primary group-hover:scale-110 transition-transform">smartphone</span>
+                <span class="text-xs font-medium text-[#F4F4F2] dark:text-gray-300">Phones</span>
+                </a>
+                <a class="bg-[#121212] dark:bg-surface-dark rounded-xl p-4 flex flex-col items-center justify-center shadow-sm hover:shadow-md transition gap-2 group" href="#">
+                <span class="material-icons text-primary group-hover:scale-110 transition-transform">laptop</span>
+                <span class="text-xs font-medium text-[#F4F4F2] dark:text-gray-300">Laptops</span>
+                </a>
+                <a class="bg-[#121212] dark:bg-surface-dark rounded-xl p-4 flex flex-col items-center justify-center shadow-sm hover:shadow-md transition gap-2 group" href="#">
+                <span class="material-icons text-primary group-hover:scale-110 transition-transform">headphones</span>
+                <span class="text-xs font-medium text-[#F4F4F2] dark:text-gray-300">Accessories</span>
+                </a>
+            </div>
+        </section>
+        <section class="mt-8 mx-2 bg-[#121212] dark:bg-black rounded-3xl p-5 pb-6">
+            <div class="flex items-center gap-1 mb-1">
+                <h2 class="text-white font-bold text-lg">Hot Deals</h2>
+                <span class="text-primary text-lg">🔥</span>
+            </div>
+            <p class="text-gray-400 text-xs mb-4">Popular among our shoppers</p>
+            
+            <div class="flex overflow-x-auto gap-4 no-scrollbar pb-2">
+                <div class="flex-shrink-0 w-44 bg-[#2A2A2A] rounded-2xl p-2 overflow-hidden border border-gray-800 flex flex-col">
+                <div class="h-33 rounded-xl overflow-hidden bg-white mb-2 relative group">
+                    <img 
+                    alt="iPhone 11 Pro Max" 
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVeCRI8Cux4gtct16P1ZKU5d2x0Qj-KacC7lCclvojysB8fLBT9PR4mgW30O9HKko0ZH_vO2CnsK9PDIionB2R0TqgX9rILBU9Iudp7kvfXlrEBOvB6Iib2wkir3rBx5ulBLj57Cp17jNl-a7mkayIR8di1tmOB9qDpgcj9wvZsR7LrOj_RNY03i-wLFcb9BAXDRdFowuOdTAJW6MmXCojRmNypsdMOltrK-LmrxcYDMVnUYEl-ks9L4BW8md1PmPLfxBQgn3o8QQ"
+                    class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 active:scale-110"/>
+                </div>
+                <div class="px-1 flex flex-col flex-grow">
+                    <h3 class="text-white text-xs font-bold truncate">iPhone 11 Pro max</h3>
+                    <p class="text-[10px] text-gray-400 mt-1 truncate">New (2 units left) - Green</p>
+                    <p class="text-primary text-sm font-bold my-2">₦ 1,000,000.00</p>
+                    <button class="mt-auto w-full bg-primary hover:bg-orange-600 text-black text-[10px] font-bold py-2 rounded-full transition-colors">
+                    View Details
+                    </button>
+                </div>
+                </div>
+
+                <div class="flex-shrink-0 w-44 bg-[#2A2A2A] rounded-2xl p-2 overflow-hidden border border-gray-800 flex flex-col">
+                <div class="h-33 rounded-xl overflow-hidden bg-white mb-2 relative group">
+                    <img 
+                        alt="Samsung Galaxy Z-Fold" 
+                        class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 active:scale-110" 
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuBzNsP8Do9me1kgpd0w4tLZ_tLmkMwrPh9NVDtdxhBKZ6hrM-QEnsHc0Q2U826vrvaR1pjkYkUbCCYalTwL9aR6rhIhrx_i3ETWhaTAyRQ2nVL_pf3e9aioMeJE5JnRNy6hzKM64wEnJmJww0SOBi6WfFBKj1cWCiwGzhl000vKWBDFyiotP37VLsN1mEb012nInEgPoiakFEc1SXM0bJObOfLhcWmB373ZGjQCrjzdRW7uWltxZGh07JKpgVX4XIXxt3Wgx9zmL2Q"/>
+                </div>
+                <div class="px-1 flex flex-col flex-grow">
+                    <h3 class="text-white text-xs font-bold truncate">Samsung Galaxy Z-Fold</h3>
+                    <p class="text-[10px] text-gray-400 mt-1 truncate">Used (2 units left) - Grey</p>
+                    <p class="text-primary text-sm font-bold my-2">₦ 1,000,000.00</p>
+                    <button class="mt-auto w-full bg-primary hover:bg-orange-600 text-black text-[10px] font-bold py-2 rounded-full transition-colors">
+                    View Details
+                    </button>
+                </div>
+                </div>
+
+                <div class="flex-shrink-0 w-44 bg-[#2A2A2A] rounded-2xl p-2 overflow-hidden border border-gray-800 flex flex-col">
+                <div class="h-33 rounded-xl overflow-hidden bg-white mb-2 relative group">
+                    <img 
+                        alt="iPhone 11 Pro Max Yellow" 
+                        class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 active:scale-110" 
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuAzVmb3rwF1XTcDWoLIVzHEcVZBJ_6k1wJuOemnU4KewFltJud-I_SfpbSa5iT5TrsoCQ2GTVl1Y35Ofox7BG8BdaaCy24-HF1xIAZdVATGgCbvQvV7s6zOTmChRrSCmLAGJEVGfne9rvQPspTMDJXW1Ep6q0syTLFy2-ED1NiHfyYHtuA4R0WnTvSfniByLezWwk_xTarsiK0tZNOAA0f9YNQ0kMNkRs017HmJNamxofola8960R4z1k6D1-nClhLjqyeJhrfU7mI"/>
+                </div>
+                <div class="px-1 flex flex-col flex-grow">
+                    <h3 class="text-white text-xs font-bold truncate">iPhone 11 Pro max</h3>
+                    <p class="text-[10px] text-gray-400 mt-1 truncate">New (2 units left) - Yellow</p>
+                    <p class="text-primary text-sm font-bold my-2">₦ 1,000,000.00</p>
+                    <button class="mt-auto w-full bg-primary hover:bg-orange-600 text-black text-[10px] font-bold py-2 rounded-full transition-colors">
+                    View Details
+                    </button>
+                </div>
+                </div>
+            </div>
+
+            <div class="flex justify-center mt-6">
+                <button class="text-gray-300 text-xs border border-gray-600 rounded-full px-6 py-2 hover:bg-gray-800 transition">More</button>
+            </div>
+        </section>
+        
+        <section class="mt-6 mx-2 bg-[#121212] dark:bg-black rounded-3xl p-5 pb-6">
+            <div class="flex items-center gap-1 mb-1">
+                <h2 class="text-white font-bold text-lg">Featured</h2>
+            </div>
+            <p class="text-gray-400 text-xs mb-4">Our recently added items</p>
+        
+            <div class="flex overflow-x-auto gap-4 no-scrollbar pb-2">
+                <div class="flex-shrink-0 w-44 bg-[#2A2A2A] rounded-2xl p-2 overflow-hidden border border-gray-800 flex flex-col">
+                <div class="h-33 rounded-xl overflow-hidden bg-white mb-2 relative group">
+                    <img 
+                        alt="iPhone 12" 
+                        class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 active:scale-110" 
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuAl_x9t3m3IxBwHdxLXYph2JmQi3O57L-aKNRaPZqtWFvimPFEj7hbpwNpVH48Qcnc4MI8GX3ICQAFs3itZTZhTzgnU4yRPc2jTBEHOOzyGFCHNXgToNUVvNXHedwNqcxIIddmwfBJiOEzNhn6GrFHqet2f04_KGfxdgBQg6fiYZnLmnZ-R9iZ8EDSDn5x7fqNVJ6tUsxgjVr3T65eRRG-9YDekGuPvRKbZCRFgp8CLfalw1s4luV7aLC5xqm1ANyL9HNwFPg_Nwrs"/>
+                </div>
+                <div class="px-1 flex flex-col flex-grow">
+                    <h3 class="text-white text-xs font-bold truncate">iPhone 12 Pro</h3>
+                    <p class="text-[10px] text-gray-400 mt-1 truncate">New (5 units left) - Blue</p>
+                    <p class="text-primary text-sm font-bold my-2">₦ 1,000,000.00</p>
+                    <button class="mt-auto w-full bg-primary hover:bg-orange-600 text-black text-[10px] font-bold py-2 rounded-full transition-colors">
+                    View Details
+                    </button>
+                </div>
+                </div>
+                
+                <div class="flex-shrink-0 w-44 bg-[#2A2A2A] rounded-2xl p-2 overflow-hidden border border-gray-800 flex flex-col">
+                <div class="h-33 rounded-xl overflow-hidden bg-white mb-2 relative group">
+                    <img 
+                        alt="Samsung Galaxy S21" 
+                        class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 active:scale-110" 
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuCahJ2_rhyG0r7i-HjUDEvBMpMYiEfc0lgQplN3xRnpjDltDjmBBqZeLBYjNvyx-47q_H1Tl-84UmSNYk8ZN8iJxn2Jz_QdRbSJv6ZyVRG9r3HkvwlH4tao-BrWWI-C9lfpkyJWMu8tCpJt3sXY7ZXOZ9yYqYRkeOULq4RHqUkvXVXWiWDNw2MJPEbxopo21kcWuBIOrSMT8IXcGMlsW7sz5UrtWCE65kS8-Tgg1HsXI-akLHMsv5TcOiONtYR8UR3wbvY4niRaWlY"/>
+                </div>
+                <div class="px-1 flex flex-col flex-grow">
+                    <h3 class="text-white text-xs font-bold truncate">Samsung Galaxy S21</h3>
+                    <p class="text-[10px] text-gray-400 mt-1 truncate">Used (1 unit left) - Black</p>
+                    <p class="text-primary text-sm font-bold my-2">₦ 1,000,000.00</p>
+                    <button class="mt-auto w-full bg-primary hover:bg-orange-600 text-black text-[10px] font-bold py-2 rounded-full transition-colors">
+                    View Details
+                    </button>
+                </div>
+                </div>
+            </div>
+            <div class="flex justify-center mt-6">
+                <button class="text-gray-300 text-xs border border-gray-600 rounded-full px-6 py-2 hover:bg-gray-800 transition">More</button>
+            </div>
+        </section>
+
+        <section class="my-[32px] mx-[12px] pt-[16px] pb-[40px] bg-[#121212] rounded-2xl">
+            <h2 class="text-center text-primary font-bold text-lg my-[16px]">How We Serve You</h2>
+        
+            <div class="space-y-4">
+                <div class="relative h-40 overflow-hidden shadow-md group">
+                <img alt="Person browsing phone" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuANEAuGrQri8HkTsdF4dwyquOl5PVleUnUTfSDCkIVDTN59ATHKZxpboXsJatL8k67mAAaocI4TLdE4qIh9F7vcNSPiO2ZxFNoZFu7r0NifX0lxLF1UXb-8bNbkEfxZvzDP3U1hzJpLFpWHurRPtlOAph_YDPG9l2MAjz8Ru0V0NnR4vc09QeeWmR6SN1Kp_fuUmLjCFcYW2Z55uv8J4b_th0-BQUrQYeGoWzORM4o-B6wAPTL1bVIL9TlMk2u0iv1yK9Qp3XgLTXI"/>
+                <div class="absolute inset-0 bg-black/50 flex flex-col justify-end p-4 text-center">
+                    <p class="text-white font-semibold text-sm">Browse our store, select a product of your choice, then, complete payment</p>
+                </div>
+                </div>
+                <div class="relative h-40 overflow-hidden shadow-md group">
+                <img alt="Person relaxing" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxnWG5UFxGu-54ofF9oGveOuac-XU6OUYXfYgYrR1GRViIviVWDBLiKjzd5sPFmmUCmPygqltrZ-5g2ShO6G8DXZrmMBpnGf2-BdQmg6fiBh-1jb4UVzlaU6x6E8SfN6k_jfNsPMdTgHz66ia1c6Sr2316si5BeHAQx_e28CeQak0a2AlY5rtEpoxV72ONIOFD54IzmOIg7GHN-CAn07nmIvwd-uAnTLQB1zBl0YSBbKs5WwoD2Hb_fePdglAgM-ocIa0pftBeDac"/>
+                <div class="absolute inset-0 bg-black/50 flex flex-col justify-end p-4 text-center">
+                    <p class="text-white font-semibold text-sm">Relax while we prepare your package for delivery</p>
+                </div>
+                </div>
+                <div class="relative h-40 overflow-hidden shadow-md group">
+                <img alt="Delivery rider" class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXS0BItbZtxTNlzfqnIGvIQpJK-rk0BlmG3n8BBDCsFI-sLcG2h0Ug6FxYC4i7Y8DQCMgQ1Y2DuV8DpEd3iiFcBg-dnHiXTLYN81C3qLo8LzgXgtxfZnKJDUGQzOI3HPJvLVZLUHPxWreZ4dCs2b7HMRdCnZcrPrYCD8xWKWBaX5gaMTZkeisDG_tncoTbfLJaahkoS19h2dkABRdyU1evwss0pmeguBns3tn-avJrQwCRfwnx8VUs5ikdlSpuH5BNxxWZVhZN2Fs"/>
+                <div class="absolute inset-0 bg-black/60 flex flex-col justify-end p-4 text-center">
+                    <p class="text-white font-semibold text-sm">Delivery within Lagos takes 12 to 48 hours once payment has been confirmed. Delivery to other locations may vary between 1 to 7 days.</p>
+                </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="px-4 text-center relative my-[32px] mx-[12px] pt-[16px] pb-[40px] bg-[#121212] rounded-2xl">
+            <h2 class="text-center text-primary font-bold text-lg my-[16px]">Several customers satisfied<br/>nationwide</h2>
+            <div class="relative h-64 w-full flex items-center justify-center my-6">
+                <div class="w-24 h-24 rounded-full border-4 border-gray-300 dark:border-gray-700 overflow-hidden shadow-lg z-10">
+                <img alt="Happy Customer Center" class="w-full h-full object-cover" src="img1.jpeg"/>
+                </div>
+                <img alt="Customer 1" class="absolute top-2 left-4 w-12 h-12 rounded-full border-2 border-white dark:border-gray-800 object-cover shadow-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB4TwjZkjbTkC2b7chp8bAEmsJsg0d5YZ8bWrs2Q8lV8ouPoOxC1_fh_VShlqjrYZv8WDex-NxyE_OzfRuqnlDnMCtgJilVal5miWHF0cbZl7E_mWM4N24d19RLFgatn6bdNb4hPPbtyr7Y-oKqwe565dZnf_dVNVcxUAvxRZHy5iI0C3trBTciEt6KXW91o-QBkVxUCbQ-CGEVTIlyJjVKHMoG46LpxmDUWWD8sB6vPq1Lj4rTpY9eW8mW47vGtfTB487A6guv6VI"/>
+                <img alt="Customer 2" class="absolute top-8 right-6 w-12 h-12 rounded-full border-2 border-white dark:border-gray-800 object-cover shadow-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAbABtpa_ajqqMCDP9GQVLo_BEsxrKqXPO59RBAMHfeWSH2E_87YBYVXHjcRVmZ1-Px5x9xg5qdukXiTSMOkLAYOx5xK3XEsWCcq-RJ9x5wsAQkFWaRuZgWD-VrgNyz3OUYLWexzduJrEW60yGUy7WUzHHfQF63fmYhqTTp9_2QENba3XvHF5LIyITrqbqONQgZjXo8ROYQ9HULxlTxxxUXhXE8t5kSM8XI1Glpl6oBvHirbh2V_VFD7u11JCg5wispjfJg6FDq1zs"/>
+                <img alt="Customer 3" class="absolute bottom-10 left-6 w-14 h-14 rounded-full border-2 border-white dark:border-gray-800 object-cover shadow-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDXCvsBXEOR9wmZpAhteI6Y2ACV6bGMYUDjmHQJ6wqOt-LSwRJoKpiG17sKE5jFCB9x1UkYiEFGkHfSk20-Bk9Lk5YMYUmvzK8ccQ5C0c6gU908PhrrEeKionjnF3sPaFgVEsFDzv5wgOEzZjyHBuhlPpeoUBOQdEgI2Mnl6DOXN1SxXk_ka8gd4a4LN39ztdY9G43wbDR7vEk7-g6x72o_Mb5pFlvB9irge450FXS8D71pVHRBjk1w2alQsPaXmJpll1uYDp1bQi4"/>
+                <img alt="Customer 4" class="absolute bottom-4 right-10 w-12 h-12 rounded-full border-2 border-white dark:border-gray-800 object-cover shadow-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAsfFvEm48Qgdxh8D6_fD1vdVJz632N0mJ1D_OVCkoKS18kvXETi-DTGIag5O0q2Nuoa8U705Bk8b-X66bBpQomHQ-_HrJztlSIpgnQsrDty8dsNxj7XSrvcpgsu5Ps7t4wVLbBqx6qT6M-5R8ttPkkCRsglL86UE2fnVI05wXIa93M5zd30g3Szi2YezXvHDvdZQbpCyh6fCK-sHYCIkhWHMz-0FX84Dc7jCy7zD3UGAeAcpRTRbDekJVO9Ansdh4dx1vq08jFkUk"/>
+                <img alt="Customer 5" class="absolute top-1/2 left-0 transform -translate-y-1/2 w-10 h-10 rounded-full border-2 border-white dark:border-gray-800 object-cover shadow-md" src="img1.jpeg"/>
+                <img alt="Customer 6" class="absolute top-1/2 right-0 transform -translate-y-1/2 w-16 h-16 rounded-full border-2 border-white dark:border-gray-800 object-cover shadow-md" src="bc666226-d3cf-43ef-91dd-47c2b21d3eec.jpg"/>
+            </div>
+            <button class="bg-primary text-[#121212] font-medium py-2 px-8 rounded-full shadow-lg hover:bg-orange-600 transition">
+                Leave a Review
+            </button>
+        </section>
+
+        <section class="my-[32px] mx-[12px] py-[16px] bg-[#121212] px-[16px] rounded-2xl">
+            <button class="w-full bg-[#FB8F0D] hover:bg-orange-500 text-[#121212] font-bold h-[40px] font-bold px-6 rounded-full
+            shadow-[0_0_20px_#ff4d00] hover:shadow-[0_0_35px_#ff4d00]
+            transition-all duration-300">
+                Shop Now
+            </button>
+
+            <button class="w-full border border-gray-400 text-[#F4F4F2] dark:text-gray-200 font-medium py-2 my-2 rounded-full hover:bg-[#2A2A2A] dark:hover:bg-gray-800 transition">
+                Ask Questions
+            </button>
+        </section>
+    </div>
+
+    <footer class="bg-[#121212] dark:bg-black text-gray-400 p-8 mt-auto rounded-t-3xl border-t border-gray-900">
+      <div class="flex items-center gap-2 mb-4">
+        <div class="w-6 h-6 rounded-full border-4 border-primary flex items-center justify-center">
+            <div class="w-1 h-3 rounded-full bg-primary rotate-[30deg] -translate-y-2 translate-x-1"></div>
+            </div>
+            <span class="font-bold text-lg text-primary tracking-wide"><span class="text-[#F4F4F2]">wesell</span>gadgets</span>
+
+        </div>
+        
+      <p class="text-[10px] text-[#F4F4F2] mb-4">
+        What we do is simple, we sell high quality new and used gadgets; phones, laptops, gaming, accessories and more. We deliver nationwide.
+      </p>
+      <p class="text-[9px] text-gray-400 mb-6 leading-relaxed">
+        Disclaimer: All product information, logos, and other trademarked items are properties of their respective brands, we only provide retail services and are not affiliated to these brands.
+      </p>
+      <div class="flex justify-center gap-4 mb-8">
+        <a class="w-8 h-8 rounded-full border border-gray-600 flex items-center justify-center hover:border-white text-white transition" href="#"><i class="fa-brands fa-x text-sm"></i></a>
+        <a class="w-8 h-8 rounded-full border border-gray-600 bg-gradient-to-tr from-yellow-400 to-purple-600 flex items-center justify-center border-none text-white transition" href="#"><i class="fa-brands fa-instagram text-sm"></i></a>
+        <a class="w-8 h-8 rounded-full border border-gray-600 bg-blue-600 border-none flex items-center justify-center text-white transition" href="#"><i class="fa-brands fa-facebook-f text-sm"></i></a>
+        <a class="w-8 h-8 rounded-full border border-gray-600 bg-black flex items-center justify-center border-none text-white transition" href="#"><i class="fa-brands fa-tiktok text-sm"></i></a>
+        <a class="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center text-white transition" href="#"><i class="fa-brands fa-whatsapp text-sm"></i></a>
+      </div>
+        <div class="grid grid-cols-5 gap-x-0 gap-y-9 text-[9px] text-center mb-10">
+        <a class="hover:text-white transition justify-self-start" href="#">About</a>
+        <a class="hover:text-white transition justify-self-start" href="#">Help</a>
+        <a class="hover:text-white transition justify-self-start" href="#">Delivery</a>
+        <a class="hover:text-white transition justify-self-start" href="#">Reviews</a>
+        <a class="hover:text-white transition justify-self-start" href="#">Terms and Conditions</a>
+
+        <a class="hover:text-white col-start-3 justify-self-center transition whitespace-nowrap" href="#">Privacy Policy</a>
+
+        <a class="hover:text-white col-start-5 justify-self-end transition" href="#">Back to Top</a>
+      </div>
+      <div class="text-center text-[10px] text-gray-400 border-t border-gray-800 pt-4">
+        © wesellgadgetsng 2025
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
