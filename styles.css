@@ -162,7 +162,7 @@ a:hover {
     align-items: center;        /* Horizontal center */
     text-align: center;         /* Center text inside elements */
     padding: 24px;  
-    margin-bottom: 40px;            
+    height: 300px;
   }
 
 .hero-video {
@@ -177,7 +177,7 @@ a:hover {
   }
 
   #hero-section h1 {
-    margin-top: 50px;
+    margin: 0px;
 
 }
 
@@ -253,6 +253,8 @@ a:hover {
     margin-right: 16px;
     color:#B1B1B1;
     font-size: 12px;
+    background-color: none;
+    
   }
 
   .footer-links a:hover {
@@ -283,5 +285,67 @@ footer hr {
     font-size: 10px;
     margin-top: 16px;
 
+}
+
+.feed {
+  font-weight: bold;
+  color: #FB8F0D;
+  background: transparent;
+  text-shadow: 
+    0 0 16px #FB8F0D,
+    0 0 24px rgba(251, 143, 13, 0.8),
+    0 0 40px rgba(251, 143, 13, 0.5);
+  transition: text-shadow 0.4s ease;
+}
+
+.product-feed {
+  display: flex;              
+  flex-direction: column;     
+  justify-content: center;    
+  align-items: center;        
+  text-align: center;         
+  padding: 24px;
+  background-color:#2A2A2A;
+  height: 300px;
+}
+
+.product-feed p {
+  color: #FBDDB8;
+  margin-top: 0;
 
 }
+.button-2 {
+  height: 40px;
+  border-radius: 30px;
+  padding-left: 32px;
+  padding-right: 32px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  background-color: #FB8F0D;
+  border: none;
+  color: #121212;
+  font-weight: bold;
+  font-size: 14px;
+  cursor: pointer;
+  margin-top: 32px;
+
+}
+
+.button-2:hover {
+  box-shadow: 
+  0 0 10px #FB8F0D;
+
+/* Smooth transitions */
+transition: all 0.4s ease;
+
+}
+
+.product-feed-card {
+  height: 400px;
+  width: 250px;
+  background-color: #F4F4F2;
+  border-radius: 16px;
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
