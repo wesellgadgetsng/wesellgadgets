@@ -8,7 +8,7 @@
         <title>We sell high quality gadgets in Nigeria and deliver Nationwide</title>
         
         <link rel="stylesheet" href="normalize.css">
-        <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" href="test.css">
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -105,6 +105,42 @@
     
     
         </div>
+                <!-- Mobile Sidebar -->
+        <div class="mobile-nav" id="mobileNav">
+        <div class="mobile-nav-header">
+            <p>Menu</p>
+            <span class="close-btn" id="closeMenu">&times;</span>
+        </div>
+            <a href="#" class="active">Home</a>
+            <a href="#">Products</a>
+            <a href="#">Hot Deals</a>
+            <a href="#">About</a>
+            <a href="#">Contact</a>
+            <a href="https://wa.me/2348012345678" target="_blank">Order on WhatsApp</a>
+        </div>
+
+        <!-- Overlay -->
+        <div class="overlay" id="overlay"></div>
+
+        <script>
+            const hamburger = document.querySelector('.hamburger');
+            const mobileNav = document.getElementById('mobileNav');
+            const overlay = document.getElementById('overlay');
+            const closeMenu = document.getElementById('closeMenu');
+
+            hamburger.addEventListener('click', () => {
+                mobileNav.classList.add('active');
+                overlay.classList.add('active');
+            });
+
+            closeMenu.addEventListener('click', closeNav);
+            overlay.addEventListener('click', closeNav);
+
+            function closeNav() {
+                mobileNav.classList.remove('active');
+                overlay.classList.remove('active');
+            }
+        </script>
 
     </body>
 
