@@ -126,6 +126,7 @@ p {
     .nav-links {
       display: none;
     }
+
 }
 
 a {
@@ -188,6 +189,8 @@ a:hover {
 #hero-section p {
     color: #FBDDB8;
     margin-top: 16px 0 0 0;
+    margin-bottom: 50px;
+
 }
 
 .button-1 {
@@ -197,7 +200,6 @@ a:hover {
     padding-right: 32px;
     padding-top: 8px;
     padding-bottom: 8px;
-    margin-top: 50px;
     background-color: #FB8F0D;
     border: none;
     color: #121212;
@@ -298,7 +300,7 @@ footer hr {
   transition: text-shadow 0.4s ease;
 }
 
-.product-feed {
+.product-feed-intro {
   display: flex;              
   flex-direction: column;     
   justify-content: center;    
@@ -309,9 +311,10 @@ footer hr {
   height: 300px;
 }
 
-.product-feed p {
+.product-feed-intro p {
   color: #FBDDB8;
   margin-top: 0;
+  margin-bottom: 32px
 
 }
 .button-2 {
@@ -327,7 +330,6 @@ footer hr {
   font-weight: bold;
   font-size: 14px;
   cursor: pointer;
-  margin-top: 32px;
 
 }
 
@@ -340,12 +342,154 @@ transition: all 0.4s ease;
 
 }
 
-.product-feed-card {
-  height: 400px;
-  width: 250px;
-  background-color: #F4F4F2;
-  border-radius: 16px;
-  margin-left: 10%;
-  margin-right: 10%;
+.product-feed-full {
+  width: 100%;                     
+  max-width: 100%;                 /* prevent any accidental max-width */
+  margin-left: 0;
+  margin-right: 0;
+  background-color: #2A2A2A;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  min-height: 100vh;               /* at least full viewport height */
 }
 
+.product-feed-full h2 {
+  margin-top: 40px;
+  margin-bottom: 60px;
+}
+
+.product-card-container {
+  width: 356px;                 
+  min-height: 568px;            
+  background-color: #F4F4F2;
+  border-radius: 16px;
+  margin-bottom: 40px;   
+  margin-left: 24px; 
+  margin-right: 24px;
+  box-sizing: border-box;       /* Padding doesn't add to width */
+  display: flex;
+  flex-direction: column;            /* Stack image + info vertically */
+  overflow: hidden;               /* Prevents any internal overflow */
+  box-shadow: 
+    0 0 20px #FB8F0D;
+  
+
+}
+
+.product-image-container {
+  width: 100%;    
+  height: 336px;
+  flex-shrink: 0;                    /* Prevents image from shrinking */
+  border-radius: 16px 16px 0px 0px;
+}
+
+.product-image-container img {
+  width: 100%;                  /* Full width of container */
+  height: 100%;                 /* Full height of container */
+  object-fit: cover;            /* Crops image to fill container without distortion */
+  object-position: center;      /* Centers the image */
+  border-radius: 16px 16px 0 0;  /* Matches container's top corners */
+  display: block;               /* Removes bottom gap */
+}
+
+.product-info {
+  width: 100%;    
+  min-height: 232px;
+  border-radius: 0 0 16px 16px;
+  background-color: #121212;  
+  box-sizing: border-box; 
+  padding: 16px;                     /* Equal padding on all sides */
+  display: flex;  
+  flex-direction: column;            /* Stacks h3 and p vertically */
+  justify-content: flex-start;       /* Starts content from top */
+  align-items: flex-start;           /* Aligns items to the left */
+  gap: 8px;                         /* Space between h3 and p */
+  text-align: left;
+  flex-grow: 1;                      /* Allows info section to grow if content increases */
+}
+
+.product-info h3 {
+  margin: 0;                         /* Remove default margin */
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.product-info .condition {
+  margin: 0;                         
+  color: #FBDDB8;
+  font-style: italic;  
+}
+
+.product-info .specs {
+  margin: 0;  
+  line-height: 20px;
+  font-size: 16px;
+  word-wrap: break-word;         /* Breaks long words if needed */
+  overflow-wrap: break-word;     /* Modern standard – same as word-wrap */
+  white-space: normal;           /* Allows wrapping (default, but explicit) */
+  overflow: hidden;              /* Cuts off anything that tries to escape */
+  word-break: break-word;        /* Breaks very long words (e.g., URLs) */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;             /* Show only 3 lines */
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;       
+  transition: all 0.4s ease;      /* Smooth transition when expanded */
+  color: #B1B1B1;
+}
+
+/* When "Show more" is clicked – expand to full text */
+.product-info .specs.expanded {
+  -webkit-line-clamp: unset;         /* Remove line limit */
+  overflow: visible;
+}
+
+
+.product-info .show-more {
+  margin: 0;                         
+  color: #FB8F0D;  
+  margin-bottom: 2px; 
+  cursor: pointer;                
+}
+
+.product-info .price {
+  margin: 0;                         
+  color: #FB8F0D; 
+  font-size: 24px;
+  font-weight: bold; 
+  margin-bottom: 8px;                
+}
+
+.button-3 {
+  display: block;                    /* Critical: makes width: 100% work on button inside <a> */
+  width: 100%;                       /* Takes full width of parent */
+  max-width: none;                   /* Removes any hidden limits */
+  height: 45px;                      /* Slightly taller for better touch target */
+  border-radius: 30px;
+  padding: 8px 24px;                 /* Horizontal padding only – vertical handled by height */
+  background-color: #FB8F0D;
+  border: none;
+  color: #121212;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-sizing: border-box;            /* Ensures padding doesn't overflow */
+}
+
+.product-info a {
+  display: block;
+  width: 100%;
+  margin-top: auto;                  /* Pushes button to bottom if space available */
+}
+
+.button-3:hover {
+  box-shadow: 
+  0 0 10px #FB8F0D;
+
+/* Smooth transitions */
+transition: all 0.4s ease;
+
+}

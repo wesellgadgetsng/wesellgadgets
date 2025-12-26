@@ -50,16 +50,46 @@
             </nav>
 
 
-            <section class="product-feed">
-                <h3>Explore our product Feed</h3>
-                <p>See our lightening deals</p>
+            <div class="product-feed-full">
+                <h2>Explore our Product Feed</h2>
 
-                <div class="product-feed-card"></div>
-                <button class="button-2">Explore</button>
-            </section>
+                <div class="product-card-container">
+                    <div class="product-image-container"><img 
+                        alt="iPhone 11 Pro Max" 
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVeCRI8Cux4gtct16P1ZKU5d2x0Qj-KacC7lCclvojysB8fLBT9PR4mgW30O9HKko0ZH_vO2CnsK9PDIionB2R0TqgX9rILBU9Iudp7kvfXlrEBOvB6Iib2wkir3rBx5ulBLj57Cp17jNl-a7mkayIR8di1tmOB9qDpgcj9wvZsR7LrOj_RNY03i-wLFcb9BAXDRdFowuOdTAJW6MmXCojRmNypsdMOltrK-LmrxcYDMVnUYEl-ks9L4BW8md1PmPLfxBQgn3o8QQ"/></div>
+                    <div class="product-info">
+                        <h3 class="product-name">iPhone 11 Pro max</h3>
+                        <p class="condition">New</p>
+                        <p class="specs" id="specs-text">Specs/info SpecsSpecsSpecsSpecsSpecsSpecsSpecsSpecSpecsSpecsSpecsSpecsSpecsSpecsSpecsSpec
+                            SpecsSpecsSpecsSpecsSSpecsSpecsSpecsSpecsSSpecsSpecsSpecsSpecsS
+                        </p>
+                        <p class="show-more" id="show-more-toggle" onclick="toggleSpecs()">Show more</p>
+                        <p class="price"> ₦ 1, 000, 000</P>
+                        <a href="https://wa.me/2348012345678"><button class="button-3">Order Now</button></a>
+
+                    </div>
+                </div>
+
+
+            </div>
 
     
         </div>
+
+        <script>
+            function toggleSpecs() {
+              const specs = document.getElementById('specs-text');
+              const toggle = document.getElementById('show-more-toggle');
+              
+              if (specs.classList.contains('expanded')) {
+                specs.classList.remove('expanded');
+                toggle.textContent = 'Show more';
+              } else {
+                specs.classList.add('expanded');
+                toggle.textContent = 'Show less';
+              }
+            }
+        </script>
 
     </body>
 
