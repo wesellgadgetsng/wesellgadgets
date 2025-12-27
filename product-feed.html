@@ -54,9 +54,18 @@
                 <h2>Explore our Product Feed</h2>
 
                 <div class="product-card-container">
-                    <div class="product-image-container"><img 
-                        alt="iPhone 11 Pro Max" 
-                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVeCRI8Cux4gtct16P1ZKU5d2x0Qj-KacC7lCclvojysB8fLBT9PR4mgW30O9HKko0ZH_vO2CnsK9PDIionB2R0TqgX9rILBU9Iudp7kvfXlrEBOvB6Iib2wkir3rBx5ulBLj57Cp17jNl-a7mkayIR8di1tmOB9qDpgcj9wvZsR7LrOj_RNY03i-wLFcb9BAXDRdFowuOdTAJW6MmXCojRmNypsdMOltrK-LmrxcYDMVnUYEl-ks9L4BW8md1PmPLfxBQgn3o8QQ"/></div>
+                    <div class="product-media-container">
+                        <div class="product-media-wrapper" tabindex="0">
+                            <img 
+                                class="product-media-image product-media"
+                                crossorigin="anonymous" 
+                                alt="iPhone 11 Pro Max" 
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVeCRI8Cux4gtct16P1ZKU5d2x0Qj-KacC7lCclvojysB8fLBT9PR4mgW30O9HKko0ZH_vO2CnsK9PDIionB2R0TqgX9rILBU9Iudp7kvfXlrEBOvB6Iib2wkir3rBx5ulBLj57Cp17jNl-a7mkayIR8di1tmOB9qDpgcj9wvZsR7LrOj_RNY03i-wLFcb9BAXDRdFowuOdTAJW6MmXCojRmNypsdMOltrK-LmrxcYDMVnUYEl-ks9L4BW8md1PmPLfxBQgn3o8QQ"/>
+
+                                
+                            </div>
+                    </div>                    
+                        
                     <div class="product-info">
                         <h3 class="product-name">iPhone 11 Pro max</h3>
                         <p class="condition">New</p>
@@ -77,6 +86,8 @@
         </div>
 
         <script>
+
+            //Product details expand and collapse
             function toggleSpecs() {
               const specs = document.getElementById('specs-text');
               const toggle = document.getElementById('show-more-toggle');
@@ -89,6 +100,131 @@
                 toggle.textContent = 'Show less';
               }
             }
+
+
+            //image Zoom
+            const wrapper = document.querySelector('.product-media-wrapper');
+            const img = document.querySelector('.product-media-image');
+
+            let scale = 1;
+            let posX = 0;
+            let posY = 0;
+            let isDragging = false;
+            let startX, startY;
+
+            // Update transform
+            const update = () => {
+                img.style.transform = `translate(${posX}px, ${posY}px) scale(${scale})`;
+            };
+
+            // Mouse wheel zoom
+            wrapper.addEventListener('wheel', (e) => {
+                e.preventDefault();
+                const delta = e.deltaY > 0 ? 0.9 : 1.1;
+                scale = Math.max(0.5, Math.min(5, scale * delta)); // Zoom out to 0.5x, in to 5x
+                update();
+            });
+
+            // Mouse drag
+            wrapper.addEventListener('mousedown', (e) => {
+                isDragging = true;
+                startX = e.clientX - posX;
+                startY = e.clientY - posY;
+                wrapper.style.cursor = 'grabbing';
+            });
+
+            document.addEventListener('mousemove', (e) => {
+                if (!isDragging) return;
+                posX = e.clientX - startX;
+                posY = e.clientY - startY;
+                update();
+            });
+
+            document.addEventListener('mouseup', () => {
+                isDragging = false;
+                wrapper.style.cursor = 'grab';
+            });
+
+            // Touch (pinch + drag)
+            let startDist = 0;
+            let startScale = 1;
+
+            wrapper.addEventListener('touchstart', (e) => {
+                if (e.touches.length === 2) {
+                // Pinch
+                const t1 = e.touches[0];
+                const t2 = e.touches[1];
+                startDist = Math.hypot(t1.pageX - t2.pageX, t1.pageY - t2.pageY);
+                startScale = scale;
+                } else if (e.touches.length === 1) {
+                // Drag
+                startX = e.touches[0].clientX - posX;
+                startY = e.touches[0].clientY - posY;
+                }
+            });
+
+            wrapper.addEventListener('touchmove', (e) => {
+                e.preventDefault();
+                if (e.touches.length === 2) {
+                const t1 = e.touches[0];
+                const t2 = e.touches[1];
+                const dist = Math.hypot(t1.pageX - t2.pageX, t1.pageY - t2.pageY);
+                scale = startScale * (dist / startDist);
+                scale = Math.max(0.5, Math.min(5, scale));
+                update();
+                } else if (e.touches.length === 1) {
+                posX = e.touches[0].clientX - startX;
+                posY = e.touches[0].clientY - startY;
+                update();
+                }
+            });
+
+            // Keyboard (arrows to pan, +/- to zoom)
+            wrapper.focus(); // Make focusable
+            wrapper.addEventListener('keydown', (e) => {
+                const step = 40;
+                switch (e.key) {
+                case 'ArrowUp': posY += step; break;
+                case 'ArrowDown': posY -= step; break;
+                case 'ArrowLeft': posX += step; break;
+                case 'ArrowRight': posX -= step; break;
+                case '+': case '=': scale = Math.min(scale + 0.5, 5); break;
+                case '-': scale = Math.max(scale - 0.5, 0.5); break;
+                }
+                update();
+            });
+
+            // Double-click/tap to reset
+            wrapper.addEventListener('dblclick', () => {
+                scale = 1;
+                posX = 0;
+                posY = 0;
+                update();
+            });
+
+
+            //Image background blender
+            document.addEventListener('DOMContentLoaded', () => {
+                const containers = document.querySelectorAll('.product-media-container');
+
+                containers.forEach(container => {
+                    const img = container.querySelector('.product-media-image');
+                    
+                    if (!img) return;
+
+                    const applyBlurredBackground = () => {
+                    // Use the image source directly as blurred background
+                    container.style.backgroundImage = `url(${img.src})`;
+                    };
+
+                    // Run when image loads
+                    if (img.complete && img.naturalWidth) {
+                    applyBlurredBackground();
+                    } else {
+                    img.onload = applyBlurredBackground;
+                    }
+                });
+                });        
         </script>
 
     </body>
