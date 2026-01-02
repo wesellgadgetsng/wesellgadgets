@@ -75,8 +75,29 @@
                                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVeCRI8Cux4gtct16P1ZKU5d2x0Qj-KacC7lCclvojysB8fLBT9PR4mgW30O9HKko0ZH_vO2CnsK9PDIionB2R0TqgX9rILBU9Iudp7kvfXlrEBOvB6Iib2wkir3rBx5ulBLj57Cp17jNl-a7mkayIR8di1tmOB9qDpgcj9wvZsR7LrOj_RNY03i-wLFcb9BAXDRdFowuOdTAJW6MmXCojRmNypsdMOltrK-LmrxcYDMVnUYEl-ks9L4BW8md1PmPLfxBQgn3o8QQ"/>
 
 
-                                <video class="product-media product-media-video" src="media/herovideo.mp4" type="video/mp4" muted controls></video>
+                                <div class="video-container product-media ">
+                                    <video 
+                                        class="product-media-video"
+                                        src="media/herovideo.mp4" 
+                                        type="video/mp4" 
+                                        muted
+                                        playsinline
+                                        id="productVideo">
+                                    </video>
+
+                                    <div class="video-controls" id="videoControls">
+                                        <button class="play-btn" id="playToggle">
+                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                                                <path d="M8 5v14l11-7z"/> 
+                                            </svg>
+                                        </button>
+                                        
+                                        <span class="video-time" id="timeDisplay">0:00 / 0:00</span>
+                                    </div>
+                                </div>
+
                         </div>
+
                         <div class="product-pagination" id="pagination"></div>
                        
                         <button id="fullscreenToggle" class="fullscreen-button" aria-label="Toggle fullscreen">
@@ -86,6 +107,10 @@
                             <svg width="24" height="24" viewBox="0 0 24 24" class="exit-icon" style="display: none;">
                                 <path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm1-8h-3v2h5V5h-2v3z"/>
                             </svg>
+                        </button>
+
+                        <button class="add-to-cart">
+                            <img src="media/add-to-cart.png" alt="add-to-cart-image"> 
                         </button>
 
                     </div>                    
@@ -403,33 +428,33 @@
             updateActiveDot();
 
             // Fullscreen toggle
-const fullscreenButton = document.getElementById('fullscreenToggle');
+            const fullscreenButton = document.getElementById('fullscreenToggle');
 
-function toggleFullscreen() {
-  if (!document.fullscreenElement) {
-    container.requestFullscreen().catch(err => console.error('Fullscreen error:', err));
-    fullscreenButton.classList.add('fullscreen');
-  } else {
-    document.exitFullscreen();
-    fullscreenButton.classList.remove('fullscreen');
-  }
-}
+            function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                container.requestFullscreen().catch(err => console.error('Fullscreen error:', err));
+                fullscreenButton.classList.add('fullscreen');
+            } else {
+                document.exitFullscreen();
+                fullscreenButton.classList.remove('fullscreen');
+            }
+            }
 
-fullscreenButton.addEventListener('click', toggleFullscreen);
+            fullscreenButton.addEventListener('click', toggleFullscreen);
 
-// Handle resize in fullscreen (recalculate zoom/pan)
-document.addEventListener('fullscreenchange', () => {
-  if (zoomedImg) {
-    updateTransform(); // Recalculate boundaries
-  }
-});
+            // Handle resize in fullscreen (recalculate zoom/pan)
+            document.addEventListener('fullscreenchange', () => {
+            if (zoomedImg) {
+                updateTransform(); // Recalculate boundaries
+            }
+            });
 
-document.addEventListener('fullscreenchange', () => {
-  if (zoomedImg) {
-    updateTransform(); // Recalculate for new dimensions
-    zoomedImg.style.objectFit = document.fullscreenElement ? 'contain' : 'cover'; // JS fallback if CSS pseudo fails
-  }
-});
+            document.addEventListener('fullscreenchange', () => {
+            if (zoomedImg) {
+                updateTransform(); // Recalculate for new dimensions
+                zoomedImg.style.objectFit = document.fullscreenElement ? 'contain' : 'cover'; // JS fallback if CSS pseudo fails
+            }
+            });
 
             //Image background blender
             document.addEventListener('DOMContentLoaded', () => {
@@ -452,7 +477,66 @@ document.addEventListener('fullscreenchange', () => {
                     img.onload = applyBlurredBackground;
                     }
                 });
-                });        
+                });   
+                
+                const video = document.getElementById('productVideo');
+                const playBtn = document.getElementById('playToggle');
+                const timeDisplay = document.getElementById('timeDisplay');
+                const controlsContainer = document.getElementById('videoControls');
+                const videoContainer = document.querySelector('.video-container');
+
+                // Icons for Play and Pause
+                const playIcon = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
+                const pauseIcon = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>';
+
+                // 1. Toggle Play/Pause
+                function togglePlay(e) {
+                    // Stop the click from bubbling up to the swipe/drag gallery logic
+                    if(e) e.stopPropagation(); 
+
+                    if (video.paused || video.ended) {
+                        video.play();
+                    } else {
+                        video.pause();
+                    }
+                }
+
+                // Update Button Icon based on state
+                function updatePlayButton() {
+                    if (video.paused) {
+                        playBtn.innerHTML = playIcon;
+                        videoContainer.classList.add('paused'); // Keep controls visible
+                    } else {
+                        playBtn.innerHTML = pauseIcon;
+                        videoContainer.classList.remove('paused'); // Allow controls to fade out
+                    }
+                }
+
+                // 2. Format Time (helper function)
+                function formatTime(seconds) {
+                    const m = Math.floor(seconds / 60);
+                    const s = Math.floor(seconds % 60);
+                    return `${m}:${s < 10 ? '0' : ''}${s}`;
+                }
+
+                // 3. Update Duration Text
+                function updateProgress() {
+                    const current = formatTime(video.currentTime);
+                    const total = formatTime(video.duration || 0);
+                    timeDisplay.textContent = `${current} / ${total}`;
+                }
+
+                // Event Listeners
+                playBtn.addEventListener('click', togglePlay);
+                video.addEventListener('click', togglePlay); // Click video to play/pause too
+                video.addEventListener('play', updatePlayButton);
+                video.addEventListener('pause', updatePlayButton);
+                video.addEventListener('timeupdate', updateProgress);
+
+                // Prevent the controls from triggering a drag event on your gallery
+                controlsContainer.addEventListener('mousedown', (e) => e.stopPropagation());
+                controlsContainer.addEventListener('touchstart', (e) => e.stopPropagation());
+
         </script>
 
     </body>
