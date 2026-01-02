@@ -129,6 +129,13 @@ p {
 
 }
 
+@media (min-width: 868px) {
+  .hamburger {
+    display: none;
+  }
+
+}
+
 a {
   text-decoration: none;
 }
@@ -290,314 +297,393 @@ footer hr {
 }
 
 .feed {
-font-weight: bold;
-color: #FB8F0D;
-background: transparent;
-text-shadow: 
-  0 0 16px #FB8F0D,
-  0 0 24px rgba(251, 143, 13, 0.8),
-  0 0 40px rgba(251, 143, 13, 0.5);
-transition: text-shadow 0.4s ease;
+  font-weight: bold;
+  color: #FB8F0D;
+  background: transparent;
+  text-shadow: 
+    0 0 16px #FB8F0D,
+    0 0 24px rgba(251, 143, 13, 0.8),
+    0 0 40px rgba(251, 143, 13, 0.5);
+  transition: text-shadow 0.4s ease;
 }
 
 .product-feed-intro {
-display: flex;              
-flex-direction: column;     
-justify-content: center;    
-align-items: center;        
-text-align: center;         
-padding: 24px;
-background-color:#2A2A2A;
-height: 300px;
+  display: flex;              
+  flex-direction: column;     
+  justify-content: center;    
+  align-items: center;        
+  text-align: center;         
+  padding: 24px;
+  background-color:#2A2A2A;
+  height: 300px;
 }
 
 .product-feed-intro p {
-color: #FBDDB8;
-margin-top: 0;
-margin-bottom: 32px
+  color: #FBDDB8;
+  margin-top: 0;
+  margin-bottom: 32px
 
 }
 .button-2 {
-height: 40px;
-border-radius: 30px;
-padding-left: 32px;
-padding-right: 32px;
-padding-top: 8px;
-padding-bottom: 8px;
-background-color: #FB8F0D;
-border: none;
-color: #121212;
-font-weight: bold;
-font-size: 14px;
-cursor: pointer;
+  height: 40px;
+  border-radius: 30px;
+  padding-left: 32px;
+  padding-right: 32px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  background-color: #FB8F0D;
+  border: none;
+  color: #121212;
+  font-weight: bold;
+  font-size: 14px;
+  cursor: pointer;
 
 }
 
 .button-2:hover {
-box-shadow: 
-0 0 10px #FB8F0D;
+  box-shadow: 
+  0 0 10px #FB8F0D;
 
-/* Smooth transitions */
-transition: all 0.4s ease;
+  /* Smooth transitions */
+  transition: all 0.4s ease;
 
 }
 
 .product-feed-full {
-width: 100%;                     
-max-width: 100%;                 /* prevent any accidental max-width */
-margin-left: 0;
-margin-right: 0;
-background-color: #2A2A2A;
-display: flex;
-flex-direction: column;
-align-items: center;
-text-align: center;
-min-height: 100vh;               /* at least full viewport height */
+  width: 100%;                     
+  max-width: 100%;                 /* prevent any accidental max-width */
+  margin-left: 0;
+  margin-right: 0;
+  background-color: #2A2A2A;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  align-items: center;
+  text-align: center;
+  min-height: 100vh;               /* at least full viewport height */
 }
 
 .product-feed-full h2 {
-margin-top: 40px;
-margin-bottom: 40px;
+  margin-top: 40px;
+  margin-bottom: 40px;
 }
 
 .product-card-container {
-width: 174px; 
-max-width: 261px;
-min-height: 400px; 
-background-color: #F4F4F2;
-border-radius: 16px;
-box-sizing: border-box;       /* Padding doesn't add to width */
-display: flex;
-flex-direction: column;            /* Stack image + info vertically */
-overflow: hidden;               /* Prevents any internal overflow */
-box-shadow: 
-  0 0 4px #707070;
+  width: 174px; 
+  max-width: 261px;
+  min-height: 400px; 
+  background-color: #F4F4F2;
+  border-radius: 16px;
+  box-sizing: border-box;       /* Padding doesn't add to width */
+  display: flex;
+  flex-direction: column;            /* Stack image + info vertically */
+  overflow: hidden;               /* Prevents any internal overflow */
+  box-shadow: 
+    0 0 4px #707070;
 
 }
 
 /* On wider screens – card grows smoothly */
 @media (min-width: 768px) {
-.product-card-container {
-  width: 100%;         /* Full width minus margins */
-}
+  .product-card-container {
+    width: 100%;         /* Full width minus margins */
+  }
 }
 
 .product-media-container {
-width: 100%;    
-height: 240px;
-max-height: 360px;           
-flex-shrink: 0;                    /* Prevents image from shrinking */
-border-radius: 16px 16px 0px 0px;
-overflow: hidden;
-cursor: grab;                      /* Hand cursor when hovering */
-position: relative;
-user-select: none;
-transition: background-color 0.8s ease;  /* Smooth fade when color changes */
+  width: 100%;    
+  height: 240px;
+  max-height: 360px;           
+  flex-shrink: 0;                    /* Prevents image from shrinking */
+  border-radius: 16px 16px 0px 0px;
+  overflow: hidden;
+  cursor: grab;                      /* Hand cursor when hovering */
+  position: relative;
+  transition: background-color 0.8s ease;  /* Smooth fade when color changes */
+  touch-action: auto; /* Allows vertical page scroll, but takes over horizontal */
 }
 
 @media (min-width: 768px) {
-.product-media-container {
-  height: 100%;         /* Full width minus margins */
-}
-}
-
-.product-media-container:active {
-cursor: grabbing;                  /* Grabbing hand while dragging */
+  .product-media-container {
+    height: 360px;         /* Full width minus margins */
+  }
 }
 
 .product-media-wrapper {
-width: 100%;
-height: 100%;
-overflow: hidden;
-touch-action: none;
-position: relative /* Enables native pinch-zoom on mobile */
+  display: flex;
+  width: 100%;
+  height: 100%;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none; /* Firefox */
+  -webkit-overflow-scrolling: touch;
 }
 
-.product-media-container::before {
-content: '';
-position: absolute;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-background-image: inherit;     /* Will be set by JS */
-background-size: cover;
-background-position: center;
-filter: blur(40px);            /* Strong blur for soft edges */
-transform: scale(1.1);         /* Slightly larger to cover edges */
-opacity: 0.8;                  /* Semi-transparent for depth */
-z-index: 1;
-border-radius: 16px 16px 0 0;
-transition: background-image 0.6s ease;
+.product-media-wrapper::-webkit-scrollbar {
+  display: none; /* Hide scrollbar for Chrome/Safari */
 }
 
+.product-media-wrapper:active {
+  cursor: grabbing;                  /* Grabbing hand while dragging */
+}
+  
 .product-media-image {
-position: relative;
-z-index: 2;
-width: 100%;
-height: 100%;
-object-fit: cover;  
-object-position: center;
-display: block;
-transition: transform 0.1s ease;   /* Smooth zoom/pan */
-user-select: none;                 /* Prevents text selection while dragging */
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;  
+  object-position: center;
+  display: block;
+  transition: transform 0.1s ease;   /* Smooth zoom/pan */
+  user-select: none;                 /* Prevents text selection while dragging */
+  cursor: zoom-in;
 }
 
 .product-media {
-width: 100%;                  /* Full width of container */
-height: 100%;                 /* Full height of container */
-object-position: center;      /* Centers the image */
-display: block;               /* Removes bottom gap */
-
-}
-/* Horizontal scroll gallery */
-.product-gallery-scroll {
-display: flex;
-width: 100%;
-height: 100%;
-overflow-x: auto;
-scroll-snap-type: x mandatory;
-scrollbar-width: none; /* Firefox */
-}
-
-.product-gallery-scroll::-webkit-scrollbar {
-display: none; /* Chrome/Safari */
+  flex: 0 0 100%; /* Each image takes 100% width */
+  width: 100%;
+  height: 100%;
+  scroll-snap-align: center;
+  pointer-events: auto;
+  transition: transform 0.2s ease-out;
+  -webkit-user-select: none;
+  -webkit-user-drag: none;
 }
 
 
-/* Zoom overlay – hidden by default */
-.zoomable-overlay {
-position: absolute;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-opacity: 0;
-visibility: hidden;
-pointer-events: none;
-transition: opacity 0.3s ease;
-z-index: 10;
+.no-snap {
+  scroll-snap-type: none !important;
 }
 
-.zoomable-overlay.active {
-opacity: 1;
-visibility: visible;
-pointer-events: auto;
+/* Zoom Class toggled by JS */
+.is-zoomed {
+  cursor: move !important; /* Indicates draggable */
+  transition: transform 0.2s ease-out;
 }
 
-.zoomable-image {
-width: 100%;
-height: 100%;
-object-fit: contain;
-object-position: center;
-transition: transform 0.2s ease-out;
-user-select: none;
+/* Active dragging state */
+.is-zoomed.dragging {
+  cursor: grabbing !important;
+  transition: none !important;
+}
+
+.product-media-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: inherit;     /* Will be set by JS */
+  background-size: cover;
+  background-position: center;
+  filter: blur(40px);            /* Strong blur for soft edges */
+  transform: scale(1.1);         /* Slightly larger to cover edges */
+  opacity: 0.8;                  /* Semi-transparent for depth */
+  z-index: 1;
+  border-radius: 16px 16px 0 0;
+  transition: background-image 0.6s ease;
+}
+
+.product-media-video {
+  z-index: 1;
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;  
+  object-position: center;
+  display: block;
+  transition: transform 0.1s ease;   /* Smooth zoom/pan */
+  user-select: none;                 /* Prevents text selection while dragging */
+
+}
+
+.product-pagination {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 0;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 3; /* Higher than images' z-index: 2 */
+}
+
+.product-pagination .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ccc;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.product-pagination .dot.active {
+  background: #333;
+}
+
+
+@media (max-width: 768px) {
+  .product-pagination .dot {
+    width: 6px;
+    height: 6px;
+  }
+}
+
+:fullscreen .product-media-image {
+  object-fit: contain !important; /* Override in full-screen to show full image */
+}
+
+.fullscreen-button {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  background: rgba(255, 255, 255, 0.7);
+  border: none;
+  border-radius: 50%;
+  padding: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+  z-index: 10; /* Increased for visibility above all layers */
+  display: block; /* Ensure always shown */
+}
+
+:fullscreen .fullscreen-button {
+  bottom: 32px; /* Adjust positioning if needed for larger screens */
+  right: 32px;
+  background: rgba(0, 0, 0, 0.7); /* Darker in full-screen for contrast */
+}
+
+.fullscreen-button:hover {
+  background: rgba(255, 255, 255, 1);
+}
+
+.fullscreen-button svg {
+  fill: #333;
+}
+
+.fullscreen-button.fullscreen .enter-icon {
+  display: block;
+}
+
+.fullscreen-button.fullscreen .exit-icon {
+  display: block;
+}
+
+/* Full-screen container adjustments */
+:fullscreen .product-media-container {
+  height: 100vh !important;
+  max-height: none !important;
+  background: #000; /* Black background to handle letterboxing */
 }
 
 .product-info {
-width: 100%;    
-min-height: 160px;
-border-radius: 0 0 16px 16px;
-background-color: #2A2A2A;  
-box-sizing: border-box; 
-padding: 12px;                     /* Equal padding on all sides */
-display: flex;  
-flex-direction: column;            /* Stacks h3 and p vertically */
-justify-content: flex-start;       /* Starts content from top */
-align-items: flex-start;           /* Aligns items to the left */
-gap: 6px;                         /* Space between h3 and p */
-text-align: left;
-flex-grow: 1;                      /* Allows info section to grow if content increases */
+  width: 100%;    
+  min-height: 160px;
+  border-radius: 0 0 16px 16px;
+  background-color: #2A2A2A;  
+  box-sizing: border-box; 
+  padding: 12px;                     /* Equal padding on all sides */
+  display: flex;  
+  flex-direction: column;            /* Stacks h3 and p vertically */
+  justify-content: flex-start;       /* Starts content from top */
+  align-items: flex-start;           /* Aligns items to the left */
+  gap: 6px;                         /* Space between h3 and p */
+  text-align: left;
+  flex-grow: 1;                      /* Allows info section to grow if content increases */
 }
 
 .product-info h3 {
-margin: 0;                         /* Remove default margin */
-font-size: 14px;
-font-weight: medium;
+  margin: 0;                         /* Remove default margin */
+  font-size: 14px;
+  font-weight: medium;
 }
 
 .product-info .condition {
-margin: 0;                         
-color: #FBDDB8;
-font-size: 12px;
+  margin: 0;                         
+  color: #FBDDB8;
+  font-size: 12px;
 
 }
 
 .product-info .quantity {
-color: #FBDDB8;
-margin: 0;  
-font-size: 10px;
+  color: #FBDDB8;
+  margin: 0;  
+  font-size: 10px;
 
 }
 
 .product-info .specs {
-margin: 0;  
-line-height: 15px;
-font-size: 12px;
-word-wrap: break-word;         /* Breaks long words if needed */
-overflow-wrap: break-word;     /* Modern standard – same as word-wrap */
-white-space: normal;           /* Allows wrapping (default, but explicit) */
-overflow: hidden;              /* Cuts off anything that tries to escape */
-word-break: break-word;        /* Breaks very long words (e.g., URLs) */
-display: -webkit-box;
--webkit-line-clamp: 2;             /* Show only 3 lines */
--webkit-box-orient: vertical;
-text-overflow: ellipsis;       
-transition: all 0.4s ease;      /* Smooth transition when expanded */
-color: #B1B1B1;
+  margin: 0;  
+  line-height: 15px;
+  font-size: 12px;
+  word-wrap: break-word;         /* Breaks long words if needed */
+  overflow-wrap: break-word;     /* Modern standard – same as word-wrap */
+  white-space: normal;           /* Allows wrapping (default, but explicit) */
+  overflow: hidden;              /* Cuts off anything that tries to escape */
+  word-break: break-word;        /* Breaks very long words (e.g., URLs) */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;             /* Show only 3 lines */
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;       
+  transition: all 0.4s ease;      /* Smooth transition when expanded */
+  color: #B1B1B1;
 }
 
 /* When "Show more" is clicked – expand to full text */
 .product-info .specs.expanded {
--webkit-line-clamp: unset;         /* Remove line limit */
-overflow: visible;
+  -webkit-line-clamp: unset;         /* Remove line limit */
+  overflow: visible;
 }
 
 
 .product-info .show-more {
-margin: 0;                         
-color: #FB8F0D;  
-cursor: pointer;   
-font-size: 12px;             
+  margin: 0;                         
+  color: #FB8F0D;  
+  cursor: pointer;   
+  font-size: 12px;             
 }
 
 .product-info .price {
-margin: 0;                         
-color: #FB8F0D; 
-font-size: 14px;
-font-weight: bold; 
-margin-bottom: 4px;                
+  margin: 0;                         
+  color: #FB8F0D; 
+  font-size: 14px;
+  font-weight: bold; 
+  margin-bottom: 4px;                
 }
 
 .button-3 {
-display: block;                    /* Critical: makes width: 100% work on button inside <a> */
-width: 100%;                       /* Takes full width of parent */
-max-width: none;                   /* Removes any hidden limits */
-height: 30px;                      /* Slightly taller for better touch target */
-border-radius: 30px;
-padding: 4px 24px;                 /* Horizontal padding only – vertical handled by height */
-background-color: #FB8F0D;
-border: none;
-color: #121212;
-font-weight: bold;
-font-size: 14px;
-cursor: pointer;
-text-align: center;
-transition: all 0.3s ease;
-box-sizing: border-box;            /* Ensures padding doesn't overflow */
+  display: block;                    /* Critical: makes width: 100% work on button inside <a> */
+  width: 100%;                       /* Takes full width of parent */
+  max-width: none;                   /* Removes any hidden limits */
+  height: 30px;                      /* Slightly taller for better touch target */
+  border-radius: 30px;
+  padding: 4px 24px;                 /* Horizontal padding only – vertical handled by height */
+  background-color: #FB8F0D;
+  border: none;
+  color: #121212;
+  font-weight: bold;
+  font-size: 14px;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-sizing: border-box;            /* Ensures padding doesn't overflow */
 }
 
 .product-info a {
-display: block;
-width: 100%;
-margin-top: auto;                  /* Pushes button to bottom if space available */
+  display: block;
+  width: 100%;
+  margin-top: auto;                  /* Pushes button to bottom if space available */
 }
 
 .button-3:hover {
 box-shadow: 
-0 0 10px #FB8F0D;
+  0 0 10px #FB8F0D;
 
 /* Smooth transitions */
-transition: all 0.4s ease;
+  transition: all 0.4s ease;
 
 }
