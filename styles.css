@@ -154,6 +154,25 @@ text-align: center;
 background-color: #2A2A2A;
 margin: 0px;
 padding: 8px;
+content: "";
+position: relative;
+inset: 0;
+border-radius: inherit;
+
+background:
+  radial-gradient(
+    circle at top left,
+    rgba(255,255,255,0.15),
+    rgba(255,255,255,0.15) 50%,
+    transparent 90%
+  ),
+  linear-gradient(
+    120deg,
+    transparent 30%,
+    rgba(255,255,255,0.25),
+    transparent 30%
+  );
+
 
 }
 
@@ -170,16 +189,16 @@ font-weight: bold;
   align-items: center;        /* Horizontal center */
   text-align: center;         /* Center text inside elements */
   padding: 24px;  
-  height: 300px;
+  height: 100%;
 }
 
 .hero-video {
   position: absolute;
-  opacity: 20%;
+  opacity: 4%;
   top: 0;
   left: 0;
   width: 100%;
-  height: 500px;
+  height: 100%;
   object-fit: cover;       /* Fills container, crops if needed */
   z-index: -1;             /* Behind your content */
 }
@@ -314,8 +333,26 @@ footer hr {
   align-items: center;        
   text-align: center;         
   padding: 24px;
-  background-color:#2A2A2A;
+  background-color:#2a2a2abc;
   height: 300px;
+  content: "";
+  position: relative;
+  inset: 0;
+  border-radius: inherit;
+  background:
+  radial-gradient(
+    circle at top left,
+    rgba(255,255,255,0.15),
+    rgba(255,255,255,0.15) 50%,
+    transparent 90%
+  ),
+  linear-gradient(
+    120deg,
+    transparent 30%,
+    rgba(255,255,255,0.25),
+    transparent 30%
+  );
+
 }
 
 .product-feed-intro p {
@@ -354,13 +391,30 @@ footer hr {
   max-width: 100%;                 /* prevent any accidental max-width */
   margin-left: 0;
   margin-right: 0;
-  background-color: #2A2A2A;
+
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
   align-items: center;
   text-align: center;
   min-height: 100vh;               /* at least full viewport height */
+
+
+  background:
+    radial-gradient(
+      circle at top left,
+      rgba(255,255,255,0.15) 25%,
+      rgba(255,255,255,0.15) 100%,
+      transparent 60%
+    ),
+    linear-gradient(
+      120deg,
+      transparent 5%,
+      rgba(255,255,255,0.25),
+      transparent 80%
+    );
+
+
 }
 
 .product-feed-full h2 {
@@ -372,16 +426,29 @@ footer hr {
   width: 174px; 
   max-width: 261px;
   min-height: 400px; 
-  background-color: #F4F4F2;
   border-radius: 16px;
   box-sizing: border-box;       /* Padding doesn't add to width */
   display: flex;
   flex-direction: column;            /* Stack image + info vertically */
   overflow: hidden;               /* Prevents any internal overflow */
-  box-shadow: 
-    0 0 4px #707070;
 
-}
+  box-shadow:
+    0 0px 10px #707070,
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+
+      
+  }
+
+  
+
+  .product-card-container:hover {
+    transform: translateY(-1px);
+    box-shadow:
+      0 0 4px #707070;
+      inset: 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+  
 
 /* On wider screens – card grows smoothly */
 @media (min-width: 768px) {
@@ -400,7 +467,10 @@ footer hr {
   cursor: grab;                      /* Hand cursor when hovering */
   position: relative;
   transition: background-color 0.8s ease;  /* Smooth fade when color changes */
-  touch-action: auto; /* Allows vertical page scroll, but takes over horizontal */
+  touch-action: pan-y; /* Allows vertical page scroll, but takes over horizontal */
+  transform-origin: center center;
+  will-change: transform;
+
 }
 
 @media (min-width: 768px) {
@@ -429,7 +499,7 @@ footer hr {
   
 .product-media-image {
   position: relative;
-  z-index: 2;
+  z-index: 3;
   width: 100%;
   height: 100%;
   object-fit: cover;  
@@ -596,7 +666,19 @@ footer hr {
   position: absolute;
   bottom: 16px;
   right: 8px;
-  background: #ffffff6e;
+  background:
+  radial-gradient(
+    circle at top left,
+    rgba(255,255,255,0.15),
+    rgba(255,255,255,0.15) 50%,
+    transparent 90%
+  ),
+  linear-gradient(
+    120deg,
+    transparent 30%,
+    rgba(255,255,255,0.25),
+    transparent 30%
+  );
   border: none;
   border-radius: 50%;
   padding: 8px;
@@ -647,6 +729,14 @@ footer hr {
   transition: background 0.3s;
   z-index: 10; /* Increased for visibility above all layers */
   display: block; /* Ensure always shown */
+  background:
+  radial-gradient(
+    circle at top left,
+    rgba(255,255,255,0.15),
+    rgba(255,255,255,0.15) 50%,
+    transparent 90%
+  ),
+
 }
 
 :fullscreen .add-to-cart {
@@ -663,25 +753,46 @@ footer hr {
 }
 
 .product-info {
-  width: 100%;    
+  width: 100%;
   min-height: 160px;
   border-radius: 0 0 16px 16px;
-  background-color: #2A2A2A;  
-  box-sizing: border-box; 
-  padding: 12px;                     /* Equal padding on all sides */
-  display: flex;  
-  flex-direction: column;            /* Stacks h3 and p vertically */
-  justify-content: flex-start;       /* Starts content from top */
-  align-items: flex-start;           /* Aligns items to the left */
-  gap: 6px;                         /* Space between h3 and p */
+
+
+  /* Glassmorphism */
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.22),
+    rgba(255, 255, 255, 0.05)
+  );
+  backdrop-filter: blur(22px) saturate(180%);
+  -webkit-backdrop-filter: blur(22px) saturate(180%);
+
+  box-shadow:
+  0 20px 40px rgba(0, 0, 0, 0.35),
+  inset 0 1px 1px rgba(255, 255, 255, 0.6),
+  inset 0 -1px 1px rgba(255, 255, 255, 0.25);
+
+  border: 1px solid rgba(255, 255, 255, 0.35);
+
+
+  box-sizing: border-box;
+  padding: 12px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 6px;
+
   text-align: left;
-  flex-grow: 1;                      /* Allows info section to grow if content increases */
+  flex-grow: 1;
 }
 
 .product-info h3 {
   margin: 0;                         /* Remove default margin */
   font-size: 14px;
   font-weight: medium;
+  color: #FFFFFF;
 }
 
 .product-info .condition {
@@ -695,7 +806,6 @@ footer hr {
   color: #FBDDB8;
   margin: 0;  
   font-size: 10px;
-
 }
 
 .product-info .specs {
@@ -712,7 +822,7 @@ footer hr {
   -webkit-box-orient: vertical;
   text-overflow: ellipsis;       
   transition: all 0.4s ease;      /* Smooth transition when expanded */
-  color: #B1B1B1;
+  color: rgba(255, 255, 255, 0.75);
 }
 
 /* When "Show more" is clicked – expand to full text */
