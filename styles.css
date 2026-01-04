@@ -347,7 +347,7 @@ footer hr {
     transparent 90%
   ),
   linear-gradient(
-    120deg,
+    160deg,
     transparent 30%,
     rgba(255,255,255,0.25),
     transparent 30%
@@ -400,19 +400,7 @@ footer hr {
   min-height: 100vh;               /* at least full viewport height */
 
 
-  background:
-    radial-gradient(
-      circle at top left,
-      rgba(255,255,255,0.15) 25%,
-      rgba(255,255,255,0.15) 100%,
-      transparent 60%
-    ),
-    linear-gradient(
-      120deg,
-      transparent 5%,
-      rgba(255,255,255,0.25),
-      transparent 80%
-    );
+  background-color:#2A2A2A;
 
 
 }
@@ -432,12 +420,12 @@ footer hr {
   flex-direction: column;            /* Stack image + info vertically */
   overflow: hidden;               /* Prevents any internal overflow */
 
-  box-shadow:
-    0 0px 10px #707070,
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    transition: transform 0.35s ease, box-shadow 0.35s ease;
 
-      
+  box-shadow:
+    0 0 4px #707070;
+    inset: 0 1px 0 rgba(255, 255, 255, 0.1);
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+    
   }
 
   
@@ -445,8 +433,8 @@ footer hr {
   .product-card-container:hover {
     transform: translateY(-1px);
     box-shadow:
-      0 0 4px #707070;
-      inset: 0 1px 0 rgba(255, 255, 255, 0.1);
+      0 0px 10px #707070,
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
   }
   
 
@@ -468,8 +456,6 @@ footer hr {
   position: relative;
   transition: background-color 0.8s ease;  /* Smooth fade when color changes */
   touch-action: pan-y; /* Allows vertical page scroll, but takes over horizontal */
-  transform-origin: center center;
-  will-change: transform;
 
 }
 
@@ -505,7 +491,6 @@ footer hr {
   object-fit: cover;  
   object-position: center;
   display: block;
-  transition: transform 0.1s ease;   /* Smooth zoom/pan */
   user-select: none;                 /* Prevents text selection while dragging */
   cursor: zoom-in;
 }
@@ -516,9 +501,10 @@ footer hr {
   height: 100%;
   scroll-snap-align: center;
   pointer-events: auto;
-  transition: transform 0.2s ease-out;
   -webkit-user-select: none;
   -webkit-user-drag: none;
+  position: relative; /* Important for proper transform origin */
+
 }
 
 
@@ -528,15 +514,26 @@ footer hr {
 
 /* Zoom Class toggled by JS */
 .is-zoomed {
-  cursor: move !important; /* Indicates draggable */
-  transition: transform 0.2s ease-out;
+  cursor: grab !important;
+  object-fit: none !important;
+  object-position: 0 0 !important;
+
 }
 
 /* Active dragging state */
 .is-zoomed.dragging {
   cursor: grabbing !important;
-  transition: none !important;
 }
+
+/* Container state when zoomed */
+.product-media-container.zoom-active {
+  touch-action: none; /* Disable all default touch behaviors */
+}
+
+.product-media-wrapper.zoom-active {
+  overflow: hidden !important; /* Prevent gallery scroll when zoomed */
+}
+
 
 .product-media-container::before {
   content: '';
@@ -759,11 +756,6 @@ footer hr {
 
 
   /* Glassmorphism */
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.22),
-    rgba(255, 255, 255, 0.05)
-  );
   backdrop-filter: blur(22px) saturate(180%);
   -webkit-backdrop-filter: blur(22px) saturate(180%);
 
@@ -772,7 +764,6 @@ footer hr {
   inset 0 1px 1px rgba(255, 255, 255, 0.6),
   inset 0 -1px 1px rgba(255, 255, 255, 0.25);
 
-  border: 1px solid rgba(255, 255, 255, 0.35);
 
 
   box-sizing: border-box;
@@ -878,4 +869,14 @@ box-shadow:
 /* Smooth transitions */
   transition: all 0.4s ease;
 
+}
+
+.product-cards-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-left: 12px;
+  margin-right: 12px;
+  margin-bottom: 80px;
 }

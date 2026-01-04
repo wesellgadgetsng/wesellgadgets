@@ -52,6 +52,8 @@
 
             <div class="product-feed-full">
                 <h2>Explore our Product Feed</h2>
+                
+                <div class="product-cards-wrapper">
 
                 <div class="product-card-container">
                     <div class="product-media-container">
@@ -129,7 +131,235 @@
                     </div>
                 </div>
 
+                <div class="product-card-container">
+                    <div class="product-media-container">
+                        <div class="product-media-wrapper" id="mediaWrapper" tabindex="0">
+                                <img 
+                                    class="product-media-image product-media"
+                                    crossorigin="anonymous" 
+                                    alt="iPhone 11 Pro Max" 
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVeCRI8Cux4gtct16P1ZKU5d2x0Qj-KacC7lCclvojysB8fLBT9PR4mgW30O9HKko0ZH_vO2CnsK9PDIionB2R0TqgX9rILBU9Iudp7kvfXlrEBOvB6Iib2wkir3rBx5ulBLj57Cp17jNl-a7mkayIR8di1tmOB9qDpgcj9wvZsR7LrOj_RNY03i-wLFcb9BAXDRdFowuOdTAJW6MmXCojRmNypsdMOltrK-LmrxcYDMVnUYEl-ks9L4BW8md1PmPLfxBQgn3o8QQ"/>
+                                    
+                                <img 
+                                    class="product-media-image product-media"
+                                    crossorigin="anonymous" 
+                                    alt="iPhone 11 Pro Max" 
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVeCRI8Cux4gtct16P1ZKU5d2x0Qj-KacC7lCclvojysB8fLBT9PR4mgW30O9HKko0ZH_vO2CnsK9PDIionB2R0TqgX9rILBU9Iudp7kvfXlrEBOvB6Iib2wkir3rBx5ulBLj57Cp17jNl-a7mkayIR8di1tmOB9qDpgcj9wvZsR7LrOj_RNY03i-wLFcb9BAXDRdFowuOdTAJW6MmXCojRmNypsdMOltrK-LmrxcYDMVnUYEl-ks9L4BW8md1PmPLfxBQgn3o8QQ"/>
+                                
+                                <img 
+                                    class="product-media-image product-media"
+                                    crossorigin="anonymous" 
+                                    alt="iPhone 11 Pro Max" 
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVeCRI8Cux4gtct16P1ZKU5d2x0Qj-KacC7lCclvojysB8fLBT9PR4mgW30O9HKko0ZH_vO2CnsK9PDIionB2R0TqgX9rILBU9Iudp7kvfXlrEBOvB6Iib2wkir3rBx5ulBLj57Cp17jNl-a7mkayIR8di1tmOB9qDpgcj9wvZsR7LrOj_RNY03i-wLFcb9BAXDRdFowuOdTAJW6MmXCojRmNypsdMOltrK-LmrxcYDMVnUYEl-ks9L4BW8md1PmPLfxBQgn3o8QQ"/>
 
+
+                                <div class="video-container product-media ">
+                                    <video 
+                                        class="product-media-video"
+                                        src="media/herovideo.mp4" 
+                                        type="video/mp4" 
+                                        muted
+                                        playsinline
+                                        id="productVideo">
+                                    </video>
+
+                                    <div class="video-controls" id="videoControls">
+                                        <button class="play-btn" id="playToggle">
+                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                                                <path d="M8 5v14l11-7z"/> 
+                                            </svg>
+                                        </button>
+                                        
+                                        <span class="video-time" id="timeDisplay">0:00 / 0:00</span>
+                                    </div>
+                                </div>
+
+                        </div>
+
+                        <div class="product-pagination" id="pagination"></div>
+                       
+                        <button id="fullscreenToggle" class="fullscreen-button" aria-label="Toggle fullscreen">
+                            <svg width="24" height="24" viewBox="0 0 24 24" class="enter-icon">
+                                <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>
+                            </svg>
+                            <svg width="24" height="24" viewBox="0 0 24 24" class="exit-icon" style="display: none;">
+                                <path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm1-8h-3v2h5V5h-2v3z"/>
+                            </svg>
+                        </button>
+
+                        <button class="add-to-cart">
+                            <img src="media/add-to-cart.png" alt="add-to-cart-image"> 
+                        </button>
+
+                    </div>                    
+                        
+                    <div class="product-info">
+                        <h3 class="product-name">iPhone 11 Pro max</h3>
+                        <p class="condition">New</p>
+                        <p class="quantity">(1 of - Sold)</p>
+                        <p class="specs" id="specs-text">Specs/info SpecsSpecsSpecsSpecsSpecsSpecsSpecsSpecSpecsSpecsSpecsSpecsSpecsSpecsSpecsSpec
+                            SpecsSpecsSpecsSpecsSSpecsSpecsSpecsSpecsSSpecsSpecsSpecsSpecsS
+                        </p>
+                        <p class="show-more" id="show-more-toggle" onclick="toggleSpecs()">Show more</p>
+                        <p class="price"> ₦ 1, 000, 000</P>
+                        <a href="https://wa.me/2348012345678"><button class="button-3">Order Now</button></a>
+
+                    </div>
+                </div>
+                <div class="product-card-container">
+                    <div class="product-media-container">
+                        <div class="product-media-wrapper" id="mediaWrapper" tabindex="0">
+                                <img 
+                                    class="product-media-image product-media"
+                                    crossorigin="anonymous" 
+                                    alt="iPhone 11 Pro Max" 
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVeCRI8Cux4gtct16P1ZKU5d2x0Qj-KacC7lCclvojysB8fLBT9PR4mgW30O9HKko0ZH_vO2CnsK9PDIionB2R0TqgX9rILBU9Iudp7kvfXlrEBOvB6Iib2wkir3rBx5ulBLj57Cp17jNl-a7mkayIR8di1tmOB9qDpgcj9wvZsR7LrOj_RNY03i-wLFcb9BAXDRdFowuOdTAJW6MmXCojRmNypsdMOltrK-LmrxcYDMVnUYEl-ks9L4BW8md1PmPLfxBQgn3o8QQ"/>
+                                    
+                                <img 
+                                    class="product-media-image product-media"
+                                    crossorigin="anonymous" 
+                                    alt="iPhone 11 Pro Max" 
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVeCRI8Cux4gtct16P1ZKU5d2x0Qj-KacC7lCclvojysB8fLBT9PR4mgW30O9HKko0ZH_vO2CnsK9PDIionB2R0TqgX9rILBU9Iudp7kvfXlrEBOvB6Iib2wkir3rBx5ulBLj57Cp17jNl-a7mkayIR8di1tmOB9qDpgcj9wvZsR7LrOj_RNY03i-wLFcb9BAXDRdFowuOdTAJW6MmXCojRmNypsdMOltrK-LmrxcYDMVnUYEl-ks9L4BW8md1PmPLfxBQgn3o8QQ"/>
+                                
+                                <img 
+                                    class="product-media-image product-media"
+                                    crossorigin="anonymous" 
+                                    alt="iPhone 11 Pro Max" 
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVeCRI8Cux4gtct16P1ZKU5d2x0Qj-KacC7lCclvojysB8fLBT9PR4mgW30O9HKko0ZH_vO2CnsK9PDIionB2R0TqgX9rILBU9Iudp7kvfXlrEBOvB6Iib2wkir3rBx5ulBLj57Cp17jNl-a7mkayIR8di1tmOB9qDpgcj9wvZsR7LrOj_RNY03i-wLFcb9BAXDRdFowuOdTAJW6MmXCojRmNypsdMOltrK-LmrxcYDMVnUYEl-ks9L4BW8md1PmPLfxBQgn3o8QQ"/>
+
+
+                                <div class="video-container product-media ">
+                                    <video 
+                                        class="product-media-video"
+                                        src="media/herovideo.mp4" 
+                                        type="video/mp4" 
+                                        muted
+                                        playsinline
+                                        id="productVideo">
+                                    </video>
+
+                                    <div class="video-controls" id="videoControls">
+                                        <button class="play-btn" id="playToggle">
+                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                                                <path d="M8 5v14l11-7z"/> 
+                                            </svg>
+                                        </button>
+                                        
+                                        <span class="video-time" id="timeDisplay">0:00 / 0:00</span>
+                                    </div>
+                                </div>
+
+                        </div>
+
+                        <div class="product-pagination" id="pagination"></div>
+                       
+                        <button id="fullscreenToggle" class="fullscreen-button" aria-label="Toggle fullscreen">
+                            <svg width="24" height="24" viewBox="0 0 24 24" class="enter-icon">
+                                <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>
+                            </svg>
+                            <svg width="24" height="24" viewBox="0 0 24 24" class="exit-icon" style="display: none;">
+                                <path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm1-8h-3v2h5V5h-2v3z"/>
+                            </svg>
+                        </button>
+
+                        <button class="add-to-cart">
+                            <img src="media/add-to-cart.png" alt="add-to-cart-image"> 
+                        </button>
+
+                    </div>                    
+                        
+                    <div class="product-info">
+                        <h3 class="product-name">iPhone 11 Pro max</h3>
+                        <p class="condition">New</p>
+                        <p class="quantity">(1 of - Sold)</p>
+                        <p class="specs" id="specs-text">Specs/info SpecsSpecsSpecsSpecsSpecsSpecsSpecsSpecSpecsSpecsSpecsSpecsSpecsSpecsSpecsSpec
+                            SpecsSpecsSpecsSpecsSSpecsSpecsSpecsSpecsSSpecsSpecsSpecsSpecsS
+                        </p>
+                        <p class="show-more" id="show-more-toggle" onclick="toggleSpecs()">Show more</p>
+                        <p class="price"> ₦ 1, 000, 000</P>
+                        <a href="https://wa.me/2348012345678"><button class="button-3">Order Now</button></a>
+
+                    </div>
+                </div>
+                <div class="product-card-container">
+                    <div class="product-media-container">
+                        <div class="product-media-wrapper" id="mediaWrapper" tabindex="0">
+                                <img 
+                                    class="product-media-image product-media"
+                                    crossorigin="anonymous" 
+                                    alt="iPhone 11 Pro Max" 
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVeCRI8Cux4gtct16P1ZKU5d2x0Qj-KacC7lCclvojysB8fLBT9PR4mgW30O9HKko0ZH_vO2CnsK9PDIionB2R0TqgX9rILBU9Iudp7kvfXlrEBOvB6Iib2wkir3rBx5ulBLj57Cp17jNl-a7mkayIR8di1tmOB9qDpgcj9wvZsR7LrOj_RNY03i-wLFcb9BAXDRdFowuOdTAJW6MmXCojRmNypsdMOltrK-LmrxcYDMVnUYEl-ks9L4BW8md1PmPLfxBQgn3o8QQ"/>
+                                    
+                                <img 
+                                    class="product-media-image product-media"
+                                    crossorigin="anonymous" 
+                                    alt="iPhone 11 Pro Max" 
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVeCRI8Cux4gtct16P1ZKU5d2x0Qj-KacC7lCclvojysB8fLBT9PR4mgW30O9HKko0ZH_vO2CnsK9PDIionB2R0TqgX9rILBU9Iudp7kvfXlrEBOvB6Iib2wkir3rBx5ulBLj57Cp17jNl-a7mkayIR8di1tmOB9qDpgcj9wvZsR7LrOj_RNY03i-wLFcb9BAXDRdFowuOdTAJW6MmXCojRmNypsdMOltrK-LmrxcYDMVnUYEl-ks9L4BW8md1PmPLfxBQgn3o8QQ"/>
+                                
+                                <img 
+                                    class="product-media-image product-media"
+                                    crossorigin="anonymous" 
+                                    alt="iPhone 11 Pro Max" 
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVeCRI8Cux4gtct16P1ZKU5d2x0Qj-KacC7lCclvojysB8fLBT9PR4mgW30O9HKko0ZH_vO2CnsK9PDIionB2R0TqgX9rILBU9Iudp7kvfXlrEBOvB6Iib2wkir3rBx5ulBLj57Cp17jNl-a7mkayIR8di1tmOB9qDpgcj9wvZsR7LrOj_RNY03i-wLFcb9BAXDRdFowuOdTAJW6MmXCojRmNypsdMOltrK-LmrxcYDMVnUYEl-ks9L4BW8md1PmPLfxBQgn3o8QQ"/>
+
+
+                                <div class="video-container product-media ">
+                                    <video 
+                                        class="product-media-video"
+                                        src="media/herovideo.mp4" 
+                                        type="video/mp4" 
+                                        muted
+                                        playsinline
+                                        id="productVideo">
+                                    </video>
+
+                                    <div class="video-controls" id="videoControls">
+                                        <button class="play-btn" id="playToggle">
+                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                                                <path d="M8 5v14l11-7z"/> 
+                                            </svg>
+                                        </button>
+                                        
+                                        <span class="video-time" id="timeDisplay">0:00 / 0:00</span>
+                                    </div>
+                                </div>
+
+                        </div>
+
+                        <div class="product-pagination" id="pagination"></div>
+                       
+                        <button id="fullscreenToggle" class="fullscreen-button" aria-label="Toggle fullscreen">
+                            <svg width="24" height="24" viewBox="0 0 24 24" class="enter-icon">
+                                <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>
+                            </svg>
+                            <svg width="24" height="24" viewBox="0 0 24 24" class="exit-icon" style="display: none;">
+                                <path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm1-8h-3v2h5V5h-2v3z"/>
+                            </svg>
+                        </button>
+
+                        <button class="add-to-cart">
+                            <img src="media/add-to-cart.png" alt="add-to-cart-image"> 
+                        </button>
+
+                    </div>                    
+                        
+                    <div class="product-info">
+                        <h3 class="product-name">iPhone 11 Pro max</h3>
+                        <p class="condition">New</p>
+                        <p class="quantity">(1 of - Sold)</p>
+                        <p class="specs" id="specs-text">Specs/info SpecsSpecsSpecsSpecsSpecsSpecsSpecsSpecSpecsSpecsSpecsSpecsSpecsSpecsSpecsSpec
+                            SpecsSpecsSpecsSpecsSSpecsSpecsSpecsSpecsSSpecsSpecsSpecsSpecsS
+                        </p>
+                        <p class="show-more" id="show-more-toggle" onclick="toggleSpecs()">Show more</p>
+                        <p class="price"> ₦ 1, 000, 000</P>
+                        <a href="https://wa.me/2348012345678"><button class="button-3">Order Now</button></a>
+
+                    </div>
+                </div>
+
+            
+            </div>
+                
             </div>
 
     
@@ -137,7 +367,7 @@
 
         <script>
 
-            //Product details expand and collapse
+        //Product details expand and collapse
             function toggleSpecs() {
               const specs = document.getElementById('specs-text');
               const toggle = document.getElementById('show-more-toggle');
@@ -151,7 +381,7 @@
               }
             }
 
-            // Image interactions
+        // Image interactions
             const wrapper = document.getElementById('mediaWrapper');
             const container = wrapper.parentElement; // .product-media-container
             let isDown = false;
@@ -396,7 +626,7 @@
             }
             }, { passive: false });
 
-            // Pagination setup
+        // Pagination setup
             const pagination = document.getElementById('pagination');
             const images = wrapper.querySelectorAll('.product-media');
             const numImages = images.length;
@@ -427,7 +657,7 @@
             // Initial update
             updateActiveDot();
 
-            // Fullscreen toggle
+        // Fullscreen toggle
             const fullscreenButton = document.getElementById('fullscreenToggle');
 
             function toggleFullscreen() {
@@ -456,7 +686,7 @@
             }
             });
 
-            //Image background blender
+        //Image background blender
             document.addEventListener('DOMContentLoaded', () => {
                 const containers = document.querySelectorAll('.product-media-container');
 
@@ -479,6 +709,7 @@
                 });
                 });   
                 
+        //Video controls
                 const video = document.getElementById('productVideo');
                 const playBtn = document.getElementById('playToggle');
                 const timeDisplay = document.getElementById('timeDisplay');
