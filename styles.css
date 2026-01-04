@@ -189,7 +189,7 @@ font-weight: bold;
   align-items: center;        /* Horizontal center */
   text-align: center;         /* Center text inside elements */
   padding: 24px;  
-  height: 100%;
+  height: 300px
 }
 
 .hero-video {
@@ -333,25 +333,12 @@ footer hr {
   align-items: center;        
   text-align: center;         
   padding: 24px;
-  background-color:#2a2a2abc;
+  background-color:#2a2a2a;
   height: 300px;
   content: "";
   position: relative;
   inset: 0;
   border-radius: inherit;
-  background:
-  radial-gradient(
-    circle at top left,
-    rgba(255,255,255,0.15),
-    rgba(255,255,255,0.15) 50%,
-    transparent 90%
-  ),
-  linear-gradient(
-    160deg,
-    transparent 30%,
-    rgba(255,255,255,0.25),
-    transparent 30%
-  );
 
 }
 
@@ -420,6 +407,10 @@ footer hr {
   flex-direction: column;            /* Stack image + info vertically */
   overflow: hidden;               /* Prevents any internal overflow */
 
+  break-inside: avoid-column; /* Critical: Keeps each card intact in one column */
+  margin-bottom: 16px; /* Vertical spacing between cards in column */
+
+
 
   box-shadow:
     0 0 4px #707070;
@@ -427,8 +418,6 @@ footer hr {
     transition: transform 0.35s ease, box-shadow 0.35s ease;
     
   }
-
-  
 
   .product-card-container:hover {
     transform: translateY(-1px);
@@ -871,12 +860,47 @@ box-shadow:
 
 }
 
-.product-cards-wrapper {
+.product-cards-container {
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
-  gap: 12px;
-  margin-left: 12px;
-  margin-right: 12px;
+  align-items: center;
+  flex-direction: column;
+  margin-left: 8px;
+  margin-right: 8px;
+}
+
+@media (min-width: 768px) {
+  .product-cards-container {
+    margin-left: 160px;
+    margin-right: 160px;
+    }
+}
+
+
+.product-cards-wrapper {
+  column-count: 3; /* Adjust: 2 on mobile, 4+ on large screens */
+  column-gap: 16px; /* Matches your flex gap; increase for breathing room */
+  margin: 12px;
   margin-bottom: 80px;
+  orphans: 1; /* Prevents single items at column bottom */
+  widows: 2; /* Ensures balanced columns */
+}
+
+/* Responsive column adjustments */
+@media (max-width: 768px) {
+  .product-cards-wrapper {
+    column-count: 2; /* Single column on small screens */
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .product-cards-wrapper {
+    column-count: 4;
+  }
+}
+
+@media (min-width: 1025px) {
+  .product-cards-wrapper {
+    column-count: 6; /* Or 4 for wider screens */
+  }
 }

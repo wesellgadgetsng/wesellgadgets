@@ -52,312 +52,223 @@
 
             <div class="product-feed-full">
                 <h2>Explore our Product Feed</h2>
-                
+
+                <div class="product-cards-container">
                 <div class="product-cards-wrapper">
 
-                <div class="product-card-container">
-                    <div class="product-media-container">
-                        <div class="product-media-wrapper" id="mediaWrapper" tabindex="0">
-                                <img 
-                                    class="product-media-image product-media"
-                                    crossorigin="anonymous" 
-                                    alt="iPhone 11 Pro Max" 
+                    <!-- Product card starts here -->
+                    <div class="product-card-container">
+                        <div class="product-media-container">
+                            <div class="product-media-wrapper" data-gallery tabindex="0">
+                                <img class="product-media-image product-media" crossorigin="anonymous" alt="iPhone 11 Pro Max" 
                                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVeCRI8Cux4gtct16P1ZKU5d2x0Qj-KacC7lCclvojysB8fLBT9PR4mgW30O9HKko0ZH_vO2CnsK9PDIionB2R0TqgX9rILBU9Iudp7kvfXlrEBOvB6Iib2wkir3rBx5ulBLj57Cp17jNl-a7mkayIR8di1tmOB9qDpgcj9wvZsR7LrOj_RNY03i-wLFcb9BAXDRdFowuOdTAJW6MmXCojRmNypsdMOltrK-LmrxcYDMVnUYEl-ks9L4BW8md1PmPLfxBQgn3o8QQ"/>
-                                    
-                                <img 
-                                    class="product-media-image product-media"
-                                    crossorigin="anonymous" 
-                                    alt="iPhone 11 Pro Max" 
+                                <img class="product-media-image product-media" crossorigin="anonymous" alt="iPhone 11 Pro Max" 
                                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVeCRI8Cux4gtct16P1ZKU5d2x0Qj-KacC7lCclvojysB8fLBT9PR4mgW30O9HKko0ZH_vO2CnsK9PDIionB2R0TqgX9rILBU9Iudp7kvfXlrEBOvB6Iib2wkir3rBx5ulBLj57Cp17jNl-a7mkayIR8di1tmOB9qDpgcj9wvZsR7LrOj_RNY03i-wLFcb9BAXDRdFowuOdTAJW6MmXCojRmNypsdMOltrK-LmrxcYDMVnUYEl-ks9L4BW8md1PmPLfxBQgn3o8QQ"/>
-                                
-                                <img 
-                                    class="product-media-image product-media"
-                                    crossorigin="anonymous" 
-                                    alt="iPhone 11 Pro Max" 
+                                <img class="product-media-image product-media" crossorigin="anonymous" alt="iPhone 11 Pro Max" 
                                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVeCRI8Cux4gtct16P1ZKU5d2x0Qj-KacC7lCclvojysB8fLBT9PR4mgW30O9HKko0ZH_vO2CnsK9PDIionB2R0TqgX9rILBU9Iudp7kvfXlrEBOvB6Iib2wkir3rBx5ulBLj57Cp17jNl-a7mkayIR8di1tmOB9qDpgcj9wvZsR7LrOj_RNY03i-wLFcb9BAXDRdFowuOdTAJW6MmXCojRmNypsdMOltrK-LmrxcYDMVnUYEl-ks9L4BW8md1PmPLfxBQgn3o8QQ"/>
 
-
-                                <div class="video-container product-media ">
-                                    <video 
-                                        class="product-media-video"
-                                        src="media/herovideo.mp4" 
-                                        type="video/mp4" 
-                                        muted
-                                        playsinline
-                                        id="productVideo">
-                                    </video>
-
-                                    <div class="video-controls" id="videoControls">
-                                        <button class="play-btn" id="playToggle">
+                                <div class="video-container product-media">
+                                    <video class="product-media-video" src="media/herovideo.mp4" type="video/mp4" muted playsinline data-video></video>
+                                    <div class="video-controls" data-video-controls>
+                                        <button class="play-btn" data-play-toggle>
                                             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
                                                 <path d="M8 5v14l11-7z"/> 
                                             </svg>
                                         </button>
-                                        
-                                        <span class="video-time" id="timeDisplay">0:00 / 0:00</span>
+                                        <span class="video-time" data-time-display>0:00 / 0:00</span>
                                     </div>
                                 </div>
+                            </div>
 
-                        </div>
-
-                        <div class="product-pagination" id="pagination"></div>
-                       
-                        <button id="fullscreenToggle" class="fullscreen-button" aria-label="Toggle fullscreen">
-                            <svg width="24" height="24" viewBox="0 0 24 24" class="enter-icon">
-                                <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>
-                            </svg>
-                            <svg width="24" height="24" viewBox="0 0 24 24" class="exit-icon" style="display: none;">
-                                <path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm1-8h-3v2h5V5h-2v3z"/>
-                            </svg>
-                        </button>
-
-                        <button class="add-to-cart">
-                            <img src="media/add-to-cart.png" alt="add-to-cart-image"> 
-                        </button>
-
-                    </div>                    
+                            <div class="product-pagination" data-pagination></div>
                         
-                    <div class="product-info">
-                        <h3 class="product-name">iPhone 11 Pro max</h3>
-                        <p class="condition">New</p>
-                        <p class="quantity">(1 of - Sold)</p>
-                        <p class="specs" id="specs-text">Specs/info SpecsSpecsSpecsSpecsSpecsSpecsSpecsSpecSpecsSpecsSpecsSpecsSpecsSpecsSpecsSpec
-                            SpecsSpecsSpecsSpecsSSpecsSpecsSpecsSpecsSSpecsSpecsSpecsSpecsS
-                        </p>
-                        <p class="show-more" id="show-more-toggle" onclick="toggleSpecs()">Show more</p>
-                        <p class="price"> ₦ 1, 000, 000</P>
-                        <a href="https://wa.me/2348012345678"><button class="button-3">Order Now</button></a>
+                            <button data-fullscreen-toggle class="fullscreen-button" aria-label="Toggle fullscreen">
+                                <svg width="24" height="24" viewBox="0 0 24 24" class="enter-icon">
+                                    <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>
+                                </svg>
+                                <svg width="24" height="24" viewBox="0 0 24 24" class="exit-icon" style="display: none;">
+                                    <path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm1-8h-3v2h5V5h-2v3z"/>
+                                </svg>
+                            </button>
 
+                            <button class="add-to-cart">
+                                <img src="media/add-to-cart.png" alt="add-to-cart-image"> 
+                            </button>
+                        </div>                    
+                            
+                        <div class="product-info">
+                            <h3 class="product-name">iPhone 11 Pro max</h3>
+                            <p class="condition">New</p>
+                            <p class="quantity">(1 of - Sold)</p>
+                            <p class="specs" data-specs-text>Specs/info SpecsSpecsSpecsSpecsSpecsSpecsSpecsSpecSpecsSpecsSpecsSpecsSpecsSpecsSpecsSpec
+                                SpecsSpecsSpecsSpecsSSpecsSpecsSpecsSpecsSSpecsSpecsSpecsSpecsS
+                            </p>
+                            <p class="show-more" data-show-more-toggle>Show more</p>
+                            <p class="price"> ₦ 1, 000, 000</P>
+                            <a href="https://wa.me/2348012345678"><button class="button-3">Order Now</button></a>
+                        </div>
                     </div>
-                </div>
-
-                <div class="product-card-container">
-                    <div class="product-media-container">
-                        <div class="product-media-wrapper" id="mediaWrapper" tabindex="0">
-                                <img 
-                                    class="product-media-image product-media"
-                                    crossorigin="anonymous" 
-                                    alt="iPhone 11 Pro Max" 
+                    <!-- Product card ends here -->
+                    <!-- Product card starts here -->
+                    <div class="product-card-container">
+                        <div class="product-media-container">
+                            <div class="product-media-wrapper" data-gallery tabindex="0">
+                                <img class="product-media-image product-media" crossorigin="anonymous" alt="iPhone 11 Pro Max" 
                                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVeCRI8Cux4gtct16P1ZKU5d2x0Qj-KacC7lCclvojysB8fLBT9PR4mgW30O9HKko0ZH_vO2CnsK9PDIionB2R0TqgX9rILBU9Iudp7kvfXlrEBOvB6Iib2wkir3rBx5ulBLj57Cp17jNl-a7mkayIR8di1tmOB9qDpgcj9wvZsR7LrOj_RNY03i-wLFcb9BAXDRdFowuOdTAJW6MmXCojRmNypsdMOltrK-LmrxcYDMVnUYEl-ks9L4BW8md1PmPLfxBQgn3o8QQ"/>
-                                    
-                                <img 
-                                    class="product-media-image product-media"
-                                    crossorigin="anonymous" 
-                                    alt="iPhone 11 Pro Max" 
+                                <img class="product-media-image product-media" crossorigin="anonymous" alt="iPhone 11 Pro Max" 
                                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVeCRI8Cux4gtct16P1ZKU5d2x0Qj-KacC7lCclvojysB8fLBT9PR4mgW30O9HKko0ZH_vO2CnsK9PDIionB2R0TqgX9rILBU9Iudp7kvfXlrEBOvB6Iib2wkir3rBx5ulBLj57Cp17jNl-a7mkayIR8di1tmOB9qDpgcj9wvZsR7LrOj_RNY03i-wLFcb9BAXDRdFowuOdTAJW6MmXCojRmNypsdMOltrK-LmrxcYDMVnUYEl-ks9L4BW8md1PmPLfxBQgn3o8QQ"/>
-                                
-                                <img 
-                                    class="product-media-image product-media"
-                                    crossorigin="anonymous" 
-                                    alt="iPhone 11 Pro Max" 
+                                <img class="product-media-image product-media" crossorigin="anonymous" alt="iPhone 11 Pro Max" 
                                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVeCRI8Cux4gtct16P1ZKU5d2x0Qj-KacC7lCclvojysB8fLBT9PR4mgW30O9HKko0ZH_vO2CnsK9PDIionB2R0TqgX9rILBU9Iudp7kvfXlrEBOvB6Iib2wkir3rBx5ulBLj57Cp17jNl-a7mkayIR8di1tmOB9qDpgcj9wvZsR7LrOj_RNY03i-wLFcb9BAXDRdFowuOdTAJW6MmXCojRmNypsdMOltrK-LmrxcYDMVnUYEl-ks9L4BW8md1PmPLfxBQgn3o8QQ"/>
 
-
-                                <div class="video-container product-media ">
-                                    <video 
-                                        class="product-media-video"
-                                        src="media/herovideo.mp4" 
-                                        type="video/mp4" 
-                                        muted
-                                        playsinline
-                                        id="productVideo">
-                                    </video>
-
-                                    <div class="video-controls" id="videoControls">
-                                        <button class="play-btn" id="playToggle">
+                                <div class="video-container product-media">
+                                    <video class="product-media-video" src="media/herovideo.mp4" type="video/mp4" muted playsinline data-video></video>
+                                    <div class="video-controls" data-video-controls>
+                                        <button class="play-btn" data-play-toggle>
                                             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
                                                 <path d="M8 5v14l11-7z"/> 
                                             </svg>
                                         </button>
-                                        
-                                        <span class="video-time" id="timeDisplay">0:00 / 0:00</span>
+                                        <span class="video-time" data-time-display>0:00 / 0:00</span>
                                     </div>
                                 </div>
+                            </div>
 
-                        </div>
-
-                        <div class="product-pagination" id="pagination"></div>
-                       
-                        <button id="fullscreenToggle" class="fullscreen-button" aria-label="Toggle fullscreen">
-                            <svg width="24" height="24" viewBox="0 0 24 24" class="enter-icon">
-                                <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>
-                            </svg>
-                            <svg width="24" height="24" viewBox="0 0 24 24" class="exit-icon" style="display: none;">
-                                <path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm1-8h-3v2h5V5h-2v3z"/>
-                            </svg>
-                        </button>
-
-                        <button class="add-to-cart">
-                            <img src="media/add-to-cart.png" alt="add-to-cart-image"> 
-                        </button>
-
-                    </div>                    
+                            <div class="product-pagination" data-pagination></div>
                         
-                    <div class="product-info">
-                        <h3 class="product-name">iPhone 11 Pro max</h3>
-                        <p class="condition">New</p>
-                        <p class="quantity">(1 of - Sold)</p>
-                        <p class="specs" id="specs-text">Specs/info SpecsSpecsSpecsSpecsSpecsSpecsSpecsSpecSpecsSpecsSpecsSpecsSpecsSpecsSpecsSpec
-                            SpecsSpecsSpecsSpecsSSpecsSpecsSpecsSpecsSSpecsSpecsSpecsSpecsS
-                        </p>
-                        <p class="show-more" id="show-more-toggle" onclick="toggleSpecs()">Show more</p>
-                        <p class="price"> ₦ 1, 000, 000</P>
-                        <a href="https://wa.me/2348012345678"><button class="button-3">Order Now</button></a>
+                            <button data-fullscreen-toggle class="fullscreen-button" aria-label="Toggle fullscreen">
+                                <svg width="24" height="24" viewBox="0 0 24 24" class="enter-icon">
+                                    <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>
+                                </svg>
+                                <svg width="24" height="24" viewBox="0 0 24 24" class="exit-icon" style="display: none;">
+                                    <path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm1-8h-3v2h5V5h-2v3z"/>
+                                </svg>
+                            </button>
 
+                            <button class="add-to-cart">
+                                <img src="media/add-to-cart.png" alt="add-to-cart-image"> 
+                            </button>
+                        </div>                    
+                            
+                        <div class="product-info">
+                            <h3 class="product-name">iPhone 11 Pro max</h3>
+                            <p class="condition">New</p>
+                            <p class="quantity">(1 of - Sold)</p>
+                            <p class="specs" data-specs-text>Specs/info SpecsSpecsSpecsSpecsSpecsSpecsSpecsSpecSpecsSpecsSpecsSpecsSpecsSpecsSpecsSpec
+                                SpecsSpecsSpecsSpecsSSpecsSpecsSpecsSpecsSSpecsSpecsSpecsSpecsS
+                            </p>
+                            <p class="show-more" data-show-more-toggle>Show more</p>
+                            <p class="price"> ₦ 1, 000, 000</P>
+                            <a href="https://wa.me/2348012345678"><button class="button-3">Order Now</button></a>
+                        </div>
                     </div>
-                </div>
-                <div class="product-card-container">
-                    <div class="product-media-container">
-                        <div class="product-media-wrapper" id="mediaWrapper" tabindex="0">
-                                <img 
-                                    class="product-media-image product-media"
-                                    crossorigin="anonymous" 
-                                    alt="iPhone 11 Pro Max" 
+                    <!-- Product card ends here -->
+                    <!-- Product card starts here -->
+                    <div class="product-card-container">
+                        <div class="product-media-container">
+                            <div class="product-media-wrapper" data-gallery tabindex="0">
+                                <img class="product-media-image product-media" crossorigin="anonymous" alt="iPhone 11 Pro Max" 
                                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVeCRI8Cux4gtct16P1ZKU5d2x0Qj-KacC7lCclvojysB8fLBT9PR4mgW30O9HKko0ZH_vO2CnsK9PDIionB2R0TqgX9rILBU9Iudp7kvfXlrEBOvB6Iib2wkir3rBx5ulBLj57Cp17jNl-a7mkayIR8di1tmOB9qDpgcj9wvZsR7LrOj_RNY03i-wLFcb9BAXDRdFowuOdTAJW6MmXCojRmNypsdMOltrK-LmrxcYDMVnUYEl-ks9L4BW8md1PmPLfxBQgn3o8QQ"/>
-                                    
-                                <img 
-                                    class="product-media-image product-media"
-                                    crossorigin="anonymous" 
-                                    alt="iPhone 11 Pro Max" 
+                                <img class="product-media-image product-media" crossorigin="anonymous" alt="iPhone 11 Pro Max" 
                                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVeCRI8Cux4gtct16P1ZKU5d2x0Qj-KacC7lCclvojysB8fLBT9PR4mgW30O9HKko0ZH_vO2CnsK9PDIionB2R0TqgX9rILBU9Iudp7kvfXlrEBOvB6Iib2wkir3rBx5ulBLj57Cp17jNl-a7mkayIR8di1tmOB9qDpgcj9wvZsR7LrOj_RNY03i-wLFcb9BAXDRdFowuOdTAJW6MmXCojRmNypsdMOltrK-LmrxcYDMVnUYEl-ks9L4BW8md1PmPLfxBQgn3o8QQ"/>
-                                
-                                <img 
-                                    class="product-media-image product-media"
-                                    crossorigin="anonymous" 
-                                    alt="iPhone 11 Pro Max" 
+                                <img class="product-media-image product-media" crossorigin="anonymous" alt="iPhone 11 Pro Max" 
                                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVeCRI8Cux4gtct16P1ZKU5d2x0Qj-KacC7lCclvojysB8fLBT9PR4mgW30O9HKko0ZH_vO2CnsK9PDIionB2R0TqgX9rILBU9Iudp7kvfXlrEBOvB6Iib2wkir3rBx5ulBLj57Cp17jNl-a7mkayIR8di1tmOB9qDpgcj9wvZsR7LrOj_RNY03i-wLFcb9BAXDRdFowuOdTAJW6MmXCojRmNypsdMOltrK-LmrxcYDMVnUYEl-ks9L4BW8md1PmPLfxBQgn3o8QQ"/>
 
-
-                                <div class="video-container product-media ">
-                                    <video 
-                                        class="product-media-video"
-                                        src="media/herovideo.mp4" 
-                                        type="video/mp4" 
-                                        muted
-                                        playsinline
-                                        id="productVideo">
-                                    </video>
-
-                                    <div class="video-controls" id="videoControls">
-                                        <button class="play-btn" id="playToggle">
+                                <div class="video-container product-media">
+                                    <video class="product-media-video" src="media/herovideo.mp4" type="video/mp4" muted playsinline data-video></video>
+                                    <div class="video-controls" data-video-controls>
+                                        <button class="play-btn" data-play-toggle>
                                             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
                                                 <path d="M8 5v14l11-7z"/> 
                                             </svg>
                                         </button>
-                                        
-                                        <span class="video-time" id="timeDisplay">0:00 / 0:00</span>
+                                        <span class="video-time" data-time-display>0:00 / 0:00</span>
                                     </div>
                                 </div>
+                            </div>
 
-                        </div>
-
-                        <div class="product-pagination" id="pagination"></div>
-                       
-                        <button id="fullscreenToggle" class="fullscreen-button" aria-label="Toggle fullscreen">
-                            <svg width="24" height="24" viewBox="0 0 24 24" class="enter-icon">
-                                <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>
-                            </svg>
-                            <svg width="24" height="24" viewBox="0 0 24 24" class="exit-icon" style="display: none;">
-                                <path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm1-8h-3v2h5V5h-2v3z"/>
-                            </svg>
-                        </button>
-
-                        <button class="add-to-cart">
-                            <img src="media/add-to-cart.png" alt="add-to-cart-image"> 
-                        </button>
-
-                    </div>                    
+                            <div class="product-pagination" data-pagination></div>
                         
-                    <div class="product-info">
-                        <h3 class="product-name">iPhone 11 Pro max</h3>
-                        <p class="condition">New</p>
-                        <p class="quantity">(1 of - Sold)</p>
-                        <p class="specs" id="specs-text">Specs/info SpecsSpecsSpecsSpecsSpecsSpecsSpecsSpecSpecsSpecsSpecsSpecsSpecsSpecsSpecsSpec
-                            SpecsSpecsSpecsSpecsSSpecsSpecsSpecsSpecsSSpecsSpecsSpecsSpecsS
-                        </p>
-                        <p class="show-more" id="show-more-toggle" onclick="toggleSpecs()">Show more</p>
-                        <p class="price"> ₦ 1, 000, 000</P>
-                        <a href="https://wa.me/2348012345678"><button class="button-3">Order Now</button></a>
+                            <button data-fullscreen-toggle class="fullscreen-button" aria-label="Toggle fullscreen">
+                                <svg width="24" height="24" viewBox="0 0 24 24" class="enter-icon">
+                                    <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>
+                                </svg>
+                                <svg width="24" height="24" viewBox="0 0 24 24" class="exit-icon" style="display: none;">
+                                    <path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm1-8h-3v2h5V5h-2v3z"/>
+                                </svg>
+                            </button>
 
+                            <button class="add-to-cart">
+                                <img src="media/add-to-cart.png" alt="add-to-cart-image"> 
+                            </button>
+                        </div>                    
+                            
+                        <div class="product-info">
+                            <h3 class="product-name">iPhone 11 Pro max</h3>
+                            <p class="condition">New</p>
+                            <p class="quantity">(1 of - Sold)</p>
+                            <p class="specs" data-specs-text>Specs/info SpecsSpecsSpecsSpecsSpecsSpecsSpecsSpecSpecsSpecsSpecsSpecsSpecsSpecsSpecsSpec
+                                SpecsSpecsSpecsSpecsSSpecsSpecsSpecsSpecsSSpecsSpecsSpecsSpecsS
+                            </p>
+                            <p class="show-more" data-show-more-toggle>Show more</p>
+                            <p class="price"> ₦ 1, 000, 000</P>
+                            <a href="https://wa.me/2348012345678"><button class="button-3">Order Now</button></a>
+                        </div>
                     </div>
-                </div>
-                <div class="product-card-container">
-                    <div class="product-media-container">
-                        <div class="product-media-wrapper" id="mediaWrapper" tabindex="0">
-                                <img 
-                                    class="product-media-image product-media"
-                                    crossorigin="anonymous" 
-                                    alt="iPhone 11 Pro Max" 
+                    <!-- Product card ends here -->
+                    <!-- Product card starts here -->
+                    <div class="product-card-container">
+                        <div class="product-media-container">
+                            <div class="product-media-wrapper" data-gallery tabindex="0">
+                                <img class="product-media-image product-media" crossorigin="anonymous" alt="iPhone 11 Pro Max" 
                                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVeCRI8Cux4gtct16P1ZKU5d2x0Qj-KacC7lCclvojysB8fLBT9PR4mgW30O9HKko0ZH_vO2CnsK9PDIionB2R0TqgX9rILBU9Iudp7kvfXlrEBOvB6Iib2wkir3rBx5ulBLj57Cp17jNl-a7mkayIR8di1tmOB9qDpgcj9wvZsR7LrOj_RNY03i-wLFcb9BAXDRdFowuOdTAJW6MmXCojRmNypsdMOltrK-LmrxcYDMVnUYEl-ks9L4BW8md1PmPLfxBQgn3o8QQ"/>
-                                    
-                                <img 
-                                    class="product-media-image product-media"
-                                    crossorigin="anonymous" 
-                                    alt="iPhone 11 Pro Max" 
+                                <img class="product-media-image product-media" crossorigin="anonymous" alt="iPhone 11 Pro Max" 
                                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVeCRI8Cux4gtct16P1ZKU5d2x0Qj-KacC7lCclvojysB8fLBT9PR4mgW30O9HKko0ZH_vO2CnsK9PDIionB2R0TqgX9rILBU9Iudp7kvfXlrEBOvB6Iib2wkir3rBx5ulBLj57Cp17jNl-a7mkayIR8di1tmOB9qDpgcj9wvZsR7LrOj_RNY03i-wLFcb9BAXDRdFowuOdTAJW6MmXCojRmNypsdMOltrK-LmrxcYDMVnUYEl-ks9L4BW8md1PmPLfxBQgn3o8QQ"/>
-                                
-                                <img 
-                                    class="product-media-image product-media"
-                                    crossorigin="anonymous" 
-                                    alt="iPhone 11 Pro Max" 
+                                <img class="product-media-image product-media" crossorigin="anonymous" alt="iPhone 11 Pro Max" 
                                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVeCRI8Cux4gtct16P1ZKU5d2x0Qj-KacC7lCclvojysB8fLBT9PR4mgW30O9HKko0ZH_vO2CnsK9PDIionB2R0TqgX9rILBU9Iudp7kvfXlrEBOvB6Iib2wkir3rBx5ulBLj57Cp17jNl-a7mkayIR8di1tmOB9qDpgcj9wvZsR7LrOj_RNY03i-wLFcb9BAXDRdFowuOdTAJW6MmXCojRmNypsdMOltrK-LmrxcYDMVnUYEl-ks9L4BW8md1PmPLfxBQgn3o8QQ"/>
 
-
-                                <div class="video-container product-media ">
-                                    <video 
-                                        class="product-media-video"
-                                        src="media/herovideo.mp4" 
-                                        type="video/mp4" 
-                                        muted
-                                        playsinline
-                                        id="productVideo">
-                                    </video>
-
-                                    <div class="video-controls" id="videoControls">
-                                        <button class="play-btn" id="playToggle">
+                                <div class="video-container product-media">
+                                    <video class="product-media-video" src="media/herovideo.mp4" type="video/mp4" muted playsinline data-video></video>
+                                    <div class="video-controls" data-video-controls>
+                                        <button class="play-btn" data-play-toggle>
                                             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
                                                 <path d="M8 5v14l11-7z"/> 
                                             </svg>
                                         </button>
-                                        
-                                        <span class="video-time" id="timeDisplay">0:00 / 0:00</span>
+                                        <span class="video-time" data-time-display>0:00 / 0:00</span>
                                     </div>
                                 </div>
+                            </div>
 
-                        </div>
-
-                        <div class="product-pagination" id="pagination"></div>
-                       
-                        <button id="fullscreenToggle" class="fullscreen-button" aria-label="Toggle fullscreen">
-                            <svg width="24" height="24" viewBox="0 0 24 24" class="enter-icon">
-                                <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>
-                            </svg>
-                            <svg width="24" height="24" viewBox="0 0 24 24" class="exit-icon" style="display: none;">
-                                <path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm1-8h-3v2h5V5h-2v3z"/>
-                            </svg>
-                        </button>
-
-                        <button class="add-to-cart">
-                            <img src="media/add-to-cart.png" alt="add-to-cart-image"> 
-                        </button>
-
-                    </div>                    
+                            <div class="product-pagination" data-pagination></div>
                         
-                    <div class="product-info">
-                        <h3 class="product-name">iPhone 11 Pro max</h3>
-                        <p class="condition">New</p>
-                        <p class="quantity">(1 of - Sold)</p>
-                        <p class="specs" id="specs-text">Specs/info SpecsSpecsSpecsSpecsSpecsSpecsSpecsSpecSpecsSpecsSpecsSpecsSpecsSpecsSpecsSpec
-                            SpecsSpecsSpecsSpecsSSpecsSpecsSpecsSpecsSSpecsSpecsSpecsSpecsS
-                        </p>
-                        <p class="show-more" id="show-more-toggle" onclick="toggleSpecs()">Show more</p>
-                        <p class="price"> ₦ 1, 000, 000</P>
-                        <a href="https://wa.me/2348012345678"><button class="button-3">Order Now</button></a>
+                            <button data-fullscreen-toggle class="fullscreen-button" aria-label="Toggle fullscreen">
+                                <svg width="24" height="24" viewBox="0 0 24 24" class="enter-icon">
+                                    <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>
+                                </svg>
+                                <svg width="24" height="24" viewBox="0 0 24 24" class="exit-icon" style="display: none;">
+                                    <path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm1-8h-3v2h5V5h-2v3z"/>
+                                </svg>
+                            </button>
 
+                            <button class="add-to-cart">
+                                <img src="media/add-to-cart.png" alt="add-to-cart-image"> 
+                            </button>
+                        </div>                    
+                            
+                        <div class="product-info">
+                            <h3 class="product-name">iPhone 11 Pro max</h3>
+                            <p class="condition">New</p>
+                            <p class="quantity">(1 of - Sold)</p>
+                            <p class="specs" data-specs-text>Specs/info SpecsSpecsSpecsSpecsSpecsSpecsSpecsSpecSpecsSpecsSpecsSpecsSpecsSpecsSpecsSpec
+                                SpecsSpecsSpecsSpecsSSpecsSpecsSpecsSpecsSSpecsSpecsSpecsSpecsS
+                            </p>
+                            <p class="show-more" data-show-more-toggle>Show more</p>
+                            <p class="price"> ₦ 1, 000, 000</P>
+                            <a href="https://wa.me/2348012345678"><button class="button-3">Order Now</button></a>
+                        </div>
                     </div>
+                    <!-- Product card ends here -->
                 </div>
-
-            
             </div>
                 
             </div>
@@ -367,408 +278,483 @@
 
         <script>
 
-        //Product details expand and collapse
-            function toggleSpecs() {
-              const specs = document.getElementById('specs-text');
-              const toggle = document.getElementById('show-more-toggle');
-              
-              if (specs.classList.contains('expanded')) {
-                specs.classList.remove('expanded');
-                toggle.textContent = 'Show more';
-              } else {
-                specs.classList.add('expanded');
-                toggle.textContent = 'Show less';
-              }
-            }
+// ==========================================
+// INITIALIZE ALL PRODUCT CARDS
+// ==========================================
+document.addEventListener('DOMContentLoaded', () => {
+    const cards = document.querySelectorAll('.product-card-container');
+    
+    cards.forEach(card => {
+        initializeProductCard(card);
+    });
+});
 
-        // Image interactions
-            const wrapper = document.getElementById('mediaWrapper');
-            const container = wrapper.parentElement; // .product-media-container
-            let isDown = false;
-            let startX, startY, scrollLeft;
-            let zoomedImg = null;
-            let scale = 1;
-            let translateX = 0;
-            let translateY = 0;
-            let isPanning = false;
-            let startTranslateX, startTranslateY;
-            let isPinching = false;
-            let startDist = 0;
-            let previousDist = 0;
-            let lastTapTime = 0;
-            let lastTapX = 0;
-            let lastTapY = 0;
-            let lastTapTarget = null;
-            let tapStartTime = 0;
-            let tapStartX = 0;
-            let tapStartY = 0;
-            let isMoved = false;
+// ==========================================
+// PRODUCT CARD INITIALIZATION
+// ==========================================
+function initializeProductCard(card) {
+    const wrapper = card.querySelector('[data-gallery]');
+    const container = card.querySelector('.product-media-container');
+    const pagination = card.querySelector('[data-pagination]');
+    const fullscreenBtn = card.querySelector('[data-fullscreen-toggle]');
+    const showMoreBtn = card.querySelector('[data-show-more-toggle]');
+    const specsText = card.querySelector('[data-specs-text]');
+    
+    // State for this specific card
+    let zoomState = {
+        active: false,
+        image: null,
+        scale: 1,
+        translateX: 0,
+        translateY: 0,
+        startX: 0,
+        startY: 0,
+        startTranslateX: 0,
+        startTranslateY: 0,
+        isPanning: false,
+        isPinching: false,
+        isMouseDown: false
+    };
 
-            // Update image transform and clamp pan to avoid blank areas
-            function updateTransform() {
-            if (scale > 1 && zoomedImg) {
-                const zoomedW = parseFloat(zoomedImg.style.width);
-                const zoomedH = parseFloat(zoomedImg.style.height);
-                const viewW = container.clientWidth;
-                const viewH = container.clientHeight;
-                // Standard clamping: tx >= viewW - zoomedW, tx <= 0
-                const minTx = Math.min(0, viewW - zoomedW);
-                const minTy = Math.min(0, viewH - zoomedH);
-                const maxTx = 0;
-                const maxTy = 0;
-                translateX = Math.max(minTx, Math.min(translateX, maxTx));
-                translateY = Math.max(minTy, Math.min(translateY, maxTy));
-                zoomedImg.style.transform = `translate(${translateX}px, ${translateY}px)`;
-            }
-            }
+    let tapState = {
+        lastTime: 0,
+        lastX: 0,
+        lastY: 0,
+        lastTarget: null
+    };
 
-            // Zoom in to center
-            function zoomInAt() {  // Always center, no px/py needed
-            const viewW = container.clientWidth;
-            const viewH = container.clientHeight;
-            const naturalW = zoomedImg.naturalWidth;
-            const naturalH = zoomedImg.naturalHeight;
-            if (naturalW === 0 || naturalH === 0) {
-                return; // Image not loaded; skip or handle asynchronously if needed
-            }
-            scale = 2.5;
-            // Set zoomed styles for full image access
-            zoomedImg.style.objectFit = 'none';
-            zoomedImg.style.objectPosition = '0 0';
-            const zoomedW = naturalW * scale;
-            const zoomedH = naturalH * scale;
-            zoomedImg.style.width = `${zoomedW}px`;
-            zoomedImg.style.height = `${zoomedH}px`;
-            // Set initial center translate, will be clamped
-            translateX = (viewW - zoomedW) / 2;
-            translateY = (viewH - zoomedH) / 2;
-            zoomedImg.classList.add('is-zoomed');
-            wrapper.style.overflowX = 'hidden';
-            container.style.touchAction = 'none';
-            updateTransform(); // Apply clamping immediately
-            }
+    let touchStartData = {
+        time: 0,
+        x: 0,
+        y: 0,
+        moved: false,
+        startDist: 0,
+        lastDist: 0
+    };
 
-            // Zoom out
-            function zoomOut() {
-            scale = 1;
-            translateX = 0;
-            translateY = 0;
-            if (zoomedImg) {
-                zoomedImg.style.objectFit = 'cover';
-                zoomedImg.style.objectPosition = 'center';
-                zoomedImg.style.width = '100%';
-                zoomedImg.style.height = '100%';
-                zoomedImg.style.transform = 'none';
-                zoomedImg.classList.remove('is-zoomed');
-            }
-            wrapper.style.overflowX = 'auto';
-            container.style.touchAction = 'auto';
-            zoomedImg = null;
-            }
+    // ==========================================
+    // ZOOM FUNCTIONS
+    // ==========================================
+    function updateTransform() {
+        if (!zoomState.active || !zoomState.image) return;
+        
+        const img = zoomState.image;
+        const viewW = container.clientWidth;
+        const viewH = container.clientHeight;
+        const imgW = img.naturalWidth * zoomState.scale;
+        const imgH = img.naturalHeight * zoomState.scale;
+        
+        const minX = Math.min(0, viewW - imgW);
+        const maxX = 0;
+        const minY = Math.min(0, viewH - imgH);
+        const maxY = 0;
+        
+        zoomState.translateX = Math.max(minX, Math.min(zoomState.translateX, maxX));
+        zoomState.translateY = Math.max(minY, Math.min(zoomState.translateY, maxY));
+        
+        img.style.transform = `translate(${zoomState.translateX}px, ${zoomState.translateY}px)`;
+    }
 
-            // Distance between touches
-            function distance(t1, t2) {
-            return Math.hypot(t1.clientX - t2.clientX, t1.clientY - t2.clientY);
-            }
+    function zoomIn(targetImg, focusX = null, focusY = null) {
+        if (zoomState.active && zoomState.image === targetImg) return;
+        
+        if (zoomState.active && zoomState.image !== targetImg) {
+            zoomOut();
+        }
+        
+        const viewW = container.clientWidth;
+        const viewH = container.clientHeight;
+        const naturalW = targetImg.naturalWidth;
+        const naturalH = targetImg.naturalHeight;
+        
+        if (naturalW === 0 || naturalH === 0) return;
+        
+        zoomState.active = true;
+        zoomState.image = targetImg;
+        zoomState.scale = 2.5;
+        
+        const zoomedW = naturalW * zoomState.scale;
+        const zoomedH = naturalH * zoomState.scale;
+        
+        targetImg.style.width = `${zoomedW}px`;
+        targetImg.style.height = `${zoomedH}px`;
+        targetImg.classList.add('is-zoomed');
+        
+        if (focusX !== null && focusY !== null) {
+            const rect = container.getBoundingClientRect();
+            const relativeX = focusX - rect.left;
+            const relativeY = focusY - rect.top;
+            
+            zoomState.translateX = relativeX - (relativeX / viewW) * zoomedW;
+            zoomState.translateY = relativeY - (relativeY / viewH) * zoomedH;
+        } else {
+            zoomState.translateX = (viewW - zoomedW) / 2;
+            zoomState.translateY = (viewH - zoomedH) / 2;
+        }
+        
+        wrapper.classList.add('zoom-active');
+        container.classList.add('zoom-active');
+        
+        updateTransform();
+    }
 
-            // Mouse events for swiping/panning
-            // (The rest of the event listeners remain the same as in the previous version, with calls to updateTransform where needed)
-            wrapper.addEventListener('mousedown', (e) => {
-            if (e.button !== 0) return;
-            if (zoomedImg && e.target === zoomedImg) {
-                isPanning = true;
-                startX = e.clientX;
-                startY = e.clientY;
-                startTranslateX = translateX;
-                startTranslateY = translateY;
-                zoomedImg.classList.add('dragging');
-            } else {
-                isDown = true;
-                wrapper.classList.add('no-snap');
-                startX = e.clientX - wrapper.offsetLeft;
-                scrollLeft = wrapper.scrollLeft;
-            }
-            wrapper.style.cursor = 'grabbing';
-            });
+    function zoomOut() {
+        if (!zoomState.active || !zoomState.image) return;
+        
+        const img = zoomState.image;
+        
+        img.style.width = '100%';
+        img.style.height = '100%';
+        img.style.transform = 'none';
+        img.classList.remove('is-zoomed', 'dragging');
+        
+        wrapper.classList.remove('zoom-active');
+        container.classList.remove('zoom-active');
+        
+        zoomState.active = false;
+        zoomState.image = null;
+        zoomState.scale = 1;
+        zoomState.translateX = 0;
+        zoomState.translateY = 0;
+    }
 
-            wrapper.addEventListener('mouseleave', () => {
-            isDown = false;
-            isPanning = false;
-            wrapper.classList.remove('no-snap');
-            if (zoomedImg) zoomedImg.classList.remove('dragging');
-            });
+    function getTouchDistance(touch1, touch2) {
+        const dx = touch1.clientX - touch2.clientX;
+        const dy = touch1.clientY - touch2.clientY;
+        return Math.sqrt(dx * dx + dy * dy);
+    }
 
-            wrapper.addEventListener('mouseup', () => {
-            isDown = false;
-            isPanning = false;
-            wrapper.classList.remove('no-snap');
-            if (zoomedImg) zoomedImg.classList.remove('dragging');
-            wrapper.style.cursor = 'grab';
-            });
+    function getTouchMidpoint(touch1, touch2) {
+        return {
+            x: (touch1.clientX + touch2.clientX) / 2,
+            y: (touch1.clientY + touch2.clientY) / 2
+        };
+    }
 
-            wrapper.addEventListener('mousemove', (e) => {
-            if (isPanning) {
-                const deltaX = e.clientX - startX;
-                const deltaY = e.clientY - startY;
-                translateX = startTranslateX + deltaX;
-                translateY = startTranslateY + deltaY;
-                updateTransform();
-            } else if (isDown) {
-                e.preventDefault();
-                const x = e.clientX - wrapper.offsetLeft;
-                const walk = (x - startX) * 2;
-                wrapper.scrollLeft = scrollLeft - walk;
-            }
-            });
-
-            // Double-click zoom
-            wrapper.addEventListener('dblclick', (e) => {
-            if (e.target.tagName === 'IMG') {
-                const img = e.target;
-                if (zoomedImg && zoomedImg !== img) {
-                zoomOut();
-                }
-                if (zoomedImg === img) {
-                zoomOut();
-                } else {
-                zoomedImg = img;
-                zoomInAt();  // Always center
-                }
-            }
-            });
-
-            // Touch events for pan, pinch, swipe, double-tap
-            wrapper.addEventListener('touchstart', (e) => {
-            isMoved = false;
-            if (e.touches.length === 1) {
-                tapStartTime = Date.now();
-                tapStartX = e.touches[0].clientX;
-                tapStartY = e.touches[0].clientY;
-                if (zoomedImg && e.target === zoomedImg) {
-                isPanning = true;
-                startX = e.touches[0].clientX;
-                startY = e.touches[0].clientY;
-                startTranslateX = translateX;
-                startTranslateY = translateY;
-                }
-            } else if (e.touches.length === 2 && zoomedImg) {
-                isPinching = true;
-                startDist = distance(e.touches[0], e.touches[1]);
-                previousDist = startDist;
-            }
-            }, { passive: false });
-
-            wrapper.addEventListener('touchmove', (e) => {
-            if (e.touches.length === 1 && isPanning) {
-                const deltaX = e.touches[0].clientX - startX;
-                const deltaY = e.touches[0].clientY - startY;
-                translateX = startTranslateX + deltaX;
-                translateY = startTranslateY + deltaY;
-                updateTransform();
-                if (Math.hypot(deltaX, deltaY) > 10) isMoved = true;
-            } else if (e.touches.length === 2 && isPinching) {
-                const currentDist = distance(e.touches[0], e.touches[1]);
-                const scaleFactor = currentDist / previousDist;
-                const oldScale = scale;
-                scale = Math.max(1, oldScale * scaleFactor);
-                const naturalW = zoomedImg.naturalWidth;
-                const naturalH = zoomedImg.naturalHeight;
-                const zoomedW = naturalW * scale;
-                const zoomedH = naturalH * scale;
-                zoomedImg.style.width = `${zoomedW}px`;
-                zoomedImg.style.height = `${zoomedH}px`;
-                // Anchor at midpoint
-                const rect = container.getBoundingClientRect();
-                const midX = (e.touches[0].clientX + e.touches[1].clientX) / 2 - rect.left;
-                const midY = (e.touches[0].clientY + e.touches[1].clientY) / 2 - rect.top;
-                translateX = midX - scale * (midX - translateX) / oldScale;
-                translateY = midY - scale * (midY - translateY) / oldScale;
-                updateTransform();
-                previousDist = currentDist;
-            }
+    // ==========================================
+    // MOUSE EVENTS
+    // ==========================================
+    wrapper.addEventListener('mousedown', (e) => {
+        if (e.button !== 0) return;
+        
+        if (zoomState.active && e.target === zoomState.image) {
+            zoomState.isPanning = true;
+            zoomState.startX = e.clientX;
+            zoomState.startY = e.clientY;
+            zoomState.startTranslateX = zoomState.translateX;
+            zoomState.startTranslateY = zoomState.translateY;
+            zoomState.image.classList.add('dragging');
+            e.preventDefault();
+        } else if (!zoomState.active) {
+            zoomState.isMouseDown = true;
+            zoomState.startX = e.clientX;
+            zoomState.scrollLeft = wrapper.scrollLeft;
             wrapper.classList.add('no-snap');
-            }, { passive: false });
+        }
+    });
 
-            wrapper.addEventListener('touchend', (e) => {
-            isPanning = false;
-            isPinching = false;
-            wrapper.classList.remove('no-snap');
-            if (zoomedImg) zoomedImg.classList.remove('dragging');
-            if (e.touches.length === 0 && e.changedTouches.length === 1) {
-                const currentTime = Date.now();
-                const endX = e.changedTouches[0].clientX;
-                const endY = e.changedTouches[0].clientY;
-                const deltaTime = currentTime - tapStartTime;
-                const movedDist = Math.hypot(endX - tapStartX, endY - tapStartY);
-                if (deltaTime < 250 && movedDist < 10) {
-                // Tap detected
-                const currentTapX = (tapStartX + endX) / 2;
-                const currentTapY = (tapStartY + endY) / 2;
-                const target = e.changedTouches[0].target;
-                if (currentTime - lastTapTime < 300 && Math.hypot(currentTapX - lastTapX, currentTapY - lastTapY) < 10 && target === lastTapTarget) {
-                    // Double tap
-                    if (target.tagName === 'IMG') {
-                    if (zoomedImg && zoomedImg === target) {
-                        zoomOut();
-                    } else {
-                        zoomedImg = target;
-                        zoomInAt();  // Always center
-                    }
-                    }
-                    lastTapTime = 0;
-                } else {
-                    lastTapTime = currentTime;
-                    lastTapX = currentTapX;
-                    lastTapY = currentTapY;
-                    lastTapTarget = target;
+    wrapper.addEventListener('mousemove', (e) => {
+        if (zoomState.isPanning) {
+            const deltaX = e.clientX - zoomState.startX;
+            const deltaY = e.clientY - zoomState.startY;
+            zoomState.translateX = zoomState.startTranslateX + deltaX;
+            zoomState.translateY = zoomState.startTranslateY + deltaY;
+            updateTransform();
+            e.preventDefault();
+        } else if (zoomState.isMouseDown && !zoomState.active) {
+            const deltaX = e.clientX - zoomState.startX;
+            wrapper.scrollLeft = zoomState.scrollLeft - deltaX;
+        }
+    });
+
+    wrapper.addEventListener('mouseup', () => {
+        zoomState.isPanning = false;
+        zoomState.isMouseDown = false;
+        wrapper.classList.remove('no-snap');
+        if (zoomState.image) zoomState.image.classList.remove('dragging');
+    });
+
+    wrapper.addEventListener('mouseleave', () => {
+        zoomState.isPanning = false;
+        zoomState.isMouseDown = false;
+        wrapper.classList.remove('no-snap');
+        if (zoomState.image) zoomState.image.classList.remove('dragging');
+    });
+
+    wrapper.addEventListener('dblclick', (e) => {
+        if (e.target.tagName !== 'IMG') return;
+        
+        if (zoomState.active && zoomState.image === e.target) {
+            zoomOut();
+        } else {
+            zoomIn(e.target, e.clientX, e.clientY);
+        }
+    });
+
+    // ==========================================
+    // TOUCH EVENTS
+    // ==========================================
+    wrapper.addEventListener('touchstart', (e) => {
+        touchStartData.moved = false;
+        
+        if (e.touches.length === 1) {
+            const touch = e.touches[0];
+            touchStartData.time = Date.now();
+            touchStartData.x = touch.clientX;
+            touchStartData.y = touch.clientY;
+            
+            if (zoomState.active && e.target === zoomState.image) {
+                zoomState.isPanning = true;
+                zoomState.startX = touch.clientX;
+                zoomState.startY = touch.clientY;
+                zoomState.startTranslateX = zoomState.translateX;
+                zoomState.startTranslateY = zoomState.translateY;
+                e.preventDefault();
+            }
+        } else if (e.touches.length === 2) {
+            zoomState.isPinching = true;
+            wrapper.classList.add('no-snap');
+            
+            const dist = getTouchDistance(e.touches[0], e.touches[1]);
+            touchStartData.startDist = dist;
+            touchStartData.lastDist = dist;
+            
+            if (!zoomState.active) {
+                const target = e.touches[0].target;
+                if (target.tagName === 'IMG') {
+                    const midpoint = getTouchMidpoint(e.touches[0], e.touches[1]);
+                    zoomIn(target, midpoint.x, midpoint.y);
                 }
-                }
             }
-            }, { passive: false });
+            
+            e.preventDefault();
+        }
+    }, { passive: false });
 
-        // Pagination setup
-            const pagination = document.getElementById('pagination');
-            const images = wrapper.querySelectorAll('.product-media');
-            const numImages = images.length;
-
-            // Create dots
-            for (let i = 0; i < numImages; i++) {
-            const dot = document.createElement('span');
-            dot.classList.add('dot');
-            dot.dataset.index = i;
-            dot.addEventListener('click', () => {
-                wrapper.scrollTo({ left: i * wrapper.clientWidth, behavior: 'smooth' });
-            });
-            pagination.appendChild(dot);
+    wrapper.addEventListener('touchmove', (e) => {
+        if (e.touches.length === 1 && zoomState.isPanning) {
+            const touch = e.touches[0];
+            const deltaX = touch.clientX - zoomState.startX;
+            const deltaY = touch.clientY - zoomState.startY;
+            
+            zoomState.translateX = zoomState.startTranslateX + deltaX;
+            zoomState.translateY = zoomState.startTranslateY + deltaY;
+            updateTransform();
+            
+            if (Math.abs(deltaX) > 10 || Math.abs(deltaY) > 10) {
+                touchStartData.moved = true;
             }
+            e.preventDefault();
+        } else if (e.touches.length === 2 && zoomState.isPinching && zoomState.active) {
+            const currentDist = getTouchDistance(e.touches[0], e.touches[1]);
+            const scaleFactor = currentDist / touchStartData.lastDist;
+            const oldScale = zoomState.scale;
+            
+            zoomState.scale = Math.max(1, Math.min(5, oldScale * scaleFactor));
+            
+            const img = zoomState.image;
+            const naturalW = img.naturalWidth;
+            const naturalH = img.naturalHeight;
+            const newW = naturalW * zoomState.scale;
+            const newH = naturalH * zoomState.scale;
+            
+            img.style.width = `${newW}px`;
+            img.style.height = `${newH}px`;
+            
+            const midpoint = getTouchMidpoint(e.touches[0], e.touches[1]);
+            const rect = container.getBoundingClientRect();
+            const focusX = midpoint.x - rect.left;
+            const focusY = midpoint.y - rect.top;
+            
+            zoomState.translateX = focusX - (focusX - zoomState.translateX) * (zoomState.scale / oldScale);
+            zoomState.translateY = focusY - (focusY - zoomState.translateY) * (zoomState.scale / oldScale);
+            
+            updateTransform();
+            touchStartData.lastDist = currentDist;
+            e.preventDefault();
+        }
+    }, { passive: false });
 
-            // Update active dot
-            function updateActiveDot() {
-            if (zoomedImg) return; // Skip if zoomed
-            const index = Math.round(wrapper.scrollLeft / wrapper.clientWidth);
-            pagination.querySelectorAll('.dot').forEach((dot, i) => {
-                dot.classList.toggle('active', i === index);
-            });
-            }
-
-            // Listen for scroll
-            wrapper.addEventListener('scroll', updateActiveDot);
-
-            // Initial update
-            updateActiveDot();
-
-        // Fullscreen toggle
-            const fullscreenButton = document.getElementById('fullscreenToggle');
-
-            function toggleFullscreen() {
-            if (!document.fullscreenElement) {
-                container.requestFullscreen().catch(err => console.error('Fullscreen error:', err));
-                fullscreenButton.classList.add('fullscreen');
-            } else {
-                document.exitFullscreen();
-                fullscreenButton.classList.remove('fullscreen');
-            }
-            }
-
-            fullscreenButton.addEventListener('click', toggleFullscreen);
-
-            // Handle resize in fullscreen (recalculate zoom/pan)
-            document.addEventListener('fullscreenchange', () => {
-            if (zoomedImg) {
-                updateTransform(); // Recalculate boundaries
-            }
-            });
-
-            document.addEventListener('fullscreenchange', () => {
-            if (zoomedImg) {
-                updateTransform(); // Recalculate for new dimensions
-                zoomedImg.style.objectFit = document.fullscreenElement ? 'contain' : 'cover'; // JS fallback if CSS pseudo fails
-            }
-            });
-
-        //Image background blender
-            document.addEventListener('DOMContentLoaded', () => {
-                const containers = document.querySelectorAll('.product-media-container');
-
-                containers.forEach(container => {
-                    const img = container.querySelector('.product-media-image');
-                    
-                    if (!img) return;
-
-                    const applyBlurredBackground = () => {
-                    // Use the image source directly as blurred background
-                    container.style.backgroundImage = `url(${img.src})`;
-                    };
-
-                    // Run when image loads
-                    if (img.complete && img.naturalWidth) {
-                    applyBlurredBackground();
-                    } else {
-                    img.onload = applyBlurredBackground;
-                    }
-                });
-                });   
+    wrapper.addEventListener('touchend', (e) => {
+        zoomState.isPanning = false;
+        wrapper.classList.remove('no-snap');
+        if (zoomState.image) zoomState.image.classList.remove('dragging');
+        
+        if (zoomState.isPinching && zoomState.scale < 1.1) {
+            zoomOut();
+        }
+        zoomState.isPinching = false;
+        
+        if (e.touches.length === 0 && e.changedTouches.length === 1) {
+            const touch = e.changedTouches[0];
+            const now = Date.now();
+            const deltaTime = now - touchStartData.time;
+            const deltaX = Math.abs(touch.clientX - touchStartData.x);
+            const deltaY = Math.abs(touch.clientY - touchStartData.y);
+            
+            if (deltaTime < 300 && deltaX < 10 && deltaY < 10 && !touchStartData.moved) {
+                const target = touch.target;
+                const tapX = (touchStartData.x + touch.clientX) / 2;
+                const tapY = (touchStartData.y + touch.clientY) / 2;
                 
-        //Video controls
-                const video = document.getElementById('productVideo');
-                const playBtn = document.getElementById('playToggle');
-                const timeDisplay = document.getElementById('timeDisplay');
-                const controlsContainer = document.getElementById('videoControls');
-                const videoContainer = document.querySelector('.video-container');
-
-                // Icons for Play and Pause
-                const playIcon = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
-                const pauseIcon = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>';
-
-                // 1. Toggle Play/Pause
-                function togglePlay(e) {
-                    // Stop the click from bubbling up to the swipe/drag gallery logic
-                    if(e) e.stopPropagation(); 
-
-                    if (video.paused || video.ended) {
-                        video.play();
-                    } else {
-                        video.pause();
+                if (now - tapState.lastTime < 300 && 
+                    Math.abs(tapX - tapState.lastX) < 30 && 
+                    Math.abs(tapY - tapState.lastY) < 30 &&
+                    target === tapState.lastTarget) {
+                    
+                    if (target.tagName === 'IMG') {
+                        if (zoomState.active && zoomState.image === target) {
+                            zoomOut();
+                        } else {
+                            zoomIn(target, tapX, tapY);
+                        }
                     }
+                    
+                    tapState.lastTime = 0;
+                } else {
+                    tapState.lastTime = now;
+                    tapState.lastX = tapX;
+                    tapState.lastY = tapY;
+                    tapState.lastTarget = target;
                 }
+            }
+        }
+    }, { passive: false });
 
-                // Update Button Icon based on state
-                function updatePlayButton() {
-                    if (video.paused) {
-                        playBtn.innerHTML = playIcon;
-                        videoContainer.classList.add('paused'); // Keep controls visible
-                    } else {
-                        playBtn.innerHTML = pauseIcon;
-                        videoContainer.classList.remove('paused'); // Allow controls to fade out
-                    }
-                }
+    wrapper.addEventListener('contextmenu', (e) => {
+        if (zoomState.active) e.preventDefault();
+    });
 
-                // 2. Format Time (helper function)
-                function formatTime(seconds) {
-                    const m = Math.floor(seconds / 60);
-                    const s = Math.floor(seconds % 60);
-                    return `${m}:${s < 10 ? '0' : ''}${s}`;
-                }
+    // ==========================================
+    // PAGINATION
+    // ==========================================
+    const images = wrapper.querySelectorAll('.product-media');
+    const numImages = images.length;
 
-                // 3. Update Duration Text
-                function updateProgress() {
-                    const current = formatTime(video.currentTime);
-                    const total = formatTime(video.duration || 0);
-                    timeDisplay.textContent = `${current} / ${total}`;
-                }
+    for (let i = 0; i < numImages; i++) {
+        const dot = document.createElement('span');
+        dot.classList.add('dot');
+        dot.dataset.index = i;
+        dot.addEventListener('click', () => {
+            wrapper.scrollTo({ left: i * wrapper.clientWidth, behavior: 'smooth' });
+        });
+        pagination.appendChild(dot);
+    }
 
-                // Event Listeners
-                playBtn.addEventListener('click', togglePlay);
-                video.addEventListener('click', togglePlay); // Click video to play/pause too
-                video.addEventListener('play', updatePlayButton);
-                video.addEventListener('pause', updatePlayButton);
-                video.addEventListener('timeupdate', updateProgress);
+    function updateActiveDot() {
+        if (zoomState.active) return;
+        const index = Math.round(wrapper.scrollLeft / wrapper.clientWidth);
+        pagination.querySelectorAll('.dot').forEach((dot, i) => {
+            dot.classList.toggle('active', i === index);
+        });
+    }
 
-                // Prevent the controls from triggering a drag event on your gallery
-                controlsContainer.addEventListener('mousedown', (e) => e.stopPropagation());
-                controlsContainer.addEventListener('touchstart', (e) => e.stopPropagation());
+    wrapper.addEventListener('scroll', updateActiveDot);
+    updateActiveDot();
 
-        </script>
+    // ==========================================
+    // FULLSCREEN
+    // ==========================================
+    fullscreenBtn.addEventListener('click', () => {
+        if (!document.fullscreenElement) {
+            container.requestFullscreen().catch(err => console.error('Fullscreen error:', err));
+            fullscreenBtn.classList.add('fullscreen');
+        } else {
+            document.exitFullscreen();
+            fullscreenBtn.classList.remove('fullscreen');
+        }
+    });
+
+    document.addEventListener('fullscreenchange', () => {
+        if (zoomState.active) {
+            updateTransform();
+        }
+    });
+
+    // ==========================================
+    // SHOW MORE/LESS
+    // ==========================================
+    showMoreBtn.addEventListener('click', () => {
+        if (specsText.classList.contains('expanded')) {
+            specsText.classList.remove('expanded');
+            showMoreBtn.textContent = 'Show more';
+        } else {
+            specsText.classList.add('expanded');
+            showMoreBtn.textContent = 'Show less';
+        }
+    });
+
+    // ==========================================
+    // BACKGROUND BLENDER
+    // ==========================================
+    const firstImg = container.querySelector('.product-media-image');
+    if (firstImg) {
+        const applyBackground = () => {
+            container.style.backgroundImage = `url(${firstImg.src})`;
+        };
+
+        if (firstImg.complete && firstImg.naturalWidth) {
+            applyBackground();
+        } else {
+            firstImg.onload = applyBackground;
+        }
+    }
+
+    // ==========================================
+    // VIDEO CONTROLS
+    // ==========================================
+    const video = card.querySelector('[data-video]');
+    const playBtn = card.querySelector('[data-play-toggle]');
+    const timeDisplay = card.querySelector('[data-time-display]');
+    const videoControls = card.querySelector('[data-video-controls]');
+    const videoContainer = card.querySelector('.video-container');
+
+    if (video && playBtn) {
+        const playIcon = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
+        const pauseIcon = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>';
+
+        function togglePlay(e) {
+            if (e) e.stopPropagation();
+            if (video.paused || video.ended) {
+                video.play();
+            } else {
+                video.pause();
+            }
+        }
+
+        function updatePlayButton() {
+            if (video.paused) {
+                playBtn.innerHTML = playIcon;
+                videoContainer.classList.add('paused');
+            } else {
+                playBtn.innerHTML = pauseIcon;
+                videoContainer.classList.remove('paused');
+            }
+        }
+
+        function formatTime(seconds) {
+            const m = Math.floor(seconds / 60);
+            const s = Math.floor(seconds % 60);
+            return `${m}:${s < 10 ? '0' : ''}${s}`;
+        }
+
+        function updateProgress() {
+            const current = formatTime(video.currentTime);
+            const total = formatTime(video.duration || 0);
+            timeDisplay.textContent = `${current} / ${total}`;
+        }
+
+        playBtn.addEventListener('click', togglePlay);
+        video.addEventListener('click', togglePlay);
+        video.addEventListener('play', updatePlayButton);
+        video.addEventListener('pause', updatePlayButton);
+        video.addEventListener('timeupdate', updateProgress);
+
+        videoControls.addEventListener('mousedown', (e) => e.stopPropagation());
+        videoControls.addEventListener('touchstart', (e) => e.stopPropagation());
+    }
+}
+</script>
 
     </body>
 
