@@ -41,7 +41,7 @@
                 </div>
         
                 <!-- Hamburger Menu (always on far right) -->
-                <div class="hamburger">
+                <div class="hamburger" id="hamburger">
                 <span></span>
                 <span></span>
                 <span></span>
@@ -112,7 +112,17 @@
     
     
         </div>
+        <script>
+            const hamburger = document.querySelector(".hamburger");
+            const navLinks = document.querySelector(".nav-links");
 
+            hamburger.addEventListener("click", () => {
+                // Toggle the .active class on the hamburger (for animation)
+                hamburger.classList.toggle("active");
+                // Toggle the .active class on the links (to show/hide)
+                navLinks.classList.toggle("active");
+            });
+        </script>
     </body>
 
 </html>
