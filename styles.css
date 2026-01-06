@@ -5,12 +5,14 @@ body {
   color: #F4F4F2;
   background-color: #121212;
   
-
-  
 }
 
 p {
   font-size: 14px;
+}
+
+a {
+  text-decoration: none;
 }
 /* --- Base Styles --- */
 .nav-bar {
@@ -326,12 +328,11 @@ footer {
   color: #FB8F0D;
 }
 
-#to-top {
-  display: flex;             
-  justify-content: right;   
+.to-top {
+  position: sticky;
 }
 
-#to-top a {
+.to-top a {
   text-decoration: none;
   color: #F4F4F2;
 }
@@ -835,11 +836,17 @@ footer hr {
   overflow: hidden;              /* Cuts off anything that tries to escape */
   word-break: break-word;        /* Breaks very long words (e.g., URLs) */
   display: -webkit-box;
-  -webkit-line-clamp: 2;             /* Show only 3 lines */
+  -webkit-line-clamp: 2;             /* Show only 2 lines */
   -webkit-box-orient: vertical;
   text-overflow: ellipsis;       
   transition: all 0.4s ease;      /* Smooth transition when expanded */
   color: rgba(255, 255, 255, 0.75);
+}
+
+@media (max-width: 768px) {
+  .product-info .specs {
+    -webkit-line-clamp: 1;             /* Show only 1 lines */
+  }
 }
 
 /* When "Show more" is clicked – expand to full text */
@@ -902,42 +909,28 @@ box-shadow:
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  margin-left: 8px;
-  margin-right: 8px;
-}
 
-@media (min-width: 768px) {
-  .product-cards-container {
-    margin-left: 160px;
-    margin-right: 160px;
-    }
 }
 
 
 .product-cards-wrapper {
-  column-count: 3; /* Adjust: 2 on mobile, 4+ on large screens */
+  column-count: 2; /* Adjust: 2 on mobile, 4+ on large screens */
   column-gap: 16px; /* Matches your flex gap; increase for breathing room */
-  margin: 12px;
   margin-bottom: 80px;
   orphans: 1; /* Prevents single items at column bottom */
   widows: 2; /* Ensures balanced columns */
+  padding: 12px;
+  
 }
 
-/* Responsive column adjustments */
-@media (max-width: 768px) {
-  .product-cards-wrapper {
-    column-count: 2; /* Single column on small screens */
-  }
+
+@media (max-width: 480px) {
+  .product-cards-wrapper { column-count: 1; column-gap: 0; }
+  .product-card-container { margin-bottom: 16px; }
 }
 
-@media (min-width: 769px) and (max-width: 1024px) {
-  .product-cards-wrapper {
-    column-count: 4;
-  }
+@media (min-width: 769px) {
+  .product-cards-wrapper { column-count: 4; column-gap: 20px; }
+  .product-card-container { margin-bottom: 20px; }
 }
 
-@media (min-width: 1025px) {
-  .product-cards-wrapper {
-    column-count: 6; /* Or 4 for wider screens */
-  }
-}
