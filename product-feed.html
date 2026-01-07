@@ -13,7 +13,8 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap" rel="stylesheet">
-        
+
+        <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
 
     </head>
     <body>
@@ -909,7 +910,7 @@
 
                 </div>
             </div>
-            <p class="to-top"><a href="#body-container">Back to Top</a></p>
+            <div class="to-top"><a href="#body-container">Top</a></div>
             </div>
 
         </div>
@@ -1394,7 +1395,47 @@ function initializeProductCard(card) {
     }
 }
 
+    // ==========================================
+    // Product card grid
+    // ==========================================
+    
+document.addEventListener('DOMContentLoaded', () => {
+  const grid = document.querySelector('.product-cards-wrapper');
+  
+  // Initialize Masonry
+  const msnry = new Masonry(grid, {
+    itemSelector: '.product-card-container', // Point to the actual card class
+    columnWidth: '.product-card-container', // Use the card itself for sizing
+    percentPosition: true, 
+    gutter: 16, 
+    horizontalOrder: true
+  });
 
+  // Critical: Layout again after images load to prevent overlapping
+  imagesLoaded(grid).on('progress', function() {
+    msnry.layout();
+  });
+});
+
+showMoreBtn.addEventListener('click', () => {
+    const wasExpanded = specsText.classList.contains('expanded');
+    
+    if (wasExpanded) {
+        specsText.classList.remove('expanded');
+        showMoreBtn.textContent = 'Show more';
+    } else {
+        specsText.classList.add('expanded');
+        showMoreBtn.textContent = 'Show less';
+    }
+
+    // Listen for transition end on the specs element, then relayout
+    specsText.addEventListener('transitionend', function handler() {
+        if (typeof msnry !== 'undefined') {
+            msnry.layout();
+        }
+        specsText.removeEventListener('transitionend', handler); // Clean up
+    });
+});
 
 </script>
 
