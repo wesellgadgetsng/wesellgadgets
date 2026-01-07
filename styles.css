@@ -272,11 +272,6 @@ font-weight: bold;
   font-size: 18px;
   cursor: pointer;
 
-  /* Neon Glow Effect */
-  box-shadow: 
-    0 0 20px #FB8F0D,
-    0 0 40px rgba(251, 143, 13, 0.6),
-    inset 0 0 20px rgba(255, 255, 255, 0.2); /* subtle inner light */
 
   /* Smooth transitions */
   transition: all 0.4s ease;
@@ -286,11 +281,10 @@ font-weight: bold;
 .button-1:hover {
   background-color: #ff9f1f; /* Slightly brighter orange */
   box-shadow: 
-    0 0 30px #FB8F0D,
-    0 0 60px rgba(251, 143, 13, 0.8),
-    0 0 80px rgba(251, 143, 13, 0.4),
+    0 0 5px #FB8F0D,
+    0 0 10px rgba(251, 143, 13, 0.8),
+    0 0 20px rgba(251, 143, 13, 0.4),
     inset 0 0 30px rgba(255, 255, 255, 0.4);
-  transform: translateY(-4px) scale(1.05); /* Lift + slight enlarge */
   color: #000000;
 }
 
@@ -329,12 +323,30 @@ footer {
 }
 
 .to-top {
-  position: sticky;
+  position: fixed;      /* Fixed to viewport, follows scroll */
+  bottom: 20px;         /* Distance from bottom edge */
+  right: 20px;          /* Distance from right edge */
+  z-index: 1000;        /* Ensures it stays on top of other content */
+  background-color: #333; /* Or your theme color */
+  background-color: #333; /* Or your theme color */
+  color: white;
+  border: none;
+  border-radius: 50%;   /* Circular button look */
+  padding: 15px;
+  font-size: 14px;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: opacity 0.3s, background-color 0.3s;
+
 }
 
 .to-top a {
   text-decoration: none;
   color: #F4F4F2;
+}
+
+.to-top:hover {
+  background-color: #555;
 }
 
 footer hr {
@@ -423,8 +435,7 @@ footer hr {
   align-items: center;
   text-align: center;
   min-height: 100vh;               /* at least full viewport height */
-
-
+  padding-bottom: 50px;
   background-color:#2A2A2A;
 
 
@@ -448,7 +459,7 @@ footer hr {
   break-inside: avoid-column; /* Critical: Keeps each card intact in one column */
   margin-bottom: 16px; /* Vertical spacing between cards in column */
 
-
+  break-inside: avoid; /* Not needed in single column, but harmless */
 
   box-shadow:
     0 0 4px #707070;
@@ -909,28 +920,41 @@ box-shadow:
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  break-inside: avoid; /* Not needed in single column, but harmless */
+  width: 100%; /* Full width; adjust max-width for constraints */
 
 }
 
 
 .product-cards-wrapper {
-  column-count: 2; /* Adjust: 2 on mobile, 4+ on large screens */
-  column-gap: 16px; /* Matches your flex gap; increase for breathing room */
-  margin-bottom: 80px;
-  orphans: 1; /* Prevents single items at column bottom */
-  widows: 2; /* Ensures balanced columns */
-  padding: 12px;
+  width: 95%;
+  margin: 0 auto;  
+  max-width: 1200px;     /* Limits width on massive monitors */
+  display: block;        /* Masonry works best with block displays */
   
+
 }
 
-
-@media (max-width: 480px) {
-  .product-cards-wrapper { column-count: 1; column-gap: 0; }
-  .product-card-container { margin-bottom: 16px; }
+/* 2 Columns for devices around 320px to 767px */
+@media (min-width: 320px) {
+  .product-card-container {
+    width: calc(50% - 10px); /* 50% minus half of your gutter */
+  }
 }
 
-@media (min-width: 769px) {
-  .product-cards-wrapper { column-count: 4; column-gap: 20px; }
-  .product-card-container { margin-bottom: 20px; }
+/* 3 Columns for Tablet (768px to 1023px) */
+@media (min-width: 768px) {
+  .product-card-container {
+    width: calc(33.33% - 14px); 
+  }
 }
 
+/* 4 Columns Fixed (1024px and above) */
+@media (min-width: 1024px) {
+  .product-cards-wrapper {
+    max-width: 1200px; /* Optional: keeps the grid from getting too wide */
+  }
+  .product-card-container {
+    width: calc(25% - 15px);
+  }
+}
