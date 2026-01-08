@@ -292,6 +292,7 @@ footer {
   background-color:#121212;
   padding-left: 24px;
   padding-right: 24PX;
+  padding-bottom: 80px;
 }
 
 .footer-summary {
@@ -306,6 +307,7 @@ footer {
 
 .footer-links {
   margin-top: 32px;
+  margin-bottom: 32px;
 
 }
 
@@ -426,10 +428,10 @@ footer hr {
 .product-feed-full {
   width: 100%;                     
   max-width: 100%;                 /* prevent any accidental max-width */
-  margin-left: 0;
-  margin-right: 0;
+  margin: 0;
 
   display: flex;
+  justify-content: center;
   flex-direction: column;
   flex-shrink: 0;
   align-items: center;
@@ -437,6 +439,8 @@ footer hr {
   min-height: 100vh;               /* at least full viewport height */
   padding-bottom: 50px;
   background-color:#2A2A2A;
+
+  padding-bottom: 80px;
 
 
 }
@@ -446,20 +450,45 @@ footer hr {
   margin-bottom: 40px;
 }
 
+/* ==========================================
+   PRODUCT GRID CONTAINER
+   ========================================== */
+
+.product-grid-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+
+
+}
+
+.product-cards-wrapper {
+  width: 95%;
+  margin: 0 auto;  
+  max-width: 1200px;     /* Limits width on massive monitors */
+  position: relative; /* For Masonry positioning */  
+}
+
+/* ==========================================
+   PRODUCT CARD
+   ========================================== */
+
 .product-card-container {
   width: 174px; 
   max-width: 261px;
-  min-height: 400px; 
+  min-height: 300px; 
   border-radius: 16px;
   box-sizing: border-box;       /* Padding doesn't add to width */
   display: flex;
   flex-direction: column;            /* Stack image + info vertically */
   overflow: hidden;               /* Prevents any internal overflow */
 
-  break-inside: avoid-column; /* Critical: Keeps each card intact in one column */
   margin-bottom: 16px; /* Vertical spacing between cards in column */
+  will-change: height;
 
-  break-inside: avoid; /* Not needed in single column, but harmless */
+  width: calc(50% - 8px);
 
   box-shadow:
     0 0 4px #707070;
@@ -475,13 +504,41 @@ footer hr {
       inset 0 1px 0 rgba(255, 255, 255, 0.1);
   }
   
+/* ==========================================
+   RESPONSIVE COLUMN WIDTHS
+   ========================================== */
 
-/* On wider screens – card grows smoothly */
-@media (min-width: 768px) {
+   /* Mobile: 1 column (below 480px) */
+@media (max-width: 320px) {
   .product-card-container {
-    width: 100%;         /* Full width minus margins */
+    width: 100%;
   }
 }
+
+/* Mobile/Small Tablet: 2 columns (480px - 767px) */
+@media (min-width: 480px) and (max-width: 767px) {
+  .product-card-container {
+    width: calc(50% - 8px);
+  }
+}
+
+/* Tablet: 3 columns (768px - 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .product-card-container {
+    width: calc(33.333% - 11px);
+  }
+}
+
+/* Desktop: 4 columns (1024px+) */
+@media (min-width: 1024px) {
+  .product-card-container {
+    width: calc(25% - 12px);
+  }
+}
+
+/* ==========================================
+   MEDIA CONTAINER
+   ========================================== */
 
 .product-media-container {
   width: 100%;    
@@ -494,12 +551,15 @@ footer hr {
   position: relative;
   transition: background-color 0.8s ease;  /* Smooth fade when color changes */
   touch-action: pan-y; /* Allows vertical page scroll, but takes over horizontal */
+  background-size: cover;
+  background-position: center;
+
 
 }
 
 @media (min-width: 768px) {
   .product-media-container {
-    height: 360px;         /* Full width minus margins */
+    height: 300px;         /* Full width minus margins */
   }
 }
 
@@ -590,6 +650,10 @@ footer hr {
   border-radius: 16px 16px 0 0;
   transition: background-image 0.6s ease;
 }
+
+/* ==========================================
+   PAGINATION, BUTTONS, VIDEO
+   ========================================== */
 
 .video-container {
   position: relative;
@@ -787,6 +851,10 @@ footer hr {
   width: 20px;
 }
 
+/* ==========================================
+   PRODUCT INFO
+   ========================================== */
+
 .product-info {
   width: 100%;
   min-height: 160px;
@@ -847,23 +915,20 @@ footer hr {
   overflow: hidden;              /* Cuts off anything that tries to escape */
   word-break: break-word;        /* Breaks very long words (e.g., URLs) */
   display: -webkit-box;
-  -webkit-line-clamp: 2;             /* Show only 2 lines */
+  -webkit-line-clamp: 1;             /* Show only 2 lines */
   -webkit-box-orient: vertical;
   text-overflow: ellipsis;       
-  transition: all 0.4s ease;      /* Smooth transition when expanded */
   color: rgba(255, 255, 255, 0.75);
+  
 }
 
-@media (max-width: 768px) {
-  .product-info .specs {
-    -webkit-line-clamp: 1;             /* Show only 1 lines */
-  }
-}
 
 /* When "Show more" is clicked – expand to full text */
 .product-info .specs.expanded {
   -webkit-line-clamp: unset;         /* Remove line limit */
   overflow: visible;
+  max-height: none;
+
 }
 
 
@@ -871,7 +936,9 @@ footer hr {
   margin: 0;                         
   color: #FB8F0D;  
   cursor: pointer;   
-  font-size: 12px;             
+  font-size: 12px;  
+  user-select: none;
+           
 }
 
 .product-info .price {
@@ -915,46 +982,3 @@ box-shadow:
 
 }
 
-.product-cards-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  break-inside: avoid; /* Not needed in single column, but harmless */
-  width: 100%; /* Full width; adjust max-width for constraints */
-
-}
-
-
-.product-cards-wrapper {
-  width: 95%;
-  margin: 0 auto;  
-  max-width: 1200px;     /* Limits width on massive monitors */
-  display: block;        /* Masonry works best with block displays */
-  
-
-}
-
-/* 2 Columns for devices around 320px to 767px */
-@media (min-width: 320px) {
-  .product-card-container {
-    width: calc(50% - 10px); /* 50% minus half of your gutter */
-  }
-}
-
-/* 3 Columns for Tablet (768px to 1023px) */
-@media (min-width: 768px) {
-  .product-card-container {
-    width: calc(33.33% - 14px); 
-  }
-}
-
-/* 4 Columns Fixed (1024px and above) */
-@media (min-width: 1024px) {
-  .product-cards-wrapper {
-    max-width: 1200px; /* Optional: keeps the grid from getting too wide */
-  }
-  .product-card-container {
-    width: calc(25% - 15px);
-  }
-}
