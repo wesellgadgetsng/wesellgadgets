@@ -469,7 +469,6 @@ footer hr {
   margin: 0 auto !important;  
   max-width: 1200px;     /* Limits width on massive monitors */
   position: relative; /* For Masonry positioning */  
-  overflow: hidden;
 }
 
 /* ==========================================
@@ -507,21 +506,21 @@ footer hr {
    ========================================== */
 
    /* Mobile: 1 column (below 480px) */
-@media (max-width: 320px) {
+@media (max-width: 330px) {
   .product-card-container {
     width: 100%;
   }
 }
 
-/* Mobile/Small Tablet: 2 columns (321px - 767px) */
-@media (min-width: 321px) and (max-width: 767px) {
+/* Mobile/Small Tablet: 2 columns (321px - 867px) */
+@media (min-width: 331px) and (max-width: 867px) {
   .product-card-container {
     width: calc(50% - 8px);
   }
 }
 
-/* Tablet: 3 columns (768px - 1023px) */
-@media (min-width: 768px) and (max-width: 1023px) {
+/* Tablet: 3 columns (868px - 1023px) */
+@media (min-width: 868px) and (max-width: 1023px) {
   .product-card-container {
     width: calc(33.333% - 11px);
   }
