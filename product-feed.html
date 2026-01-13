@@ -1417,12 +1417,11 @@ document.addEventListener('DOMContentLoaded', () => {
         percentPosition: true,
         gutter: 16,
         horizontalOrder: true,
-        fitWidth: false, // Allow full width usage
-        transitionDuration: '0.05s'
+        transitionDuration: 0
     });
 
     // Layout after images load
-    imagesLoaded(grid).on('progress', function() {
+    imagesLoaded(grid).on('always', function() {
         masonryInstance.layout();
     });
 
@@ -1440,10 +1439,28 @@ document.addEventListener('DOMContentLoaded', () => {
             if (masonryInstance) {
                 masonryInstance.layout();
             }
-        }, 250);
+        }, 100);
     });
 });
 
+/**
+ * Debounce function to limit how often a function can run.
+ */
+ function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
+// ==========================================
+// Product card Lazy loading
+// ==========================================
 const cardObserver = new IntersectionObserver((entries, observer) => {
     entries.forEach(async entry => {
         if (!entry.isIntersecting) return;
