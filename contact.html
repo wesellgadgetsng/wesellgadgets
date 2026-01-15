@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Us | WeSellGadgets</title>
+    
+    <link rel="stylesheet" href="normalize.css">
+    <link rel="stylesheet" href="styles.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="body-container">
+        <!-- Navigation Bar -->
+        <nav class="nav-bar">
+            <!-- Logo on the Left -->
+            <div id="logo">
+                <div id="logo-circle">
+                    <div id="logo-bar"></div>
+                </div>
+                <p id="logo-text">wesell<span>gadgets</span></p>
+            </div>
+        
+            <!-- Right Side: Links + Hamburger -->
+            <div class="nav-right">
+                <!-- Navigation Links -->
+                <div class="nav-links">
+                    <a href="index.html">Home</a>
+                    <a href="product-feed.html" class="feed products">Products</a>
+                    <a href="about.html">About</a>
+                    <a href="contact.html" class="active">Contact</a>
+                    <a href="https://wa.me/2348012345678" target="_blank">Order on WhatsApp</a>
+                </div>
+
+                <!-- Hamburger Menu -->
+                <div class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>          
+        </nav>
+
+        <!-- Main Content -->
+        <main>
+            <h1>Contact WeSellGadgets</h1>
+            <p>If you have any questions, feedback, or need assistance, feel free to reach out to us. We are always happy to help!</p>
+
+            <!-- Contact Form -->
+            <form action="#" method="POST" class="contact-form">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="message">Message:</label>
+                <textarea id="message" name="message" required></textarea>
+
+                <button type="submit">Send Message</button>
+            </form>
+
+            <!-- Contact Info -->
+            <section class="contact-info">
+                <h2>Other ways to reach us:</h2>
+                <p>WhatsApp: <a href="https://wa.me/2348012345678" target="_blank">+234 801 234 5678</a></p>
+                <p>Email: <a href="mailto:info@wesellgadgetsng.com">info@wesellgadgetsng.com</a></p>
+                <p>Location: Nationwide delivery across Nigeria</p>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer>
+            <div id="logo">
+                <div id="logo-circle">
+                    <div id="logo-bar"></div>
+                </div>
+                <p id="logo-text">wesell<span>gadgets</span></p>
+            </div>
+
+            <p class="footer-summary">What we do is simple, we sell high quality new and used gadgets; phones, laptops, gaming, accessories and more. We deliver nationwide.</p>
+
+            <p class="footer-disclaimer">Disclaimer: All product information, logos, and other trademarked items are properties of their respective brands, we only provide retail services and are not affiliated to these brands.</p>
+
+            <div class="footer-links">
+                <a href="#">How we serve you</a>
+                <a href="about.html">About</a>
+                <a href="contact.html" class="active">Contact</a>
+                <a href="#">Reviews</a>
+                <a href="#">Terms and Conditions</a>
+                <a href="product-feed.html" class="feed products">Products</a>
+            </div>
+
+            <div class="to-top"><a href="#body-container">Top</a></div>
+
+            <hr>
+            <p id="copyright">© wesellgadgetsng 2025</p>
+        </footer>
+    </div>
+
+    <script>
+        const hamburger = document.querySelector(".hamburger");
+        const navLinks = document.querySelector(".nav-links");
+
+        hamburger.addEventListener("click", () => {
+            hamburger.classList.toggle("active");
+            navLinks.classList.toggle("active");
+        });
+    </script>
+</body>
+</html>
