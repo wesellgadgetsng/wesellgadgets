@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About Us | WeSellGadgets</title>
+    
+    <link rel="stylesheet" href="normalize.css">
+    <link rel="stylesheet" href="styles.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="body-container">
+        <!-- Navigation Bar -->
+        <nav class="nav-bar">
+            <!-- Logo on the Left -->
+            <div id="logo">
+                <div id="logo-circle">
+                    <div id="logo-bar"></div>
+                </div>
+                <p id="logo-text">wesell<span>gadgets</span></p>
+            </div>
+        
+            <!-- Right Side: Links + Hamburger -->
+            <div class="nav-right">
+                <!-- Navigation Links -->
+                <div class="nav-links">
+                    <a href="index.html">Home</a>
+                    <a href="product-feed.html" class="feed products">Products</a>
+                    <a href="about.html" class="active">About</a>
+                    <a href="contact.html">Contact</a>
+                    <a href="https://wa.me/2348012345678" target="_blank">Order on WhatsApp</a>
+                </div>
+
+                <!-- Hamburger Menu -->
+                <div class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>          
+        </nav>
+
+        <!-- Main Content -->
+        <main>
+            <h1>About WeSellGadgets</h1>
+            <p>WeSellGadgets is dedicated to providing high-quality gadgets to customers across Nigeria. Our products include phones, laptops, gaming consoles, accessories, and more. We deliver nationwide and ensure excellent customer service.</p>
+            
+            <p>Our mission is simple: to make the best gadgets accessible, reliable, and affordable for everyone. We are not affiliated with any brand; we only provide retail services.</p>
+        </main>
+
+        <!-- Footer -->
+        <footer>
+            <div id="logo">
+                <div id="logo-circle">
+                    <div id="logo-bar"></div>
+                </div>
+                <p id="logo-text">wesell<span>gadgets</span></p>
+            </div>
+
+            <p class="footer-summary">What we do is simple, we sell high quality new and used gadgets; phones, laptops, gaming, accessories and more. We deliver nationwide.</p>
+
+            <p class="footer-disclaimer">Disclaimer: All product information, logos, and other trademarked items are properties of their respective brands, we only provide retail services and are not affiliated to these brands.</p>
+
+            <div class="footer-links">
+                <a href="#">How we serve you</a>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+                <a href="#">Reviews</a>
+                <a href="#">Terms and Conditions</a>
+                <a href="product-feed.html" class="feed products">Products</a>
+            </div>
+
+            <div class="to-top"><a href="#body-container">Top</a></div>
+
+            <hr>
+            <p id="copyright">© wesellgadgetsng 2025</p>
+        </footer>
+    </div>
+
+    <script>
+        const hamburger = document.querySelector(".hamburger");
+        const navLinks = document.querySelector(".nav-links");
+
+        hamburger.addEventListener("click", () => {
+            // Toggle the .active class on the hamburger (for animation)
+            hamburger.classList.toggle("active");
+            // Toggle the .active class on the links (to show/hide)
+            navLinks.classList.toggle("active");
+        });
+    </script>
+</body>
+</html>
