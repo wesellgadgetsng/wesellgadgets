@@ -431,7 +431,6 @@ footer hr {
   margin: 0;
 
   display: flex;
-  justify-content: center;
   flex-direction: column;
   flex-shrink: 0;
   align-items: center;
@@ -456,10 +455,6 @@ footer hr {
 
 .product-grid-container {
   width: 100%;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
 
 
 }
@@ -762,19 +757,7 @@ footer hr {
   position: absolute;
   bottom: 16px;
   right: 8px;
-  background:
-  radial-gradient(
-    circle at top left,
-    rgba(255,255,255,0.15),
-    rgba(255,255,255,0.15) 50%,
-    transparent 90%
-  ),
-  linear-gradient(
-    120deg,
-    transparent 30%,
-    rgba(255,255,255,0.25),
-    transparent 30%
-  );
+  background: rgba(0, 0, 0, 0.7); /* Darker in full-screen for contrast */
   border: none;
   border-radius: 50%;
   padding: 8px;
@@ -788,10 +771,12 @@ footer hr {
   bottom: 32px; /* Adjust positioning if needed for larger screens */
   right: 32px;
   background: rgba(0, 0, 0, 0.7); /* Darker in full-screen for contrast */
+
 }
 
 .fullscreen-button:hover {
-  background: rgba(255, 255, 255, 1);
+  background: rgba(255, 255, 255, 0.5);
+
 }
 
 .fullscreen-button svg {
@@ -915,7 +900,8 @@ footer hr {
   -webkit-line-clamp: 1;             /* Show only 2 lines */
   -webkit-box-orient: vertical;
   text-overflow: ellipsis;       
-  color: rgba(255, 255, 255, 0.75);
+  color: #F4F4F2;
+  font-weight: bold;
   
 }
 
