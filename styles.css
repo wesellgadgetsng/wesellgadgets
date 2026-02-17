@@ -14,6 +14,11 @@ p {
 a {
   text-decoration: none;
 }
+
+#body-container {
+  width: 100%;
+
+}
 /* --- Base Styles --- */
 .nav-bar {
   display: flex;
@@ -21,7 +26,7 @@ a {
   align-items: center;
   height: 72px;
   background-color: #121212;
-  border-bottom: 1px solid #707070;
+  border-bottom: 0.5px solid #FB8F0D;
   padding: 0 24px;
   opacity: 0.9; /* Corrected syntax from 90% */
   position: relative; /* Needed for positioning the mobile menu */
@@ -80,7 +85,7 @@ a {
 .nav-links a {
   color: #B1B1B1;
   text-decoration: none;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 500;
   padding: 8px 0;
   transition: color 0.3s ease;
@@ -198,19 +203,6 @@ position: relative;
 inset: 0;
 border-radius: inherit;
 
-background:
-  radial-gradient(
-    circle at top left,
-    rgba(255,255,255,0.15),
-    rgba(255,255,255,0.15) 50%,
-    transparent 90%
-  ),
-  linear-gradient(
-    120deg,
-    transparent 30%,
-    rgba(255,255,255,0.25),
-    transparent 30%
-  );
 
 
 }
@@ -228,7 +220,10 @@ font-weight: bold;
   align-items: center;        /* Horizontal center */
   text-align: center;         /* Center text inside elements */
   padding: 24px;  
-  height: 300px
+  height: 100px;
+  width: 100%;
+
+
 }
 
 .hero-video {
@@ -243,7 +238,7 @@ font-weight: bold;
 }
 
 #hero-section h1 {
-  margin: 0px;
+  margin-top: 20px;
 
 }
 
@@ -253,8 +248,7 @@ font-weight: bold;
 
 #hero-section p {
   color: #FBDDB8;
-  margin-top: 16px 0 0 0;
-  margin-bottom: 50px;
+  margin-top: 0px;
 
 }
 
@@ -289,11 +283,17 @@ font-weight: bold;
 }
 
 footer {
-  background-color:#121212;
   padding-left: 24px;
   padding-right: 24PX;
   padding-bottom: 80px;
+  box-shadow:
+  0 0 8px #FB8F0D;
+  inset: 0 1px 0 rgba(255, 255, 255, 0.1);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  
 }
+
+
 
 .footer-summary {
   margin-top: 0px;
@@ -351,16 +351,8 @@ footer {
   background-color: #555;
 }
 
-footer hr {
-  border: none;
-  height: 0.5px;
-  background-color: #FB8F0D;
-  opacity: 50%
-}
 
 #copyright {
-  display: flex;             
-  justify-content: center;   
   color: #B1B1B1;
   font-size: 10px;
   margin-top: 16px;
@@ -378,28 +370,23 @@ footer hr {
   transition: text-shadow 0.4s ease;
 }
 
-.product-feed-intro {
+.contact-card {
   display: flex;              
   flex-direction: column;     
   justify-content: center;    
   align-items: center;        
   text-align: center;         
   padding: 24px;
-  background-color:#2a2a2a;
   height: 300px;
   content: "";
   position: relative;
   inset: 0;
   border-radius: inherit;
 
-}
-
-.product-feed-intro p {
-  color: #FBDDB8;
-  margin-top: 0;
-  margin-bottom: 32px
+  border-top: 0.5px solid #FB8F0D;
 
 }
+
 .button-2 {
   height: 40px;
   border-radius: 30px;
@@ -425,6 +412,39 @@ footer hr {
 
 }
 
+.button-3 {
+  height: 40px;
+  border: #FB8F0D 1px solid;
+  border-radius: 30px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  background-color: #121212;
+  color: #F4F4F2;
+  font-weight: bold;
+  font-size: 14px;
+  cursor: pointer;
+
+  display: block;                    /* Critical: makes width: 100% work on button inside <a> */
+  width: 100%;                       /* Takes full width of parent */
+  max-width: none;                   /* Removes any hidden limits */
+  padding: 4px 24px;                 /* Horizontal padding only – vertical handled by height */
+  text-align: center;
+  transition: all 0.3s ease;
+  box-sizing: border-box;            /* Ensures padding doesn't overflow */
+
+
+}
+
+.button-3:hover {
+  box-shadow: 
+  0 0 10px #FB8F0D;
+
+  /* Smooth transitions */
+  transition: all 0.4s ease;
+
+}
+
+
 .product-feed-full {
   width: 100%;                     
   max-width: 100%;                 /* prevent any accidental max-width */
@@ -437,16 +457,29 @@ footer hr {
   text-align: center;
   min-height: 100vh;               /* at least full viewport height */
   padding-bottom: 50px;
-  background-color:#2A2A2A;
-
   padding-bottom: 80px;
+  background:
+  radial-gradient(
+    circle at top left,
+    rgba(255,255,255,0.15),
+    rgba(255,255,255,0.15) 50%,
+    transparent 90%
+  ),
+  linear-gradient(
+    120deg,
+    transparent 30%,
+    rgba(255,255,255,0.25),
+    transparent 30%
+  );
+
 
 
 }
 
-.product-feed-full h2 {
-  margin-top: 40px;
+.product-feed-full p {
+  margin-top: 0px;
   margin-bottom: 40px;
+  color: #FBDDB8;
 }
 
 /* ==========================================
@@ -809,7 +842,7 @@ footer hr {
   cursor: pointer;
   transition: background 0.3s;
   z-index: 10; /* Increased for visibility above all layers */
-  display: block; /* Ensure always shown */
+  display: none; /* Ensure always shown */
   background:
   radial-gradient(
     circle at top left,
@@ -817,6 +850,7 @@ footer hr {
     rgba(255,255,255,0.15) 50%,
     transparent 90%
   ),
+
 
 }
 
@@ -865,6 +899,7 @@ footer hr {
 
   text-align: left;
   flex-grow: 1;
+  
 }
 
 .product-info h3 {
@@ -932,7 +967,7 @@ footer hr {
   margin-bottom: 4px;                
 }
 
-.button-3 {
+.button-4 {
   display: block;                    /* Critical: makes width: 100% work on button inside <a> */
   width: 100%;                       /* Takes full width of parent */
   max-width: none;                   /* Removes any hidden limits */
@@ -956,7 +991,7 @@ footer hr {
   margin-top: auto;                  /* Pushes button to bottom if space available */
 }
 
-.button-3:hover {
+.button-4:hover {
 box-shadow: 
   0 0 10px #FB8F0D;
 
