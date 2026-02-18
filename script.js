@@ -502,9 +502,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const cards = Array.from(grid.querySelectorAll('.product-card-container'));
 
-// --- NEW: DYNAMIC BADGE LOGIC ---
+// --- DYNAMIC PERIOD BADGE LOGIC ---
 const now = new Date();
-const thirtyDaysInMs = 30 * 24 * 60 * 60 * 1000;
+const seventyTwoHoursInMs = 72 * 60 * 60 * 1000; // Threshold for pulse animation
 
 cards.forEach(card => {
     const postDateStr = card.getAttribute('data-date');
@@ -512,33 +512,43 @@ cards.forEach(card => {
         const postDate = new Date(postDateStr);
         const timeDiff = now - postDate;
 
-        if (timeDiff > 0 && timeDiff < thirtyDaysInMs) {
+        if (timeDiff > 0) {
             const mediaContainer = card.querySelector('.product-media-container');
             if (mediaContainer && !mediaContainer.querySelector('.badge-new')) {
                 
                 let badgeText = '';
-                const diffMins = Math.floor(timeDiff / (1000 * 60));
-                const diffHours = Math.floor(timeDiff / (1000 * 60 * 60));
-                const diffDays = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+                const sec = 1000;
+                const min = sec * 60;
+                const hr = min * 60;
+                const day = hr * 24;
+                const wk = day * 7;
+                const mnth = day * 30.44;
+                const yr = day * 365.25;
 
-                // Formatting Logic:
-                if (diffMins < 60) {
-                    badgeText = `${diffMins}M`; // Minutes (e.g., 24M)
-                } else if (diffHours < 72) {
-                    badgeText = `${diffHours}H`; // Hours up to 72 (e.g., 1H)
-                } else {
-                    badgeText = `${diffDays}D`; // Days after 72 hours (e.g., 4D)
-                }
+                // Determine Badge Text
+                if (timeDiff >= yr) badgeText = `${Math.floor(timeDiff / yr)}Y`;
+                else if (timeDiff >= mnth) badgeText = `${Math.floor(timeDiff / mnth)}MN`;
+                else if (timeDiff >= wk) badgeText = `${Math.floor(timeDiff / wk)}W`;
+                else if (timeDiff >= day) badgeText = `${Math.floor(timeDiff / day)}D`;
+                else if (timeDiff >= hr) badgeText = `${Math.floor(timeDiff / hr)}H`;
+                else if (timeDiff >= min) badgeText = `${Math.floor(timeDiff / min)}M`;
+                else badgeText = `${Math.floor(timeDiff / sec)}S`;
 
                 const badge = document.createElement('div');
                 badge.className = 'badge-new';
                 badge.innerText = badgeText;
+
+                // Only add pulse if item is less than 72 hours old
+                if (timeDiff < seventyTwoHoursInMs) {
+                    badge.classList.add('pulse');
+                }
+
                 mediaContainer.appendChild(badge);
             }
         }
     }
 });
-    
+
     // --- REVERSE ORDER ---
     cards.reverse().forEach(card => grid.appendChild(card));
 
