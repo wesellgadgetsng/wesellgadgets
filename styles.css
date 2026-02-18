@@ -4,6 +4,7 @@ body {
   font-optical-sizing: auto;
   color: #F4F4F2;
   background-color: #121212;
+
   
 }
 
@@ -16,8 +17,9 @@ a {
 }
 
 #body-container {
-  width: 100%;
+  width: 100% !important;
 
+  
 }
 /* --- Base Styles --- */
 .nav-bar {
@@ -273,23 +275,19 @@ font-weight: bold;
 
 /* Hover Effect – Brighter & Bigger Glow */
 .button-1:hover {
-  background-color: #ff9f1f; /* Slightly brighter orange */
   box-shadow: 
-    0 0 5px #FB8F0D,
-    0 0 10px rgba(251, 143, 13, 0.8),
-    0 0 20px rgba(251, 143, 13, 0.4),
-    inset 0 0 30px rgba(255, 255, 255, 0.4);
-  color: #000000;
+  0 0 10px #FB8F0D;
+
+  /* Smooth transitions */
+  transition: all 0.4s ease;
 }
 
 footer {
   padding-left: 24px;
   padding-right: 24PX;
   padding-bottom: 80px;
-  box-shadow:
-  0 0 8px #FB8F0D;
-  inset: 0 1px 0 rgba(255, 255, 255, 0.1);
-  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  box-shadow: 0 -15px 10px -15px rgba(251, 143, 13, 0.5), 
+  inset 0 1px 0 rgba(255, 255, 255, 0.1);  
   
 }
 
@@ -418,8 +416,8 @@ footer {
   border-radius: 30px;
   padding-top: 8px;
   padding-bottom: 8px;
-  background-color: #121212;
-  color: #F4F4F2;
+  background-color: #2A2A2A;
+  color: #FB8F0D;
   font-weight: bold;
   font-size: 14px;
   cursor: pointer;
@@ -445,7 +443,7 @@ footer {
 }
 
 
-.product-feed-full {
+.product-feed {
   width: 100%;                     
   max-width: 100%;                 /* prevent any accidental max-width */
   margin: 0;
@@ -476,7 +474,7 @@ footer {
 
 }
 
-.product-feed-full p {
+.product-feed p {
   margin-top: 0px;
   margin-bottom: 40px;
   color: #FBDDB8;
@@ -516,7 +514,7 @@ footer {
 
 
   box-shadow:
-    0 0 4px #707070;
+    0 0 4px #FB8F0D;
     inset: 0 1px 0 rgba(255, 255, 255, 0.1);
     transition: transform 0.35s ease, box-shadow 0.35s ease;
     
@@ -525,7 +523,7 @@ footer {
   .product-card-container:hover {
     transform: translateY(-1px);
     box-shadow:
-      0 0px 10px #707070,
+      0 0px 10px #FB8F0D,
       inset 0 1px 0 rgba(255, 255, 255, 0.1);
   }
   
@@ -771,7 +769,7 @@ footer {
 }
 
 .product-pagination .dot.active {
-  background: #333;
+  background: #FB8F0D;
 }
 
 
@@ -867,6 +865,29 @@ footer {
   width: 20px;
 }
 
+.badge-new {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: #FB8F0D; /* Match your "Order Now" button */
+  color: #121212;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  z-index: 20;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  pointer-events: none; /* Don't interfere with clicks */
+  animation: pulse-soft 2s infinite;
+}
+
+@keyframes pulse-soft {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
 /* ==========================================
    PRODUCT INFO
    ========================================== */
@@ -935,7 +956,7 @@ footer {
   -webkit-line-clamp: 1;             /* Show only 2 lines */
   -webkit-box-orient: vertical;
   text-overflow: ellipsis;       
-  color: #F4F4F2;
+  color: #ccc;
   font-weight: bold;
   
 }
