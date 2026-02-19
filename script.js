@@ -490,6 +490,7 @@ function initializeProductCard(card) {
     }
 }
 
+
 // ==========================================
 // MASONRY INITIALIZATION (Global Scope)
 // ==========================================
@@ -501,6 +502,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!grid) return;
 
     const cards = Array.from(grid.querySelectorAll('.product-card-container'));
+    
 
 // --- DYNAMIC PERIOD BADGE LOGIC ---
 const now = new Date();
@@ -561,6 +563,7 @@ cards.forEach(card => {
         horizontalOrder: true,
         transitionDuration: 0
     });
+    
 
     // Layout refresh
     imagesLoaded(grid).on('always', () => masonryInstance.layout());
@@ -606,3 +609,162 @@ const cardObserver = new IntersectionObserver((entries, observer) => {
 }, {
     rootMargin: '500px'
 });
+
+
+// ==========================================
+// PRODUCT SEARCH FUNCTIONALITY
+// ==========================================
+(function initProductSearch() {
+    const searchInput = document.getElementById('product-search');
+    const searchClear = document.getElementById('search-clear');
+    const searchResultsCount = document.getElementById('search-results-count');
+    const noResults = document.getElementById('no-results');
+    const searchQueryDisplay = document.getElementById('search-query-display');
+    const clearSearchBtn = document.getElementById('clear-search-btn');
+    const productCards = document.querySelectorAll('.product-card-container');
+
+    if (!searchInput || productCards.length === 0) return;
+
+    let searchTimeout;
+
+    // Extract searchable text from each card
+    const cardData = Array.from(productCards).map(card => {
+        const name = card.querySelector('.product-name')?.textContent || '';
+        const condition = card.querySelector('.condition')?.textContent || '';
+        const specs = card.querySelector('.specs')?.textContent || '';
+        const price = card.querySelector('.price')?.textContent || '';
+        const quantity = card.querySelector('.quantity')?.textContent || '';
+        
+        return {
+            element: card,
+            searchText: `${name} ${condition} ${specs} ${price} ${quantity}`.toLowerCase(),
+            name: name
+        };
+    });
+
+    // Search function
+    function performSearch(query) {
+        const searchTerm = query.toLowerCase().trim();
+        
+        // If empty, show all cards
+        if (searchTerm === '') {
+            cardData.forEach(({ element }) => {
+                element.classList.remove('hidden');
+            });
+            updateResultsCount(cardData.length);
+            hideNoResults();
+            relayoutMasonry();
+            return;
+        }
+
+        // Filter cards
+        let visibleCount = 0;
+        cardData.forEach(({ element, searchText }) => {
+            if (searchText.includes(searchTerm)) {
+                element.classList.remove('hidden');
+                visibleCount++;
+            } else {
+                element.classList.add('hidden');
+            }
+        });
+
+        // Update UI
+        updateResultsCount(visibleCount, searchTerm);
+        if (visibleCount === 0) {
+            showNoResults(query);
+        } else {
+            hideNoResults();
+        }
+
+        relayoutMasonry();
+    }
+
+    // Update results count
+    function updateResultsCount(count, query = '') {
+        if (query === '') {
+            searchResultsCount.textContent = '';
+            searchResultsCount.classList.remove('visible');
+        } else {
+            const productText = count === 1 ? 'product' : 'products';
+            searchResultsCount.textContent = `Found ${count} ${productText} matching "${query}"`;
+            searchResultsCount.classList.add('visible');
+        }
+    }
+
+    // Show no results message
+    function showNoResults(query) {
+        searchQueryDisplay.textContent = query;
+        noResults.style.display = 'block';
+    }
+
+    // Hide no results message
+    function hideNoResults() {
+        noResults.style.display = 'none';
+    }
+
+// Relayout Masonry
+function relayoutMasonry() {
+    if (masonryInstance) {
+        masonryInstance.options.itemSelector = '.product-card-container:not(.hidden)';
+        
+        masonryInstance.reloadItems();
+        
+        setTimeout(() => {
+            masonryInstance.layout();
+        }, 50);
+    }
+}
+    // Clear search
+    function clearSearch() {
+        searchInput.value = '';
+        searchClear.style.display = 'none';
+        performSearch('');
+        searchInput.focus();
+    }
+
+    // Event: Input (real-time search with debounce)
+    searchInput.addEventListener('input', (e) => {
+        const value = e.target.value;
+        
+        // Show/hide clear button
+        searchClear.style.display = value ? 'flex' : 'none';
+
+        // Debounce search for performance
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(() => {
+            performSearch(value);
+        }, 300); // Wait 300ms after user stops typing
+    });
+
+    // Event: Clear button
+    searchClear.addEventListener('click', clearSearch);
+
+    // Event: Clear search button in no results
+    clearSearchBtn.addEventListener('click', clearSearch);
+
+    // Event: Enter key to search immediately (skip debounce)
+    searchInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            clearTimeout(searchTimeout);
+            performSearch(searchInput.value);
+        }
+    });
+
+    // Event: Escape key to clear search
+    searchInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            clearSearch();
+        }
+    });
+
+    // Accessibility: Focus trap for keyboard users
+    searchInput.addEventListener('focus', () => {
+        searchInput.parentElement.style.borderColor = '#FB8F0D';
+    });
+
+    searchInput.addEventListener('blur', () => {
+        if (!searchInput.value) {
+            searchInput.parentElement.style.borderColor = 'rgba(251, 143, 13, 0.3)';
+        }
+    });
+})();

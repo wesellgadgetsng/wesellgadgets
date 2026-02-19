@@ -62,12 +62,47 @@
                     <p>Explore to see our lightening ⚡ deals</p>
                 </div>
 
+                <div class="search-container">
+                    <div class="search-wrapper">
+                        <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <path d="m21 21-4.35-4.35"></path>
+                        </svg>
+                        <input 
+                            type="text" 
+                            id="product-search" 
+                            class="search-input" 
+                            placeholder="Search products by name, specs, price, condition..."
+                            autocomplete="off"
+                        />
+                        <button class="search-clear" id="search-clear" style="display: none;">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="18" y1="6" x2="6" y2="18"></line>
+                                <line x1="6" y1="6" x2="18" y2="18"></line>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="search-results-count" id="search-results-count"></div>
+                </div>
+                
                 <div class="product-grid-container" data-product-id="123">
                 <div class="product-cards-wrapper">
 
+                    <div class="no-results" id="no-results" style="display: none;">
+                        <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#FB8F0D" stroke-width="1.5">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <path d="m21 21-4.35-4.35"></path>
+                            <line x1="11" y1="8" x2="11" y2="12"></line>
+                            <line x1="11" y1="16" x2="11.01" y2="16"></line>
+                        </svg>
+                        <h3>No Products Found</h3>
+                        <p>We couldn't find any products matching "<span id="search-query-display"></span>", check for misspellings </p>
+                        <button class="button-2" id="clear-search-btn">Clear Search</button>
+                    </div>
+                    
                     <!-- Product card starts here -->
                     <!--<div class="product-card-container productName-HP-Dell-Apple condition-used-new ram-8-16-32 gen-10-11 core-i5-i7 storage-225-512 screenSize-11 operatingSystem-11-10 dateAddedAndOrder-17012026-01">-->
-                    <div data-date="2026-01-18 10:00:00" class="product-card-container dell latitude 7420 used 32 11 i7 512 11 windows 11 RDL7420-17012026-01">
+                    <div data-date="2026-01-18 10:00:00" class="product-card-container laptop laptops dell latitude 7420 used 32 11 i7 512 11 windows 11 RDL7420-17012026-01">
 
                         <div class="product-media-container">
                             <div class="product-media-wrapper" data-gallery tabindex="0">
@@ -112,7 +147,7 @@
 
                     <!-- Product card starts here -->
                     <!-- PHONE <div class="product-card-container productName-Samsung-Apple condition-used-new ram-8-16-32 storage-225-512 screenSize-11 operatingSystem-11-10 dateAddedAndOrder-17012026-01">-->
-                        <div data-date="2026-02-10 10:00:00" class="product-card-container Samsung Galaxy S25 used 256 RSGS25-17012026-01">
+                        <div data-date="2026-02-10 10:00:00" class="product-card-container phone phones Samsung Galaxy S25 used 256 RSGS25-17012026-01">
 
                             <div class="product-media-container">
                                 <div class="product-media-wrapper" data-gallery tabindex="0">
@@ -154,7 +189,7 @@
 
                     <!-- Product card starts here -->
                     <!-- PHONE <div class="product-card-container productName-Samsung-Apple condition-used-new ram-8-16-32 storage-225-512 screenSize-11 operatingSystem-11-10 dateAddedAndOrder-17012026-01">-->
-                        <div data-date="2026-02-14 10:00:00" class="product-card-container Samsung Galaxy S25 used 128 RSGS25-17012026-02">
+                        <div data-date="2026-02-14 10:00:00" class="product-card-container phone phones Samsung Galaxy S25 used 128 RSGS25-17012026-02">
 
                             <div class="product-media-container">
                                 <div class="product-media-wrapper" data-gallery tabindex="0">
@@ -196,7 +231,7 @@
 
                     <!-- Product card starts here -->
                     <!-- IPAD <div class="product-card-container productName-Samsung-Apple condition-used-new ram-8-16-32 storage-225-512 screenSize-11 operatingSystem-11-10 dateAddedAndOrder-17012026-01">-->
-                            <div data-date="2026-02-15 10:00:00" class="product-card-container iPad used 64 RiPD10-17012026-01">
+                            <div data-date="2026-02-15 10:00:00" class="product-card-container tablet tablets iPad used 64 RiPD10-17012026-01">
     
                                 <div class="product-media-container">
                                     <div class="product-media-wrapper" data-gallery tabindex="0">
@@ -239,7 +274,7 @@
 
                     <!-- Product card starts here -->
                     <!-- WATCH <div class="product-card-container productName-Samsung-Apple condition-used-new ram-8-16-32 storage-225-512 screenSize-11 operatingSystem-11-10 dateAddedAndOrder-17012026-01">-->
-                            <div data-date="2026-02-16 10:00:00" class="product-card-container Apple Watch Ultra 2 used 64 RAWU2-17012026-01">
+                            <div data-date="2026-02-16 10:00:00" class="product-card-container watch watches Apple Watch Ultra 2 used 64 RAWU2-17012026-01">
     
                                 <div class="product-media-container">
                                     <div class="product-media-wrapper" data-gallery tabindex="0">
@@ -280,7 +315,7 @@
 
                     <!-- Product card starts here -->
                     <!-- LAPTOP <div class="product-card-container productName-HP-Dell-Apple condition-used-new ram-8-16-32 gen-10-11 core-i5-i7 storage-225-512 screenSize-11 operatingSystem-11-10 dateAddedAndOrder-17012026-01">-->
-                            <div data-date="2026-02-17 10:00:00" class="product-card-container Apple MacBook Air New 16 512 RAMBA-17012026-01">
+                            <div data-date="2026-02-17 10:00:00" class="product-card-container laptop laptops Apple MacBook Air New 16 512 RAMBA-17012026-01">
     
                                 <div class="product-media-container">
                                     <div class="product-media-wrapper" data-gallery tabindex="0">
@@ -321,7 +356,7 @@
 
                     <!-- Product card starts here -->
                     <!-- PHONE <div class="product-card-container productName-Samsung-Apple condition-used-new ram-8-16-32 storage-225-512 screenSize-11 operatingSystem-11-10 dateAddedAndOrder-17012026-01">-->
-                            <div data-date="2026-02-18 10:00:00" class="product-card-container iPhone 17 pro max new 256 RiP17PM-17012026-01">
+                            <div data-date="2026-02-18 10:00:00" class="product-card-container phone phones iPhone 17 pro max new 256 RiP17PM-17012026-01">
     
                                 <div class="product-media-container">
                                     <div class="product-media-wrapper" data-gallery tabindex="0">
