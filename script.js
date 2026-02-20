@@ -602,6 +602,7 @@ const cardObserver = new IntersectionObserver((entries, observer) => {
         card.innerHTML = await res.text();
 
         imagesLoaded(card, () => {
+            masonryInstance.options.itemSelector = '.product-card-container:not(.hidden)';
             masonryInstance.appended(card);
             masonryInstance.layout();
         });
