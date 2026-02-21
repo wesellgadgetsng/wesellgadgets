@@ -613,12 +613,13 @@ const cardObserver = new IntersectionObserver((entries, observer) => {
 
 
 // ==========================================
-// PRODUCT SEARCH FUNCTIONALITY
+// ADVANCED PRODUCT SEARCH WITH SUGGESTIONS
 // ==========================================
 (function initProductSearch() {
     const searchInput = document.getElementById('product-search');
     const searchClear = document.getElementById('search-clear');
     const searchResultsCount = document.getElementById('search-results-count');
+    const searchSuggestions = document.getElementById('search-suggestions');
     const noResults = document.getElementById('no-results');
     const searchQueryDisplay = document.getElementById('search-query-display');
     const clearSearchBtn = document.getElementById('clear-search-btn');
@@ -627,41 +628,213 @@ const cardObserver = new IntersectionObserver((entries, observer) => {
     if (!searchInput || productCards.length === 0) return;
 
     let searchTimeout;
+    let currentSuggestionIndex = -1;
 
-    // Extract searchable text from each card
+    // ==========================================
+    // EXTRACT STRUCTURED DATA FROM CARDS
+    // ==========================================
     const cardData = Array.from(productCards).map(card => {
-        const name = card.querySelector('.product-name')?.textContent || '';
-        const condition = card.querySelector('.condition')?.textContent || '';
-        const specs = card.querySelector('.specs')?.textContent || '';
-        const price = card.querySelector('.price')?.textContent || '';
-        const quantity = card.querySelector('.quantity')?.textContent || '';
+        // Extract from classList (category keywords)
+        const classList = Array.from(card.classList);
+        
+        // Extract visible content
+        const name = card.querySelector('.product-name')?.textContent?.trim() || '';
+        const condition = card.querySelector('.condition')?.textContent?.trim() || '';
+        const specs = card.querySelector('.specs')?.textContent?.trim() || '';
+        const price = card.querySelector('.price')?.textContent?.trim() || '';
+        
+        // Extract hidden keywords
+        const ram = card.querySelector('.ram.keyword')?.textContent?.trim() || '';
+        const storage = card.querySelector('.storage.keyword')?.textContent?.trim() || '';
+        const brand = card.querySelector('.brand.keyword')?.textContent?.trim() || '';
+        const processor = card.querySelector('.core.keyword, .processor.keyword')?.textContent?.trim() || '';
+        const screen = card.querySelector('.screen.keyword')?.textContent?.trim() || '';
+        const os = card.querySelector('.os.keyword')?.textContent?.trim() || '';
+        const productType = card.querySelector('.product.keyword')?.textContent?.trim() || '';
+        
+        // Determine category from classList
+        let category = '';
+        if (classList.includes('laptop') || classList.includes('laptops')) category = 'laptop';
+        else if (classList.includes('phone') || classList.includes('phones')) category = 'phone';
+        else if (classList.includes('tablet') || classList.includes('tablets')) category = 'tablet';
+        else if (classList.includes('watch') || classList.includes('watches')) category = 'watch';
         
         return {
             element: card,
-            searchText: `${name} ${condition} ${specs} ${price} ${quantity}`.toLowerCase(),
-            name: name
+            category: category,
+            name: name.toLowerCase(),
+            brand: brand.toLowerCase(),
+            condition: condition.toLowerCase(),
+            specs: specs.toLowerCase(),
+            price: price,
+            ram: ram,
+            storage: storage,
+            processor: processor.toLowerCase(),
+            screen: screen,
+            os: os.toLowerCase(),
+            productType: productType.toLowerCase(),
+            // Combined search text
+            searchText: `${name} ${brand} ${condition} ${specs} ${ram} ${storage} ${processor} ${screen} ${os} ${productType} ${category}`.toLowerCase()
         };
     });
 
-    // Search function
+    // ==========================================
+    // KEYWORD EXTRACTION & MATCHING
+    // ==========================================
+    const keywordPatterns = {
+        categories: ['laptop', 'laptops', 'phone', 'phones', 'tablet', 'tablets', 'watch', 'watches'],
+        brands: ['apple', 'dell', 'samsung', 'hp', 'lenovo', 'asus', 'acer', 'microsoft', 'huawei'],
+        ram: ['4gb', '8gb', '16gb', '32gb', '64gb', '4 gb', '8 gb', '16 gb', '32 gb', '64 gb'],
+        storage: ['128gb', '256gb', '512gb', '1tb', '2tb', '128 gb', '256 gb', '512 gb'],
+        processor: ['i3', 'i5', 'i7', 'i9', 'm1', 'm2', 'm3', 'm4', 'ryzen', 'intel', 'amd'],
+        condition: ['new', 'used', 'refurbished', 'open box', 'brand new'],
+        os: ['windows', 'mac', 'macos', 'ios', 'android', 'linux']
+    };
+
+    function extractKeywords(query) {
+        const lowerQuery = query.toLowerCase();
+        const words = lowerQuery.split(/\s+/);
+        const extracted = {
+            categories: [],
+            brands: [],
+            ram: [],
+            storage: [],
+            processor: [],
+            condition: [],
+            os: [],
+            raw: words
+        };
+
+        for (const [type, patterns] of Object.entries(keywordPatterns)) {
+            for (const pattern of patterns) {
+                if (lowerQuery.includes(pattern)) {
+                    if (!extracted[type].includes(pattern)) {
+                        extracted[type].push(pattern);
+                    }
+                }
+            }
+        }
+
+        return extracted;
+    }
+
+    // ==========================================
+    // INTELLIGENT SEARCH FUNCTION 
+    // ==========================================
     function performSearch(query) {
         const searchTerm = query.toLowerCase().trim();
-        
-        // If empty, show all cards
+
         if (searchTerm === '') {
             cardData.forEach(({ element }) => {
                 element.classList.remove('hidden');
             });
+
             updateResultsCount(cardData.length);
             hideNoResults();
+            hideSuggestions();
             relayoutMasonry();
             return;
         }
 
-        // Filter cards
+        const keywords = extractKeywords(searchTerm);
         let visibleCount = 0;
-        cardData.forEach(({ element, searchText }) => {
-            if (searchText.includes(searchTerm)) {
+
+        cardData.forEach(({ element, category = '', brand = '', searchText = '', ram = '', storage = '', processor = '', condition = '', os = '' }) => {
+
+            let matches = 0;
+            let totalCriteria = 0;
+            let shouldShow = false;
+
+            category = category.toLowerCase();
+            brand = brand.toLowerCase();
+            searchText = searchText.toLowerCase();
+            ram = ram.toLowerCase();
+            storage = storage.toLowerCase();
+            processor = processor.toLowerCase();
+            condition = condition.toLowerCase();
+            os = os.toLowerCase();
+
+            // Category
+            if (keywords.categories.length > 0) {
+                totalCriteria++;
+                if (keywords.categories.some(cat => category.includes(cat) || searchText.includes(cat))) {
+                    matches++;
+                }
+            }
+
+            // Brand
+            if (keywords.brands.length > 0) {
+                totalCriteria++;
+                if (keywords.brands.some(b => brand.includes(b) || searchText.includes(b))) {
+                    matches++;
+                }
+            }
+
+            // RAM
+            if (keywords.ram.length > 0) {
+                totalCriteria++;
+                if (keywords.ram.some(r => searchText.includes(r))) {
+                    matches++;
+                }
+            }
+
+            // Storage
+            if (keywords.storage.length > 0) {
+                totalCriteria++;
+                if (keywords.storage.some(s => searchText.includes(s))) {
+                    matches++;
+                }
+            }
+
+            // Processor
+            if (keywords.processor.length > 0) {
+                totalCriteria++;
+                if (keywords.processor.some(p => searchText.includes(p))) {
+                    matches++;
+                }
+            }
+
+            // Condition
+            if (keywords.condition.length > 0) {
+                totalCriteria++;
+                if (keywords.condition.some(c => searchText.includes(c))) {
+                    matches++;
+                }
+            }
+
+            // OS
+            if (keywords.os.length > 0) {
+                totalCriteria++;
+                if (keywords.os.some(o => searchText.includes(o))) {
+                    matches++;
+                }
+            }
+
+            // ===== STRICT MATCH LOGIC =====
+
+            // 1️⃣ Exact product name match
+            if (searchText === searchTerm) {
+                shouldShow = true;
+            }
+
+            // 2️⃣ Structured keywords → require ALL match
+            else if (totalCriteria > 0) {
+                if (matches === totalCriteria) {
+                    shouldShow = true;
+                }
+            }
+
+            // 3️⃣ No structured keywords → require ALL words
+            else {
+                const words = searchTerm.split(/\s+/);
+                const allWordsMatch = words.every(word => searchText.includes(word));
+                if (allWordsMatch) {
+                    shouldShow = true;
+                }
+            }
+
+            // Apply visibility
+            if (shouldShow) {
                 element.classList.remove('hidden');
                 visibleCount++;
             } else {
@@ -669,8 +842,8 @@ const cardObserver = new IntersectionObserver((entries, observer) => {
             }
         });
 
-        // Update UI
         updateResultsCount(visibleCount, searchTerm);
+
         if (visibleCount === 0) {
             showNoResults(query);
         } else {
@@ -680,7 +853,159 @@ const cardObserver = new IntersectionObserver((entries, observer) => {
         relayoutMasonry();
     }
 
-    // Update results count
+    // ==========================================
+    // MASONRY SAFE RELAYOUT 
+    // ==========================================
+    function relayoutMasonry() {
+        if (!masonryInstance) return;
+
+        masonryInstance.reloadItems();
+        masonryInstance.layout();
+    }
+
+    // ==========================================
+    // AUTO-SUGGESTIONS
+    // ==========================================
+    function generateSuggestions(query) {
+        const searchTerm = query.toLowerCase().trim();
+        
+        if (searchTerm.length < 2) {
+            hideSuggestions();
+            return;
+        }
+
+        const keywords = extractKeywords(searchTerm);
+        const suggestions = [];
+        const seen = new Set();
+
+        // Suggest categories
+        keywordPatterns.categories.forEach(cat => {
+            if (cat.includes(searchTerm) && !seen.has(cat)) {
+                const count = cardData.filter(item => item.category === cat.replace('s', '')).length;
+                if (count > 0) {
+                    suggestions.push({
+                        type: 'category',
+                        text: cat.charAt(0).toUpperCase() + cat.slice(1),
+                        count: count,
+                        query: cat
+                    });
+                    seen.add(cat);
+                }
+            }
+        });
+
+        // Suggest brands
+        keywordPatterns.brands.forEach(brand => {
+            if (brand.includes(searchTerm) && !seen.has(brand)) {
+                const count = cardData.filter(item => item.brand.includes(brand)).length;
+                if (count > 0) {
+                    suggestions.push({
+                        type: 'brand',
+                        text: brand.charAt(0).toUpperCase() + brand.slice(1),
+                        count: count,
+                        query: brand
+                    });
+                    seen.add(brand);
+                }
+            }
+        });
+
+        // Suggest combinations (brand + category)
+        if (keywords.brands.length > 0 || keywords.categories.length > 0) {
+            cardData.forEach(item => {
+                const combo = `${item.brand} ${item.category}`;
+                if (combo.includes(searchTerm) && !seen.has(combo) && item.brand && item.category) {
+                    const comboText = `${item.brand.charAt(0).toUpperCase() + item.brand.slice(1)} ${item.category}s`;
+                    const count = cardData.filter(c => c.brand === item.brand && c.category === item.category).length;
+                    if (count > 0) {
+                        suggestions.push({
+                            type: 'combo',
+                            text: comboText,
+                            count: count,
+                            query: combo
+                        });
+                        seen.add(combo);
+                    }
+                }
+            });
+        }
+
+        // Suggest specific products
+        cardData.forEach(item => {
+            if (item.name.includes(searchTerm) && !seen.has(item.name)) {
+                suggestions.push({
+                    type: 'product',
+                    text: item.name.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' '),
+                    count: 1,
+                    query: item.name
+                });
+                seen.add(item.name);
+            }
+        });
+
+        displaySuggestions(suggestions.slice(0, 8)); // Limit to 8 suggestions
+    }
+
+    function displaySuggestions(suggestions) {
+        if (suggestions.length === 0) {
+            hideSuggestions();
+            return;
+        }
+
+        const icons = {
+            category: '<svg class="suggestion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>',
+            brand: '<svg class="suggestion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>',
+            combo: '<svg class="suggestion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M12 1v6m0 6v6m6-12l-6 3m6 6l-6-3m-6 3l6-3m-6-6l6 3"></path></svg>',
+            product: '<svg class="suggestion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>'
+        };
+
+        let html = '';
+        let lastType = '';
+
+        suggestions.forEach((sug, index) => {
+            if (sug.type !== lastType) {
+                const categoryName = sug.type === 'combo' ? 'Popular Searches' : sug.type + 's';
+                html += `<div class="suggestion-category">${categoryName}</div>`;
+                lastType = sug.type;
+            }
+
+            const highlightedText = highlightMatch(sug.text, searchInput.value);
+            html += `
+                <div class="suggestion-item" data-query="${sug.query}" data-index="${index}">
+                    ${icons[sug.type]}
+                    <span class="suggestion-text">${highlightedText}</span>
+                    <span class="suggestion-count">${sug.count}</span>
+                </div>
+            `;
+        });
+
+        searchSuggestions.innerHTML = html;
+        searchSuggestions.style.display = 'block';
+        currentSuggestionIndex = -1;
+
+        // Add click listeners
+        searchSuggestions.querySelectorAll('.suggestion-item').forEach(item => {
+            item.addEventListener('click', () => {
+                searchInput.value = item.dataset.query;
+                performSearch(item.dataset.query);
+                hideSuggestions();
+            });
+        });
+    }
+
+    function highlightMatch(text, query) {
+        const regex = new RegExp(`(${query})`, 'gi');
+        return text.replace(regex, '<span class="highlight">$1</span>');
+    }
+
+    function hideSuggestions() {
+        searchSuggestions.style.display = 'none';
+        currentSuggestionIndex = -1;
+    }
+
+    // ==========================================
+    // UTILITY FUNCTIONS
+    // ==========================================
     function updateResultsCount(count, query = '') {
         if (query === '') {
             searchResultsCount.textContent = '';
@@ -692,80 +1017,105 @@ const cardObserver = new IntersectionObserver((entries, observer) => {
         }
     }
 
-    // Show no results message
     function showNoResults(query) {
         searchQueryDisplay.textContent = query;
         noResults.style.display = 'block';
     }
 
-    // Hide no results message
     function hideNoResults() {
         noResults.style.display = 'none';
     }
 
-// Relayout Masonry
-function relayoutMasonry() {
-    if (masonryInstance) {
-        masonryInstance.options.itemSelector = '.product-card-container:not(.hidden)';
-        
-        masonryInstance.reloadItems();
-        
-        setTimeout(() => {
-            masonryInstance.layout();
-        }, 50);
+    function relayoutMasonry() {
+        if (masonryInstance) {
+            masonryInstance.options.itemSelector = '.product-card-container:not(.hidden)';
+            masonryInstance.reloadItems();
+            setTimeout(() => {
+                masonryInstance.layout();
+            }, 50);
+        }
     }
-}
-    // Clear search
+
     function clearSearch() {
         searchInput.value = '';
         searchClear.style.display = 'none';
+        hideSuggestions();
         performSearch('');
         searchInput.focus();
     }
 
-    // Event: Input (real-time search with debounce)
+    // ==========================================
+    // EVENT LISTENERS
+    // ==========================================
     searchInput.addEventListener('input', (e) => {
         const value = e.target.value;
-        
-        // Show/hide clear button
         searchClear.style.display = value ? 'flex' : 'none';
 
-        // Debounce search for performance
         clearTimeout(searchTimeout);
+        
+        // Show suggestions immediately
+        generateSuggestions(value);
+        
+        // Debounce actual search
         searchTimeout = setTimeout(() => {
             performSearch(value);
-        }, 300); // Wait 300ms after user stops typing
+        }, 300);
     });
 
-    // Event: Clear button
-    searchClear.addEventListener('click', clearSearch);
+    searchInput.addEventListener('keydown', (e) => {
+        const suggestions = searchSuggestions.querySelectorAll('.suggestion-item');
+        
+        if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            currentSuggestionIndex = Math.min(currentSuggestionIndex + 1, suggestions.length - 1);
+            updateSuggestionHighlight(suggestions);
+        } else if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            currentSuggestionIndex = Math.max(currentSuggestionIndex - 1, -1);
+            updateSuggestionHighlight(suggestions);
+        } else if (e.key === 'Enter') {
+            e.preventDefault();
+            if (currentSuggestionIndex >= 0 && suggestions[currentSuggestionIndex]) {
+                suggestions[currentSuggestionIndex].click();
+            } else {
+                clearTimeout(searchTimeout);
+                performSearch(searchInput.value);
+                hideSuggestions();
+            }
+        } else if (e.key === 'Escape') {
+            if (searchSuggestions.style.display === 'block') {
+                hideSuggestions();
+            } else {
+                clearSearch();
+            }
+        }
+    });
 
-    // Event: Clear search button in no results
+    function updateSuggestionHighlight(suggestions) {
+        suggestions.forEach((sug, index) => {
+            if (index === currentSuggestionIndex) {
+                sug.style.background = 'linear-gradient(90deg, rgba(251, 143, 13, 0.15), rgba(251, 143, 13, 0.05))';
+                sug.style.paddingLeft = '24px';
+            } else {
+                sug.style.background = '';
+                sug.style.paddingLeft = '20px';
+            }
+        });
+    }
+
+    searchClear.addEventListener('click', clearSearch);
     clearSearchBtn.addEventListener('click', clearSearch);
 
-    // Event: Enter key to search immediately (skip debounce)
-    searchInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-            clearTimeout(searchTimeout);
-            performSearch(searchInput.value);
+    // Click outside to close suggestions
+    document.addEventListener('click', (e) => {
+        if (!searchInput.contains(e.target) && !searchSuggestions.contains(e.target)) {
+            hideSuggestions();
         }
     });
 
-    // Event: Escape key to clear search
-    searchInput.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') {
-            clearSearch();
-        }
-    });
-
-    // Accessibility: Focus trap for keyboard users
     searchInput.addEventListener('focus', () => {
-        searchInput.parentElement.style.borderColor = '#FB8F0D';
-    });
-
-    searchInput.addEventListener('blur', () => {
-        if (!searchInput.value) {
-            searchInput.parentElement.style.borderColor = 'rgba(251, 143, 13, 0.3)';
+        if (searchInput.value.length >= 2) {
+            generateSuggestions(searchInput.value);
         }
     });
 })();

@@ -663,6 +663,7 @@ padding: 4px;
       rgba(255, 255, 255, 0.05),
       rgba(251, 143, 13, 0.2)
     );
+
     -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
@@ -670,7 +671,7 @@ padding: 4px;
     z-index: 1;
 }
 
-
+  
   .product-card-container:hover {
     transform: translateY(-1px);
 
@@ -680,11 +681,13 @@ padding: 4px;
       rgba(255, 255, 255, 0.06) 100%
     );
 
+    /*
     box-shadow:
       0 0px 10px #FB8F0D,
       inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        */
+
   }
-  
   
   
 /* ==========================================
@@ -1478,3 +1481,129 @@ box-shadow:
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+.hidden {
+  display: none;
+}
+
+/* ==========================================
+   SEARCH SUGGESTIONS DROPDOWN
+   ========================================== */
+   .search-suggestions {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    right: 0;
+    max-height: 400px;
+    overflow-y: auto;
+    border-radius: 16px;
+    z-index: 1000;
+    
+    /* Glass Effect */
+    background: linear-gradient(
+      135deg,
+      rgba(40, 40, 50, 0.95) 0%,
+      rgba(30, 30, 40, 0.95) 100%
+    );
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(251, 143, 13, 0.3);
+    
+    /* Shadow */
+    box-shadow:
+      0 12px 40px rgba(0, 0, 0, 0.5),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    
+    /* Animation */
+    animation: slideDown 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .search-suggestions::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  .search-suggestions::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+  }
+  
+  .search-suggestions::-webkit-scrollbar-thumb {
+    background: rgba(251, 143, 13, 0.5);
+    border-radius: 10px;
+  }
+  
+  .search-suggestions::-webkit-scrollbar-thumb:hover {
+    background: rgba(251, 143, 13, 0.7);
+  }
+  
+  .suggestion-item {
+    padding: 12px 20px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  .suggestion-item:last-child {
+    border-bottom: none;
+  }
+  
+  .suggestion-item:hover {
+    background: linear-gradient(
+      90deg,
+      rgba(251, 143, 13, 0.15),
+      rgba(251, 143, 13, 0.05)
+    );
+    padding-left: 24px;
+  }
+  
+  .suggestion-icon {
+    width: 18px;
+    height: 18px;
+    color: #FB8F0D;
+    flex-shrink: 0;
+  }
+  
+  .suggestion-text {
+    color: #F4F4F2;
+    font-size: 14px;
+    flex: 1;
+  }
+  
+  .suggestion-text .highlight {
+    color: #FB8F0D;
+    font-weight: 600;
+  }
+  
+  .suggestion-count {
+    color: #B1B1B1;
+    font-size: 12px;
+    background: rgba(251, 143, 13, 0.1);
+    padding: 2px 8px;
+    border-radius: 12px;
+  }
+  
+  .suggestion-category {
+    padding: 8px 20px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #FB8F0D;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    background: rgba(251, 143, 13, 0.1);
+    border-bottom: 1px solid rgba(251, 143, 13, 0.2);
+  }
+  
