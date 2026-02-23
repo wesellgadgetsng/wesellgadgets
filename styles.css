@@ -1607,3 +1607,281 @@ box-shadow:
     border-bottom: 1px solid rgba(251, 143, 13, 0.2);
   }
   
+
+  /* ==========================================
+   ABOUT PAGE STYLING
+   ========================================== */
+.about-page {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 60px 24px 80px;
+  min-height: 100vh;
+  
+  
+  /* Premium gradient background */
+  background: 
+    radial-gradient(ellipse at top, rgba(251, 143, 13, 0.12), transparent 50%),
+    radial-gradient(ellipse at bottom, rgba(30, 30, 40, 1), rgba(15, 15, 20, 1));
+}
+
+.about-hero {
+  text-align: center;
+  margin-bottom: 60px;
+  animation: fadeInUp 0.8s ease;
+}
+
+.about-hero h1 {
+  font-size: 48px;
+  margin: 0 0 16px 0;
+  color: #F4F4F2;
+  font-weight: 700;
+}
+
+.about-hero h1 span {
+  color: #FB8F0D;
+  text-shadow: 0 0 20px rgba(251, 143, 13, 0.5);
+}
+
+.about-subtitle {
+  font-size: 20px;
+  color: #FBDDB8;
+  margin: 0;
+  font-weight: 400;
+}
+
+.about-content {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+/* Glass About Cards */
+.about-card {
+  padding: 32px;
+  border-radius: 20px;
+
+  box-sizing: border-box;
+
+  
+  /* Crystal glass effect */
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.12) 0%,
+    rgba(255, 255, 255, 0.04) 100%
+  );
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  animation: fadeInUp 0.8s ease backwards;
+}
+
+.about-card:nth-child(2) { animation-delay: 0.1s; }
+.about-card:nth-child(3) { animation-delay: 0.2s; }
+.about-card:nth-child(4) { animation-delay: 0.3s; }
+
+.about-card:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 12px 40px rgba(251, 143, 13, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.15) 0%,
+    rgba(255, 255, 255, 0.06) 100%
+  );
+}
+
+.about-icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  
+  background: linear-gradient(
+    135deg,
+    rgba(251, 143, 13, 0.2),
+    rgba(251, 143, 13, 0.05)
+  );
+  border: 2px solid rgba(251, 143, 13, 0.3);
+}
+
+.about-card h2 {
+  color: #F4F4F2;
+  font-size: 28px;
+  margin: 0 0 16px 0;
+  text-align: center;
+}
+
+.about-card p {
+  color: #E0E0E0;
+  font-size: 16px;
+  line-height: 1.8;
+  margin: 0 0 16px 0;
+}
+
+.about-card p:last-child {
+  margin-bottom: 0;
+}
+
+.about-list {
+  list-style: none;
+  padding: 0;
+  margin: 16px 0;
+}
+
+.about-list li {
+  color: #E0E0E0;
+  font-size: 16px;
+  line-height: 1.8;
+  padding: 8px 0 8px 32px;
+  position: relative;
+}
+
+.inline-link {
+  color: #FB8F0D;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.inline-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #FB8F0D;
+  transition: width 0.3s ease;
+}
+
+.inline-link:hover::after {
+  width: 100%;
+}
+
+/* Highlight Card */
+.highlight-card {
+  background: linear-gradient(
+    135deg,
+    rgba(251, 143, 13, 0.15) 0%,
+    rgba(251, 143, 13, 0.05) 100%
+  );
+  border: 1px solid rgba(251, 143, 13, 0.3);
+}
+
+.about-cta {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin-top: 24px;
+  flex-wrap: wrap;
+}
+
+/* Thank You Section */
+.about-thank-you {
+  text-align: center;
+  padding: 48px 32px;
+  margin-top: 32px;
+  border-radius: 20px;
+  
+  background: linear-gradient(
+    135deg,
+    rgba(251, 143, 13, 0.1),
+    rgba(251, 143, 13, 0.02)
+  );
+  border: 2px dashed rgba(251, 143, 13, 0.3);
+  animation: fadeInUp 1s ease backwards;
+  animation-delay: 0.4s;
+}
+
+.about-thank-you svg {
+  margin-bottom: 24px;
+  animation: heartbeat 2s ease infinite;
+}
+
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  10%, 30% { transform: scale(1.1); }
+  20%, 40% { transform: scale(1); }
+}
+
+.about-thank-you h2 {
+  color: #F4F4F2;
+  font-size: 32px;
+  margin: 0 0 16px 0;
+}
+
+.about-thank-you p {
+  color: #FBDDB8;
+  font-size: 18px;
+  margin: 0;
+  line-height: 1.6;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .about-page {
+    padding: 40px 16px 60px;
+  }
+
+  .about-hero h1 {
+    font-size: 36px;
+  }
+
+  .about-subtitle {
+    font-size: 16px;
+  }
+
+  .about-card {
+    padding: 24px;
+  }
+
+  .about-card h2 {
+    font-size: 24px;
+  }
+
+  .about-cta {
+    flex-direction: column;
+  }
+
+  .about-cta a {
+    width: 100%;
+  }
+
+  .about-cta button {
+    width: 100%;
+  }
+
+  .about-thank-you h2 {
+    font-size: 24px;
+  }
+
+  .about-thank-you p {
+    font-size: 16px;
+  }
+}

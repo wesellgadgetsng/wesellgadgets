@@ -718,140 +718,124 @@ const cardObserver = new IntersectionObserver((entries, observer) => {
         return extracted;
     }
 
-    // ==========================================
-    // INTELLIGENT SEARCH FUNCTION 
-    // ==========================================
-    function performSearch(query) {
-        const searchTerm = query.toLowerCase().trim();
-
-        if (searchTerm === '') {
-            cardData.forEach(({ element }) => {
-                element.classList.remove('hidden');
-            });
-
-            updateResultsCount(cardData.length);
-            hideNoResults();
-            hideSuggestions();
-            relayoutMasonry();
-            return;
-        }
-
-        const keywords = extractKeywords(searchTerm);
-        let visibleCount = 0;
-
-        cardData.forEach(({ element, category = '', brand = '', searchText = '', ram = '', storage = '', processor = '', condition = '', os = '' }) => {
-
-            let matches = 0;
-            let totalCriteria = 0;
-            let shouldShow = false;
-
-            category = category.toLowerCase();
-            brand = brand.toLowerCase();
-            searchText = searchText.toLowerCase();
-            ram = ram.toLowerCase();
-            storage = storage.toLowerCase();
-            processor = processor.toLowerCase();
-            condition = condition.toLowerCase();
-            os = os.toLowerCase();
-
-            // Category
-            if (keywords.categories.length > 0) {
-                totalCriteria++;
-                if (keywords.categories.some(cat => category.includes(cat) || searchText.includes(cat))) {
-                    matches++;
-                }
-            }
-
-            // Brand
-            if (keywords.brands.length > 0) {
-                totalCriteria++;
-                if (keywords.brands.some(b => brand.includes(b) || searchText.includes(b))) {
-                    matches++;
-                }
-            }
-
-            // RAM
-            if (keywords.ram.length > 0) {
-                totalCriteria++;
-                if (keywords.ram.some(r => searchText.includes(r))) {
-                    matches++;
-                }
-            }
-
-            // Storage
-            if (keywords.storage.length > 0) {
-                totalCriteria++;
-                if (keywords.storage.some(s => searchText.includes(s))) {
-                    matches++;
-                }
-            }
-
-            // Processor
-            if (keywords.processor.length > 0) {
-                totalCriteria++;
-                if (keywords.processor.some(p => searchText.includes(p))) {
-                    matches++;
-                }
-            }
-
-            // Condition
-            if (keywords.condition.length > 0) {
-                totalCriteria++;
-                if (keywords.condition.some(c => searchText.includes(c))) {
-                    matches++;
-                }
-            }
-
-            // OS
-            if (keywords.os.length > 0) {
-                totalCriteria++;
-                if (keywords.os.some(o => searchText.includes(o))) {
-                    matches++;
-                }
-            }
-
-            // ===== STRICT MATCH LOGIC =====
-
-            // 1️⃣ Exact product name match
-            if (searchText === searchTerm) {
-                shouldShow = true;
-            }
-
-            // 2️⃣ Structured keywords → require ALL match
-            else if (totalCriteria > 0) {
-                if (matches === totalCriteria) {
-                    shouldShow = true;
-                }
-            }
-
-            // 3️⃣ No structured keywords → require ALL words
-            else {
-                const words = searchTerm.split(/\s+/);
-                const allWordsMatch = words.every(word => searchText.includes(word));
-                if (allWordsMatch) {
-                    shouldShow = true;
-                }
-            }
-
-            // Apply visibility
-            if (shouldShow) {
-                element.classList.remove('hidden');
-                visibleCount++;
-            } else {
-                element.classList.add('hidden');
-            }
+// ==========================================
+// INTELLIGENT SEARCH FUNCTION (FIXED)
+// ==========================================
+function performSearch(query) {
+    const searchTerm = query.toLowerCase().trim();
+    
+    // If empty, show all cards
+    if (searchTerm === '') {
+        cardData.forEach(({ element }) => {
+            element.classList.remove('hidden');
         });
+        updateResultsCount(cardData.length);
+        hideNoResults();
+        hideSuggestions();
+        relayoutMasonry();
+        return;
+    }
 
-        updateResultsCount(visibleCount, searchTerm);
+    // Extract keywords from query
+    const keywords = extractKeywords(searchTerm);
+    
+    // Determine if this is a specific product search (exact name match)
+    const isExactProductSearch = cardData.some(item => item.name === searchTerm);
+    
+    // Filter cards with intelligent matching
+    let visibleCount = 0;
+    cardData.forEach(({ element, category, brand, name, searchText, ram, storage, processor, condition, os }) => {
+        let shouldShow = false;
+        
+        // EXACT PRODUCT NAME MATCH (highest priority)
+        if (name === searchTerm) {
+            shouldShow = true;
+        }
+        // KEYWORD-BASED MATCHING (requires ALL criteria to match)
+        else if (keywords.categories.length > 0 || keywords.brands.length > 0 || 
+                 keywords.ram.length > 0 || keywords.storage.length > 0 || 
+                 keywords.processor.length > 0 || keywords.condition.length > 0 || 
+                 keywords.os.length > 0) {
+            
+            let allMatch = true; // Start with true, invalidate if any criteria fails
+            
+            // Category matching - MUST match if specified
+            if (keywords.categories.length > 0) {
+                const categoryMatch = keywords.categories.some(cat => 
+                    category.includes(cat.replace('s', '')) || 
+                    category === cat.replace('s', '')
+                );
+                if (!categoryMatch) allMatch = false;
+            }
 
-        if (visibleCount === 0) {
-            showNoResults(query);
-        } else {
-            hideNoResults();
+            // Brand matching - MUST match if specified
+            if (keywords.brands.length > 0 && allMatch) {
+                const brandMatch = keywords.brands.some(b => brand.includes(b));
+                if (!brandMatch) allMatch = false;
+            }
+
+            // RAM matching - MUST match if specified
+            if (keywords.ram.length > 0 && allMatch) {
+                const ramMatch = keywords.ram.some(r => {
+                    const ramValue = r.replace(/\s+/g, '').replace('gb', '');
+                    return ram.includes(ramValue);
+                });
+                if (!ramMatch) allMatch = false;
+            }
+
+            // Storage matching - MUST match if specified
+            if (keywords.storage.length > 0 && allMatch) {
+                const storageMatch = keywords.storage.some(s => {
+                    const storageValue = s.replace(/\s+/g, '').replace('gb', '').replace('tb', '');
+                    return storage.includes(storageValue);
+                });
+                if (!storageMatch) allMatch = false;
+            }
+
+            // Processor matching - MUST match if specified
+            if (keywords.processor.length > 0 && allMatch) {
+                const processorMatch = keywords.processor.some(p => processor.includes(p));
+                if (!processorMatch) allMatch = false;
+            }
+
+            // Condition matching - MUST match if specified
+            if (keywords.condition.length > 0 && allMatch) {
+                const conditionMatch = keywords.condition.some(c => condition.includes(c));
+                if (!conditionMatch) allMatch = false;
+            }
+
+            // OS matching - MUST match if specified
+            if (keywords.os.length > 0 && allMatch) {
+                const osMatch = keywords.os.some(o => os.includes(o));
+                if (!osMatch) allMatch = false;
+            }
+
+            shouldShow = allMatch;
+        }
+        // FALLBACK: General text search (for non-keyword queries)
+        else {
+            shouldShow = searchText.includes(searchTerm);
         }
 
-        relayoutMasonry();
+        // Apply visibility
+        if (shouldShow) {
+            element.classList.remove('hidden');
+            visibleCount++;
+        } else {
+            element.classList.add('hidden');
+        }
+    });
+
+    // Update UI
+    updateResultsCount(visibleCount, searchTerm);
+    if (visibleCount === 0) {
+        showNoResults(query);
+    } else {
+        hideNoResults();
     }
+
+    relayoutMasonry();
+}
 
     // ==========================================
     // MASONRY SAFE RELAYOUT 

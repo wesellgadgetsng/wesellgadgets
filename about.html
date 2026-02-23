@@ -1,130 +1,190 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About Us - wesellgadgets</title>
+    
+    <link rel="stylesheet" href="normalize.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap" rel="stylesheet">
+</head>
 
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<body>
+    <div id="body-container">
+        <!-- Navigation Bar -->
+        <nav class="nav-bar">
+            <a href="index.html">
+                <div id="logo">
+                    <div id="logo-circle">
+                        <div id="logo-bar"></div>
+                    </div>
+                    <p id="logo-text">wesell<span>gadgets</span></p>
+                </div>
+            </a>
 
-        <title>We sell high quality gadgets in Nigeria and deliver Nationwide</title>
+            <div class="nav-right">
+                <div class="nav-links">
+                    <a href="index.html">Home</a>
+                    <a href="about.html" class="active">About</a>
+                    <a href="contact.html">Contact</a>
+                    <a href="https://wa.me/+2347039661343" target="_blank" rel="noopener noreferrer" >Order on WhatsApp</a>
+                </div>
         
-        <link rel="stylesheet" href="normalize.css">
-        <link rel="stylesheet" href="styles.css">
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>          
+        </nav>
 
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap" rel="stylesheet">
+        <div class="top-banner">
+            <p>Good meals 🍲 take time, our web store is still in progress, <span><a href="https://wa.me/2347039661343" target="_blank" rel="noopener noreferrer" >Message us on WhatsApp</a></span> to solve all your gadget needs.</p>
+        </div>
 
-    </head>
-    <body>
-        
+        <!-- About Section -->
+        <section class="about-page">
+            <div class="about-hero">
+                <h1>About <span>wesellgadgets</span></h1>
+                <p class="about-subtitle">Your Trusted Partner for Quality Gadgets in Nigeria</p>
+            </div>
 
-        <div id="body-container">
-            <nav class="nav-bar">
-            <!-- Logo on the Left -->
+            <div class="about-content">
+                <!-- Who We Are -->
+                <div class="about-card">
+                    <div class="about-icon">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#FB8F0D" stroke-width="2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                    </div>
+                    <h2>Who We Are</h2>
+                    <p>We are an <strong>online gadgets store</strong> powered by a community of <strong>verified and trusted suppliers</strong> with primary locations in <strong>Computer Village, Ikeja, Lagos</strong>. Every product we offer is thoroughly checked and tested to ensure you receive only the highest quality gadgets with complete buyer protection.</p>
+                </div>
+
+                <!-- What We Offer -->
+                <div class="about-card">
+                    <div class="about-icon">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#FB8F0D" stroke-width="2">
+                            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                        </svg>
+                    </div>
+                    <h2>What We Offer</h2>
+                    <p>We provide <strong>retail and bulk supplies</strong> for new and preowned gadgets including:</p>
+                    <ul class="about-list">
+                        <li>📱 Smartphones & Tablets</li>
+                        <li>💻 Laptops & Desktop Computers</li>
+                        <li>🎮 Gaming Consoles & Accessories</li>
+                        <li>⌚ Smartwatches & Wearables</li>
+                        <li>🏢 Personal & Office Supplies</li>
+                    </ul>
+                    <p>Can't find what you need? <a href="contact.html" class="inline-link">Reach out to us</a> and we'll help you source it!</p>
+                </div>
+
+                <!-- Our Promise -->
+                <div class="about-card">
+                    <div class="about-icon">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#FB8F0D" stroke-width="2">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                        </svg>
+                    </div>
+                    <h2>Our Promise</h2>
+                    <p>We are committed to transparency and customer satisfaction. Our <a href="#" class="inline-link">Terms of Service</a>, <a href="#" class="inline-link">Conditions</a>, and <a href="#" class="inline-link">Privacy Policy</a> clearly outline how we serve and protect you.</p>
+                    <p>Your feedback and suggestions are invaluable to us. We continuously improve our services based on what you tell us. <a href="contact.html" class="inline-link">Share your thoughts</a> with us!</p>
+                </div>
+
+                <!-- Location & Contact -->
+                <div class="about-card highlight-card">
+                    <div class="about-icon">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#FB8F0D" stroke-width="2">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                            <circle cx="12" cy="10" r="3"></circle>
+                        </svg>
+                    </div>
+                    <h2>Find Us</h2>
+                    <p><strong>Primary Location:</strong> Computer Village, Ikeja, Lagos, Nigeria</p>
+                    <p><strong>Nationwide Delivery:</strong> We ship to all states across Nigeria</p>
+                    <div class="about-cta">
+                        <a href="contact.html"><button class="button-1">Contact Us</button></a>
+                        <a href="https://wa.me/+2347039661343" target="_blank" rel="noopener noreferrer" ><button class="button-2">WhatsApp</button></a>
+                    </div>
+                </div>
+
+                <!-- Thank You Message -->
+                <div class="about-thank-you">
+                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#FB8F0D" stroke-width="2">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                    </svg>
+                    <h2>Thank You for Letting Us Serve You</h2>
+                    <p>We appreciate your trust and look forward to helping you find the perfect gadgets for your needs.</p>
+                </div>
+            </div>
+        </section>
+
+        <footer>
             <div id="logo">
                 <div id="logo-circle">
                 <div id="logo-bar"></div>
                 </div>
                 <p id="logo-text">wesell<span>gadgets</span></p>
             </div>
-        
-            <!-- Right Side: Links + Hamburger -->
-            <div class="nav-right">
-                <!-- Navigation Links -->
-                <div class="nav-links">
-                    <a href="index.html" class="active">Home</a>
-                    <a href="product-feed.html" class="feed products">Products</a>
-                    <a href="about.html">About</a>
-                    <a href="contact.html">Contact</a>
-                    <a href="https://wa.me/+2347039661343" target="_blank">Order on WhatsApp</a>
-                </div>
 
-        
-                <!-- Hamburger Menu (always on far right) -->
-                <div class="hamburger" id="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-                </div>
-            </div>          
-            </nav>
+            <P class="footer-summary">We offer high-quality new and pre-owned gadgets; phones, laptops, gaming consoles, accessories, and more–delivered anywhere in Nigeria.</P>
 
-            <div class="top-banner"><p>Good meals 🍲 take time, our web store is still in progress, <span><a href="https://wa.me/2348012345678" target="_blank">Message us on WhatsApp</a></span> to solve all your gadget needs.</p></div>
-
-            <section id="hero-section">
-                <div id="hero-content">
-                    <video 
-                    src="media/herovideo.mp4" 
-                    type="video/mp4"
-                    autoplay 
-                    loop 
-                    muted 
-                    playsinline 
-                    class="hero-video">
-                    </video>
-
-                    <h1>Your <span>Trusted</span> Store for <span>Quality</span> Gadgets in Nigeria</h1>
-                    <p>Phones, Laptops, Gaming, Accessories – Delivered Nationwide</p>
-
-                    <a href="https://wa.me/+2347039661343" target="_blank">
-                        <button class="button-1">Order on WhatsApp</button>
-                    </a>
-
-                </div>
-
-
-            </section>
-
-
-            <section class="product-feed-intro">
-                <h3>Explore our Product Feed</h3>
-                <p>See our lightening ⚡ deals</p>
-
-                <a href="product-feed.html"><button class="button-2">Explore</button></a>
-            </section>
-
-            <footer>
-                <div id="logo">
-                    <div id="logo-circle">
-                    <div id="logo-bar"></div>
-                    </div>
-                    <p id="logo-text">wesell<span>gadgets</span></p>
-                </div>
-
-                <P class="footer-summary">What we do is simple, we sell high quality new and used gadgets; phones, laptops, gaming, accessories and more. We deliver nationwide.</P>
-
-                <P class="footer-disclaimer">Disclaimer: All product information, logos, and other trademarked items are properties of their respective brands, we only provide retail services and are not affiliated to these brands.</P>
-    
-                <div class="footer-links">
-                    <a href="about.html" class="active">About</a>
-                    <a href="contact.html">Contact</a>
-                    <a href="#">Reviews</a>
-                    <a href="#">Terms and Conditions</a>
-                    <a href="product-feed.html" class="feed products">Products</a>
-                </div>
-
-                <div class="to-top"><a href="#body-container">Top</a></div>
-
-                <hr>
-                
-                <p id="copyright">© wesellgadgetsng 2025</p>
-                    
+            <P class="footer-disclaimer">Disclaimer: All trademarks and logos belong to their respective owners. We are an independent retailer and are not affiliated with any listed brands.</P>
             
-            </footer>
-    
-    
-        </div>
-        <script>
-            const hamburger = document.querySelector(".hamburger");
-            const navLinks = document.querySelector(".nav-links");
+            <div class="social-icon-container">
+                <a class="x" href="https://x.com/WeSellGadgetsng?t=sSGZJEBamef6u05BIMBuiw&s=09" target="_blank" rel="noopener noreferrer">
+                    <div class="social-icon"><img class="social-icon-img" src="media/x-icon.svg" alt="Follow us on X"></div>
+                </a>
+                
+                <a class="facebook" href="https://www.facebook.com/wesellgadgets.2025" target="_blank" rel="noopener noreferrer">
+                    <div class="social-icon"><img class="social-icon-img" src="media/facebook-icon.svg" alt="Follow us on Facebook"></div>
+                </a>
+                
+                <a class="instagram" href="https://www.instagram.com/wesellgadgets.ng?igsh=bWhneGxjYmVseThq" target="_blank" rel="noopener noreferrer">
+                    <div class="social-icon"><img class="social-icon-img" src="media/instagram-icon.svg" alt="Follow us on Instagram"></div>
+                </a>
+                
+                <a class="threads" href="https://www.threads.com/@wesellgadgets.ng" target="_blank" rel="noopener noreferrer">
+                    <div class="social-icon"><img class="social-icon-img" src="media/threads-icon.svg" alt="Follow us on Threads"></div>
+                </a>
+                
+                <a class="tiktok" href="https://www.tiktok.com/@wesellgadgets.ng" target="_blank" rel="noopener noreferrer">
+                    <div class="social-icon"><img class="social-icon-img" src="media/tiktok-icon.svg" alt="Follow us on TikTok"></div>
+                </a>
+                
+                <a class="whatsapp" href="https://wa.me/+2347039661343" target="_blank" rel="noopener noreferrer">
+                    <div class="social-icon"><img class="social-icon-img" src="media/whatsapp-icon.svg" alt="Contact us on WhatsApp"></div>
+                </a>
 
-            hamburger.addEventListener("click", () => {
-                // Toggle the .active class on the hamburger (for animation)
-                hamburger.classList.toggle("active");
-                // Toggle the .active class on the links (to show/hide)
-                navLinks.classList.toggle("active");
-            });
-        </script>
-    </body>
+            </div>
 
+            <div class="footer-links">
+                <a href="about.html" class="active">About</a>
+                <a href="contact.html">Contact</a>
+                <a href="#">Reviews</a>
+                <a href="#">Terms and Conditions</a>
+                <a href="index.html" class="feed products">Home</a>
+            </div>
+
+
+            <div class="to-top"><a href="#top">Top</a></div>
+
+            
+            <p id="copyright">© wesellgadgetsng 2025 - present</p>
+                
+        
+        </footer>
+
+        <div class="to-top"><a href="#body-container">Top</a></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
 </html>
