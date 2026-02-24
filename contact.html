@@ -3,112 +3,250 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Contact Us | WeSellGadgets</title>
-    
+    <title>Contact Us — wesellgadgets | Reach Out Anytime</title>
+
     <link rel="stylesheet" href="normalize.css">
     <link rel="stylesheet" href="styles.css">
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap" rel="stylesheet">
 </head>
+
 <body>
     <div id="body-container">
-        <!-- Navigation Bar -->
+
+        <!-- Navigation -->
         <nav class="nav-bar">
-            <!-- Logo on the Left -->
-            <div id="logo">
-                <div id="logo-circle">
-                    <div id="logo-bar"></div>
+            <a href="index.html">
+                <div id="logo">
+                    <div id="logo-circle"><div id="logo-bar"></div></div>
+                    <p id="logo-text">wesell<span>gadgets</span></p>
                 </div>
-                <p id="logo-text">wesell<span>gadgets</span></p>
-            </div>
-        
-            <!-- Right Side: Links + Hamburger -->
+            </a>
             <div class="nav-right">
-                <!-- Navigation Links -->
                 <div class="nav-links">
                     <a href="index.html">Home</a>
-                    <a href="product-feed.html" class="feed products">Products</a>
                     <a href="about.html">About</a>
                     <a href="contact.html" class="active">Contact</a>
-                    <a href="https://wa.me/2348012345678" target="_blank">Order on WhatsApp</a>
+                    <a href="https://wa.me/+2347039661343" target="_blank" rel="noopener noreferrer">Order on WhatsApp</a>
                 </div>
-
-                <!-- Hamburger Menu -->
-                <div class="hamburger" id="hamburger">
-                    <span></span>
-                    <span></span>
-                    <span></span>
+                <div class="hamburger">
+                    <span></span><span></span><span></span>
                 </div>
-            </div>          
+            </div>
         </nav>
 
-        <!-- Main Content -->
-        <main>
-            <h1>Contact WeSellGadgets</h1>
-            <p>If you have any questions, feedback, or need assistance, feel free to reach out to us. We are always happy to help!</p>
+        <!-- Background -->
+        <div class="background-wrapper">
+            <img src="media/background.jpg" alt="background" class="background-image">
+            <div class="frost-overlay"></div>
+        </div>
 
-            <!-- Contact Form -->
-            <form action="#" method="POST" class="contact-form">
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="name" required>
+        <!-- Top Banner -->
+        <div class="top-banner">
+            <p>Good meals 🍲 take time, our web store is still in progress, <span><a href="https://wa.me/2347039661343" target="_blank" rel="noopener noreferrer">Message us on WhatsApp</a></span> to meet your gadget needs.</p>
+        </div>
 
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
+        <!-- Contact Page Content -->
+        <main class="contact-page">
 
-                <label for="message">Message:</label>
-                <textarea id="message" name="message" required></textarea>
-
-                <button type="submit">Send Message</button>
-            </form>
-
-            <!-- Contact Info -->
-            <section class="contact-info">
-                <h2>Other ways to reach us:</h2>
-                <p>WhatsApp: <a href="https://wa.me/2348012345678" target="_blank">+234 801 234 5678</a></p>
-                <p>Email: <a href="mailto:info@wesellgadgetsng.com">info@wesellgadgetsng.com</a></p>
-                <p>Location: Nationwide delivery across Nigeria</p>
+            <!-- Hero -->
+            <section class="contact-hero">
+                <p class="about-eyebrow">Get In Touch</p>
+                <h1>We're Here to <span>Help You</span></h1>
+                <p class="about-subtitle">Whether you have a question, need a product sourced, or want to place a bulk order — we respond fast.</p>
             </section>
+
+            <!-- Contact Cards Grid -->
+            <div class="contact-grid">
+
+                <!-- WhatsApp - Primary CTA -->
+                <a href="https://wa.me/+2347039661343" target="_blank" rel="noopener noreferrer" class="contact-card-link">
+                    <div class="contact-method-card contact-method-card--primary">
+                        <div class="contact-method-icon contact-method-icon--whatsapp">
+                            <svg width="36" height="36" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.126.554 4.118 1.512 5.857L.057 23.882l6.186-1.431A11.956 11.956 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.813 9.813 0 0 1-5.093-1.43l-.365-.216-3.674.849.87-3.583-.238-.378A9.795 9.795 0 0 1 2.182 12C2.182 6.579 6.579 2.182 12 2.182S21.818 6.579 21.818 12 17.421 21.818 12 21.818z"/></svg>
+                        </div>
+                        <div class="contact-method-body">
+                            <p class="contact-method-tag">Fastest Response</p>
+                            <h3>Chat on WhatsApp</h3>
+                            <p>Send us a message directly. We typically reply within minutes during business hours.</p>
+                            <p class="contact-method-detail">+234 703 966 1343</p>
+                        </div>
+                        <svg class="contact-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </div>
+                </a>
+
+                <!-- Email -->
+                <a href="mailto:wesellgadgetsng@gmail.com" class="contact-card-link">
+                    <div class="contact-method-card">
+                        <div class="contact-method-icon contact-method-icon--email">
+                            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#FB8F0D" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                        </div>
+                        <div class="contact-method-body">
+                            <p class="contact-method-tag">Email Us</p>
+                            <h3>Send an Email</h3>
+                            <p>For formal enquiries, bulk orders, and partnership requests. We respond within 24 hours.</p>
+                            <p class="contact-method-detail">wesellgadgetsng@gmail.com</p>
+                        </div>
+                        <svg class="contact-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </div>
+                </a>
+
+                <!-- Instagram -->
+                <a href="https://www.instagram.com/wesellgadgets.ng?igsh=bWhneGxjYmVseThq" target="_blank" rel="noopener noreferrer" class="contact-card-link">
+                    <div class="contact-method-card">
+                        <div class="contact-method-icon contact-method-icon--instagram">
+                            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="url(#ig-grad)" stroke-width="2"><defs><linearGradient id="ig-grad" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#f09433"/><stop offset="25%" style="stop-color:#e6683c"/><stop offset="50%" style="stop-color:#dc2743"/><stop offset="75%" style="stop-color:#cc2366"/><stop offset="100%" style="stop-color:#bc1888"/></linearGradient></defs><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                        </div>
+                        <div class="contact-method-body">
+                            <p class="contact-method-tag">Follow & DM Us</p>
+                            <h3>Instagram</h3>
+                            <p>Browse our latest products, deals, and updates. Slide into our DMs anytime.</p>
+                            <p class="contact-method-detail">@wesellgadgets.ng</p>
+                        </div>
+                        <svg class="contact-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </div>
+                </a>
+
+                <!-- Facebook -->
+                <a href="https://www.facebook.com/wesellgadgets.2025" target="_blank" rel="noopener noreferrer" class="contact-card-link">
+                    <div class="contact-method-card">
+                        <div class="contact-method-icon contact-method-icon--facebook">
+                            <svg width="36" height="36" viewBox="0 0 24 24" fill="#1877F2"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                        </div>
+                        <div class="contact-method-body">
+                            <p class="contact-method-tag">Like Our Page</p>
+                            <h3>Facebook</h3>
+                            <p>Stay updated with our product listings, promotions, and community updates.</p>
+                            <p class="contact-method-detail">wesellgadgets.2025</p>
+                        </div>
+                        <svg class="contact-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </div>
+                </a>
+
+                <!-- X / Twitter -->
+                <a href="https://x.com/WeSellGadgetsng?t=sSGZJEBamef6u05BIMBuiw&s=09" target="_blank" rel="noopener noreferrer" class="contact-card-link">
+                    <div class="contact-method-card">
+                        <div class="contact-method-icon contact-method-icon--x">
+                            <svg width="36" height="36" viewBox="0 0 24 24" fill="#F4F4F2"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.259 5.63zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                        </div>
+                        <div class="contact-method-body">
+                            <p class="contact-method-tag">Follow Us on X</p>
+                            <h3>X (Twitter)</h3>
+                            <p>Follow for real-time deals, restocks, and gadget news. Tag us in your orders!</p>
+                            <p class="contact-method-detail">@WeSellGadgetsng</p>
+                        </div>
+                        <svg class="contact-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </div>
+                </a>
+
+                <!-- TikTok -->
+                <a href="https://www.tiktok.com/@wesellgadgets.ng" target="_blank" rel="noopener noreferrer" class="contact-card-link">
+                    <div class="contact-method-card">
+                        <div class="contact-method-icon contact-method-icon--tiktok">
+                            <svg width="36" height="36" viewBox="0 0 24 24" fill="#F4F4F2"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.78a4.85 4.85 0 0 1-1.02-.09z"/></svg>
+                        </div>
+                        <div class="contact-method-body">
+                            <p class="contact-method-tag">Watch Our Videos</p>
+                            <h3>TikTok</h3>
+                            <p>Watch product reviews, unboxings, and behind-the-scenes content from our team.</p>
+                            <p class="contact-method-detail">@wesellgadgets.ng</p>
+                        </div>
+                        <svg class="contact-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </div>
+                </a>
+
+            </div>
+
+            <!-- FAQ Section -->
+            <section class="contact-faq">
+                <h2>Frequently Asked Questions</h2>
+                <div class="faq-grid">
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FB8F0D" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                            <h4>Do you deliver nationwide?</h4>
+                        </div>
+                        <p>Yes! We deliver to all 36 states and the FCT. Delivery timelines and costs vary by location. Contact us for a delivery quote to your area.</p>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FB8F0D" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                            <h4>Can I inspect a product before buying?</h4>
+                        </div>
+                        <p>For Lagos-based customers, in-person inspection at our Computer Village location can be arranged. Contact us to schedule a visit.</p>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FB8F0D" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                            <h4>Do you offer bulk or wholesale pricing?</h4>
+                        </div>
+                        <p>Yes, we offer competitive pricing for bulk and wholesale orders for businesses, schools, and organisations. Reach out to discuss your requirements.</p>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FB8F0D" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                            <h4>What if I can't find a product on your site?</h4>
+                        </div>
+                        <p>No problem! Contact us via WhatsApp or email with the product details. Our supplier network is extensive and we can source most gadgets on request.</p>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FB8F0D" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                            <h4>What payment methods do you accept?</h4>
+                        </div>
+                        <p>We accept bank transfers and payments via major Nigerian banks. Payment details are provided when you place your order via WhatsApp or email.</p>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FB8F0D" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                            <h4>How quickly do you respond to enquiries?</h4>
+                        </div>
+                        <p>WhatsApp messages are typically answered within minutes during business hours (8am–9pm daily). Email responses are within 24 hours.</p>
+                    </div>
+
+                </div>
+            </section>
+
         </main>
 
         <!-- Footer -->
         <footer>
             <div id="logo">
-                <div id="logo-circle">
-                    <div id="logo-bar"></div>
-                </div>
+                <div id="logo-circle"><div id="logo-bar"></div></div>
                 <p id="logo-text">wesell<span>gadgets</span></p>
             </div>
+            <p class="footer-summary">We offer high-quality new and pre-owned gadgets; phones, laptops, gaming consoles, accessories, and more — delivered anywhere in Nigeria.</p>
+            <p class="footer-disclaimer">Disclaimer: All trademarks and logos belong to their respective owners. We are an independent retailer and are not affiliated with any listed brands.</p>
 
-            <p class="footer-summary">What we do is simple, we sell high quality new and used gadgets; phones, laptops, gaming, accessories and more. We deliver nationwide.</p>
-
-            <p class="footer-disclaimer">Disclaimer: All product information, logos, and other trademarked items are properties of their respective brands, we only provide retail services and are not affiliated to these brands.</p>
+            <div class="social-icon-container">
+                <a class="x" href="https://x.com/WeSellGadgetsng?t=sSGZJEBamef6u05BIMBuiw&s=09" target="_blank" rel="noopener noreferrer"><div class="social-icon"><img class="social-icon-img" src="media/x-icon.svg" alt="Follow us on X"></div></a>
+                <a class="facebook" href="https://www.facebook.com/wesellgadgets.2025" target="_blank" rel="noopener noreferrer"><div class="social-icon"><img class="social-icon-img" src="media/facebook-icon.svg" alt="Follow us on Facebook"></div></a>
+                <a class="instagram" href="https://www.instagram.com/wesellgadgets.ng?igsh=bWhneGxjYmVseThq" target="_blank" rel="noopener noreferrer"><div class="social-icon"><img class="social-icon-img" src="media/instagram-icon.svg" alt="Follow us on Instagram"></div></a>
+                <a class="threads" href="https://www.threads.com/@wesellgadgets.ng" target="_blank" rel="noopener noreferrer"><div class="social-icon"><img class="social-icon-img" src="media/threads-icon.svg" alt="Follow us on Threads"></div></a>
+                <a class="tiktok" href="https://www.tiktok.com/@wesellgadgets.ng" target="_blank" rel="noopener noreferrer"><div class="social-icon"><img class="social-icon-img" src="media/tiktok-icon.svg" alt="Follow us on TikTok"></div></a>
+                <a class="whatsapp" href="https://wa.me/+2347039661343" target="_blank" rel="noopener noreferrer"><div class="social-icon"><img class="social-icon-img" src="media/whatsapp-icon.svg" alt="Contact us on WhatsApp"></div></a>
+            </div>
 
             <div class="footer-links">
-                <a href="#">How we serve you</a>
                 <a href="about.html">About</a>
                 <a href="contact.html" class="active">Contact</a>
                 <a href="#">Reviews</a>
                 <a href="#">Terms and Conditions</a>
-                <a href="product-feed.html" class="feed products">Products</a>
+                <a href="index.html">Home</a>
             </div>
-
-            <div class="to-top"><a href="#body-container">Top</a></div>
-
-            <hr>
-            <p id="copyright">© wesellgadgetsng 2025</p>
+            <div class="to-top"><a href="#top">Top</a></div>
+            <p id="copyright">© wesellgadgetsng 2025 - present</p>
         </footer>
+
+        <div class="to-top"><a href="#top">Top</a></div>
     </div>
-
-    <script>
-        const hamburger = document.querySelector(".hamburger");
-        const navLinks = document.querySelector(".nav-links");
-
-        hamburger.addEventListener("click", () => {
-            hamburger.classList.toggle("active");
-            navLinks.classList.toggle("active");
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
