@@ -72,6 +72,7 @@
                   alt="background image by Sebastiaan Chia on Unsplash" 
                   class="background-image"
                   loading="lazy" 
+                  loading="eager"
                   
                 >
                 <div class="frost-overlay"></div>
@@ -136,11 +137,11 @@
 
                         <div class="product-media-container">
                             <div class="product-media-wrapper" data-gallery tabindex="0">
-                                <img loading="lazy" class="product-media-image product-media" crossorigin="anonymous" alt="Dell Latitude 7420 Closed" 
+                                <img loading="lazy" decoding="async" class="product-media-image product-media" crossorigin="anonymous" alt="Dell Latitude 7420 Closed" 
                                     src="products/laptops/dell-latitude-7420-1.png"/>
-                                <img loading="lazy" class="product-media-image product-media" crossorigin="anonymous" alt="Dell Latitude 7420 Opened" 
+                                <img loading="lazy" decoding="async" class="product-media-image product-media" crossorigin="anonymous" alt="Dell Latitude 7420 Opened" 
                                     src="products/laptops/dell-latitude-7420-2.png"/>
-                                <img loading="lazy" class="product-media-image product-media" crossorigin="anonymous" alt="Dell Latitude 7420 Opened" 
+                                <img loading="lazy" decoding="async" class="product-media-image product-media" crossorigin="anonymous" alt="Dell Latitude 7420 Opened" 
                                     src="products/laptops/dell-latitude-7420-3.png"/>
 
                             </div>
@@ -624,7 +625,15 @@
 
         </div>
 
-        <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+        <div class="spec-modal" id="spec-modal">
+            <div class="spec-modal-overlay"></div>
+            <div class="spec-modal-content">
+              <button class="spec-modal-close">&times;</button>
+              <h3 id="modal-product-name"></h3>
+              <p id="modal-specs-text"></p>
+            </div>
+          </div>
+
         
         <script src="script.js"></script>
     </body>

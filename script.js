@@ -1,4 +1,18 @@
 // ==========================================
+// SMART RESIZE HANDLING
+// ==========================================
+let resizeTimer;
+
+window.addEventListener("resize", () => {
+  document.body.classList.add("is-resizing");
+
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() => {
+    document.body.classList.remove("is-resizing");
+  }, 150);
+});
+
+// ==========================================
 // Hamburger
 // ==========================================
 const hamburger = document.querySelector(".hamburger");
@@ -13,14 +27,6 @@ if (hamburger && navLinks) {
 
 
 // ==========================================
-// INITIALIZE ALL PRODUCT CARDS
-// ==========================================
-document.addEventListener('DOMContentLoaded', () => {
-    const cards = document.querySelectorAll('.product-card-container');
-    
-});
-
-// ==========================================
 // PRODUCT CARD INITIALIZATION
 // ==========================================
 function initializeProductCard(card) {
@@ -28,8 +34,6 @@ function initializeProductCard(card) {
     const container = card.querySelector('.product-media-container');
     const pagination = card.querySelector('[data-pagination]');
     const fullscreenBtn = card.querySelector('[data-fullscreen-toggle]');
-    const showMoreBtn = card.querySelector('[data-show-more-toggle]');
-    const specsText = card.querySelector('[data-specs-text]');
     
     // State for this specific card
     let zoomState = {
@@ -63,298 +67,6 @@ function initializeProductCard(card) {
         lastDist: 0
     };
 
-    // ==========================================
-    // ZOOM FUNCTIONS
-    // ==========================================
-    function updateTransform() {
-        if (!zoomState.active || !zoomState.image) return;
-        
-        const img = zoomState.image;
-        const viewW = container.clientWidth;
-        const viewH = container.clientHeight;
-        const imgW = img.naturalWidth * zoomState.scale;
-        const imgH = img.naturalHeight * zoomState.scale;
-        
-        const minX = Math.min(0, viewW - imgW);
-        const maxX = 0;
-        const minY = Math.min(0, viewH - imgH);
-        const maxY = 0;
-        
-        zoomState.translateX = Math.max(minX, Math.min(zoomState.translateX, maxX));
-        zoomState.translateY = Math.max(minY, Math.min(zoomState.translateY, maxY));
-        
-        img.style.transform = `translate(${zoomState.translateX}px, ${zoomState.translateY}px)`;
-    }
-
-    function zoomIn(targetImg, focusX = null, focusY = null) {
-        if (zoomState.active && zoomState.image === targetImg) return;
-        
-        if (zoomState.active && zoomState.image !== targetImg) {
-            zoomOut();
-        }
-        
-        const viewW = container.clientWidth;
-        const viewH = container.clientHeight;
-        const naturalW = targetImg.naturalWidth;
-        const naturalH = targetImg.naturalHeight;
-        
-        if (naturalW === 0 || naturalH === 0) return;
-        
-        zoomState.active = true;
-        zoomState.image = targetImg;
-        zoomState.scale = 2.5;
-        
-        const zoomedW = naturalW * zoomState.scale;
-        const zoomedH = naturalH * zoomState.scale;
-        
-        targetImg.style.width = `${zoomedW}px`;
-        targetImg.style.height = `${zoomedH}px`;
-        targetImg.classList.add('is-zoomed');
-        
-        if (focusX !== null && focusY !== null) {
-            const rect = container.getBoundingClientRect();
-            const relativeX = focusX - rect.left;
-            const relativeY = focusY - rect.top;
-            
-            zoomState.translateX = relativeX - (relativeX / viewW) * zoomedW;
-            zoomState.translateY = relativeY - (relativeY / viewH) * zoomedH;
-        } else {
-            zoomState.translateX = (viewW - zoomedW) / 2;
-            zoomState.translateY = (viewH - zoomedH) / 2;
-        }
-        
-        wrapper.classList.add('zoom-active');
-        container.classList.add('zoom-active');
-        
-        updateTransform();
-    }
-
-    function zoomOut() {
-        if (!zoomState.active || !zoomState.image) return;
-        
-        const img = zoomState.image;
-        
-        img.style.width = '100%';
-        img.style.height = '100%';
-        img.style.transform = 'none';
-        img.classList.remove('is-zoomed', 'dragging');
-        
-        wrapper.classList.remove('zoom-active');
-        container.classList.remove('zoom-active');
-        
-        zoomState.active = false;
-        zoomState.image = null;
-        zoomState.scale = 1;
-        zoomState.translateX = 0;
-        zoomState.translateY = 0;
-    }
-
-    function getTouchDistance(touch1, touch2) {
-        const dx = touch1.clientX - touch2.clientX;
-        const dy = touch1.clientY - touch2.clientY;
-        return Math.sqrt(dx * dx + dy * dy);
-    }
-
-    function getTouchMidpoint(touch1, touch2) {
-        return {
-            x: (touch1.clientX + touch2.clientX) / 2,
-            y: (touch1.clientY + touch2.clientY) / 2
-        };
-    }
-
-    // ==========================================
-    // MOUSE EVENTS
-    // ==========================================
-    wrapper.addEventListener('mousedown', (e) => {
-        if (e.button !== 0) return;
-        
-        if (zoomState.active && e.target === zoomState.image) {
-            zoomState.isPanning = true;
-            zoomState.startX = e.clientX;
-            zoomState.startY = e.clientY;
-            zoomState.startTranslateX = zoomState.translateX;
-            zoomState.startTranslateY = zoomState.translateY;
-            zoomState.image.classList.add('dragging');
-            e.preventDefault();
-        } else if (!zoomState.active) {
-            zoomState.isMouseDown = true;
-            zoomState.startX = e.clientX;
-            zoomState.scrollLeft = wrapper.scrollLeft;
-            wrapper.classList.add('no-snap');
-        }
-    });
-
-    wrapper.addEventListener('mousemove', (e) => {
-        if (zoomState.isPanning) {
-            const deltaX = e.clientX - zoomState.startX;
-            const deltaY = e.clientY - zoomState.startY;
-            zoomState.translateX = zoomState.startTranslateX + deltaX;
-            zoomState.translateY = zoomState.startTranslateY + deltaY;
-            updateTransform();
-            e.preventDefault();
-        } else if (zoomState.isMouseDown && !zoomState.active) {
-            const deltaX = e.clientX - zoomState.startX;
-            wrapper.scrollLeft = zoomState.scrollLeft - deltaX;
-        }
-    });
-
-    wrapper.addEventListener('mouseup', () => {
-        zoomState.isPanning = false;
-        zoomState.isMouseDown = false;
-        wrapper.classList.remove('no-snap');
-        if (zoomState.image) zoomState.image.classList.remove('dragging');
-    });
-
-    wrapper.addEventListener('mouseleave', () => {
-        zoomState.isPanning = false;
-        zoomState.isMouseDown = false;
-        wrapper.classList.remove('no-snap');
-        if (zoomState.image) zoomState.image.classList.remove('dragging');
-    });
-
-    wrapper.addEventListener('dblclick', (e) => {
-        if (e.target.tagName !== 'IMG') return;
-        
-        if (zoomState.active && zoomState.image === e.target) {
-            zoomOut();
-        } else {
-            zoomIn(e.target, e.clientX, e.clientY);
-        }
-    });
-
-    // ==========================================
-    // TOUCH EVENTS
-    // ==========================================
-    wrapper.addEventListener('touchstart', (e) => {
-        touchStartData.moved = false;
-        
-        if (e.touches.length === 1) {
-            const touch = e.touches[0];
-            touchStartData.time = Date.now();
-            touchStartData.x = touch.clientX;
-            touchStartData.y = touch.clientY;
-            
-            if (zoomState.active && e.target === zoomState.image) {
-                zoomState.isPanning = true;
-                zoomState.startX = touch.clientX;
-                zoomState.startY = touch.clientY;
-                zoomState.startTranslateX = zoomState.translateX;
-                zoomState.startTranslateY = zoomState.translateY;
-                e.preventDefault();
-            }
-        } else if (e.touches.length === 2) {
-            zoomState.isPinching = true;
-            wrapper.classList.add('no-snap');
-            
-            const dist = getTouchDistance(e.touches[0], e.touches[1]);
-            touchStartData.startDist = dist;
-            touchStartData.lastDist = dist;
-            
-            if (!zoomState.active) {
-                const target = e.touches[0].target;
-                if (target.tagName === 'IMG') {
-                    const midpoint = getTouchMidpoint(e.touches[0], e.touches[1]);
-                    zoomIn(target, midpoint.x, midpoint.y);
-                }
-            }
-            
-            e.preventDefault();
-        }
-    }, { passive: false });
-
-    wrapper.addEventListener('touchmove', (e) => {
-        if (e.touches.length === 1 && zoomState.isPanning) {
-            const touch = e.touches[0];
-            const deltaX = touch.clientX - zoomState.startX;
-            const deltaY = touch.clientY - zoomState.startY;
-            
-            zoomState.translateX = zoomState.startTranslateX + deltaX;
-            zoomState.translateY = zoomState.startTranslateY + deltaY;
-            updateTransform();
-            
-            if (Math.abs(deltaX) > 10 || Math.abs(deltaY) > 10) {
-                touchStartData.moved = true;
-            }
-            e.preventDefault();
-        } else if (e.touches.length === 2 && zoomState.isPinching && zoomState.active) {
-            const currentDist = getTouchDistance(e.touches[0], e.touches[1]);
-            const scaleFactor = currentDist / touchStartData.lastDist;
-            const oldScale = zoomState.scale;
-            
-            zoomState.scale = Math.max(1, Math.min(5, oldScale * scaleFactor));
-            
-            const img = zoomState.image;
-            const naturalW = img.naturalWidth;
-            const naturalH = img.naturalHeight;
-            const newW = naturalW * zoomState.scale;
-            const newH = naturalH * zoomState.scale;
-            
-            img.style.width = `${newW}px`;
-            img.style.height = `${newH}px`;
-            
-            const midpoint = getTouchMidpoint(e.touches[0], e.touches[1]);
-            const rect = container.getBoundingClientRect();
-            const focusX = midpoint.x - rect.left;
-            const focusY = midpoint.y - rect.top;
-            
-            zoomState.translateX = focusX - (focusX - zoomState.translateX) * (zoomState.scale / oldScale);
-            zoomState.translateY = focusY - (focusY - zoomState.translateY) * (zoomState.scale / oldScale);
-            
-            updateTransform();
-            touchStartData.lastDist = currentDist;
-            e.preventDefault();
-        }
-    }, { passive: false });
-
-    wrapper.addEventListener('touchend', (e) => {
-        zoomState.isPanning = false;
-        wrapper.classList.remove('no-snap');
-        if (zoomState.image) zoomState.image.classList.remove('dragging');
-        
-        if (zoomState.isPinching && zoomState.scale < 1.1) {
-            zoomOut();
-        }
-        zoomState.isPinching = false;
-        
-        if (e.touches.length === 0 && e.changedTouches.length === 1) {
-            const touch = e.changedTouches[0];
-            const now = Date.now();
-            const deltaTime = now - touchStartData.time;
-            const deltaX = Math.abs(touch.clientX - touchStartData.x);
-            const deltaY = Math.abs(touch.clientY - touchStartData.y);
-            
-            if (deltaTime < 300 && deltaX < 10 && deltaY < 10 && !touchStartData.moved) {
-                const target = touch.target;
-                const tapX = (touchStartData.x + touch.clientX) / 2;
-                const tapY = (touchStartData.y + touch.clientY) / 2;
-                
-                if (now - tapState.lastTime < 300 && 
-                    Math.abs(tapX - tapState.lastX) < 30 && 
-                    Math.abs(tapY - tapState.lastY) < 30 &&
-                    target === tapState.lastTarget) {
-                    
-                    if (target.tagName === 'IMG') {
-                        if (zoomState.active && zoomState.image === target) {
-                            zoomOut();
-                        } else {
-                            zoomIn(target, tapX, tapY);
-                        }
-                    }
-                    
-                    tapState.lastTime = 0;
-                } else {
-                    tapState.lastTime = now;
-                    tapState.lastX = tapX;
-                    tapState.lastY = tapY;
-                    tapState.lastTarget = target;
-                }
-            }
-        }
-    }, { passive: false });
-
-    wrapper.addEventListener('contextmenu', (e) => {
-        if (zoomState.active) e.preventDefault();
-    });
 
     // ==========================================
     // PAGINATION
@@ -380,7 +92,18 @@ function initializeProductCard(card) {
         });
     }
 
-    wrapper.addEventListener('scroll', updateActiveDot);
+    let ticking = false;
+
+    wrapper.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          updateActiveDot();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }, { passive: true });
+    
     updateActiveDot();
 
     // ==========================================
@@ -397,24 +120,11 @@ function initializeProductCard(card) {
     });
 
     document.addEventListener('fullscreenchange', () => {
-        if (zoomState.active) {
-            updateTransform();
-        }
+        document.querySelectorAll('.is-zoomed').forEach(img => {
+            img.style.transform = img.style.transform;
+        });
     });
 
-    // ==========================================
-    // SHOW MORE/LESS
-    // ==========================================
-    showMoreBtn.addEventListener('click', () => {
-        specsText.classList.toggle('expanded');
-        showMoreBtn.textContent =
-            specsText.classList.contains('expanded') ? 'Show less' : 'Show more';
-
-    // Force layout after DOM update
-    requestAnimationFrame(() => {
-        masonryInstance.layout();
-    });
-});
     // ==========================================
     // BACKGROUND BLENDER
     // ==========================================
@@ -488,9 +198,8 @@ function initializeProductCard(card) {
 
 
 // ==========================================
-// MASONRY + LOAD MORE LOGIC
+// LOAD MORE + BADGE LOGIC
 // ==========================================
-let masonryInstance = null;
 let currentLimit = 20; // Initial number of cards to show
 const increment = 20;  // How many to show on "Load More" click
 
@@ -549,25 +258,17 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     
     // --- REVERSE ORDER & PREPARE FOR PAGINATION ---
-    cards.reverse().forEach(card => {
+    cards.sort((a, b) => {
+        return new Date(b.dataset.date) - new Date(a.dataset.date);
+    }).forEach(card => {
         grid.appendChild(card);
-        card.classList.add('paginated-hidden'); // Hide all by default
+        card.classList.add('paginated-hidden');
     });
 
     cards.forEach(card => {
         initializeProductCard(card);
     });
 
-
-    // --- INITIALIZE MASONRY ---
-    masonryInstance = new Masonry(grid, {
-        itemSelector: '.product-card-container:not(.paginated-hidden):not(.hidden)',
-        columnWidth: '.product-card-container',
-        percentPosition: true,
-        gutter: 16,
-        horizontalOrder: true,
-        transitionDuration: 0
-    });
 
     // --- PAGINATION FUNCTION ---
     window.updatePagination = function() {
@@ -591,10 +292,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        if (masonryInstance) {
-            masonryInstance.reloadItems();
-            masonryInstance.layout();
-        }
     };
 
     // --- BUTTON CLICK EVENT ---
@@ -607,34 +304,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Run pagination on start
     updatePagination();
-    imagesLoaded(grid).on('always', () => masonryInstance.layout());
 });
 
-
-// ==========================================
-// Product card Lazy loading
-// ==========================================
-const cardObserver = new IntersectionObserver((entries, observer) => {
-    entries.forEach(async entry => {
-        if (!entry.isIntersecting) return;
-
-        const card = entry.target;
-        observer.unobserve(card);
-
-        // Fetch product HTML
-        const res = await fetch(`/product/${card.dataset.productId}.html`);
-        card.innerHTML = await res.text();
-
-        imagesLoaded(card, () => {
-            masonryInstance.appended(card);
-            masonryInstance.reloadItems();
-            masonryInstance.layout();
-
-        });
-    });
-}, {
-    rootMargin: '500px'
-});
 
 // ==========================================
 // PROFESSIONAL ECOMMERCE SEARCH ENGINE (V7)
@@ -646,8 +317,7 @@ const cardObserver = new IntersectionObserver((entries, observer) => {
     const searchSuggestions = document.getElementById('search-suggestions');
     const noResults = document.getElementById('no-results');
     const searchQueryDisplay = document.getElementById('search-query-display');
-    const productCards = document.querySelectorAll('.product-card-container');
-    const clearSearchBtn = document.getElementById('clear-search-btn');
+    const productCards = Array.from(document.querySelectorAll('.product-card-container'));    const clearSearchBtn = document.getElementById('clear-search-btn');
 
     if (!searchInput || productCards.length === 0) return;
 
@@ -707,7 +377,6 @@ const cardObserver = new IntersectionObserver((entries, observer) => {
             products.forEach(p => p.element.classList.remove('hidden'));
             updateResultsCount(0, '');
             hideNoResults();
-            relayoutMasonry();
             return;
         }
 
@@ -735,7 +404,6 @@ const cardObserver = new IntersectionObserver((entries, observer) => {
         updateResultsCount(visibleCount, searchTerm);
         visibleCount === 0 ? showNoResults(searchTerm) : hideNoResults();
         if (hideSuggestionsFlag) hideSuggestions();
-        relayoutMasonry();
     }
 
     // ==============================
@@ -840,17 +508,7 @@ const cardObserver = new IntersectionObserver((entries, observer) => {
     // ==============================
     // UTILITIES & EVENTS
     // ==============================
-    function relayoutMasonry() {
-        if (!masonryInstance) return;
-    
-        masonryInstance.reloadItems();
-        masonryInstance.layout();
-    
-        setTimeout(() => {
-            masonryInstance.layout();
-        }, 100);
-    }
-    
+
     function updateResultsCount(count, query) {
         if (!query) { searchResultsCount.classList.remove('visible'); return; }
         searchResultsCount.innerHTML = `Found <strong>${count}</strong> items for "<strong>${query}</strong>"`;
@@ -896,3 +554,41 @@ const cardObserver = new IntersectionObserver((entries, observer) => {
         if (!searchInput.contains(e.target) && !searchSuggestions.contains(e.target)) hideSuggestions();
     });
 })();
+
+
+    // ==========================================
+    // SHOW MORE/LESS
+    // ==========================================
+
+const modal = document.getElementById("spec-modal");
+const modalOverlay = document.querySelector(".spec-modal-overlay");
+const modalClose = document.querySelector(".spec-modal-close");
+const modalTitle = document.getElementById("modal-product-name");
+const modalSpecs = document.getElementById("modal-specs-text");
+
+document.addEventListener("click", function(e) {
+    const btn = e.target.closest("[data-show-more-toggle]");
+    if (!btn) return;
+
+    const card = btn.closest(".product-card-container");
+    const title = card.querySelector(".product-name").textContent;
+    const specs = card.querySelector("[data-specs-text]").textContent;
+
+    modalTitle.textContent = title;
+    modalSpecs.textContent = specs;
+
+    modal.classList.add("active");
+    document.body.style.overflow = "hidden";
+});
+
+function closeModal() {
+  modal.classList.remove("active");
+  document.body.style.overflow = "";
+}
+
+modalClose.addEventListener("click", closeModal);
+modalOverlay.addEventListener("click", closeModal);
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") closeModal();
+});

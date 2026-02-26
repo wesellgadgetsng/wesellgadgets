@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Dashboard — WeSellGadgets</title>
+  <link rel="stylesheet" href="normalize.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="dashboard.css">
+</head>
+<body class="dashboard-body">
+
+<!-- ── NAV ─────────────────────────────────────── -->
+<header class="dash-header">
+  <a href="index.html" class="dash-logo">
+    <img src="media/logo.png" alt="WeSellGadgets">
+  </a>
+  <nav class="dash-nav">
+    <button class="dash-tab active" data-tab="products">Products</button>
+    <button class="dash-tab" data-tab="add-product" id="addProductTab">+ Add Product</button>
+    <button class="dash-tab super-only hidden" data-tab="users">Users</button>
+    <button id="logoutBtn" class="btn-ghost">Logout</button>
+  </nav>
+  <div class="dash-user-info">
+    <span id="dashUserName">Loading…</span>
+    <span id="dashUserRole" class="role-badge"></span>
+  </div>
+</header>
+
+<!-- ── MAIN ────────────────────────────────────── -->
+<main class="dash-main">
+
+  <!-- LOGIN GATE (shown when not logged in) -->
+  <section id="loginGate" class="dash-gate">
+    <div class="gate-card glass-card">
+      <h2>Admin Login</h2>
+      <p>Sign in to manage products</p>
+      <form id="loginForm">
+        <input type="email"    id="loginEmail"    placeholder="Email"    required>
+        <input type="password" id="loginPassword" placeholder="Password" required>
+        <button type="submit"  class="btn-primary">Sign In</button>
+        <p id="loginError" class="error-msg hidden"></p>
+      </form>
+    </div>
+  </section>
+
+  <!-- DASHBOARD CONTENT (hidden until logged in) -->
+  <div id="dashContent" class="hidden">
+
+    <!-- ── PRODUCTS TAB ── -->
+    <section class="dash-panel" id="tab-products">
+      <div class="panel-header">
+        <h2>My Products</h2>
+        <div class="panel-controls">
+          <input type="text" id="dashSearch" placeholder="Search products…" class="dash-search-input">
+          <select id="dashCatFilter" class="dash-select">
+            <option value="">All Categories</option>
+            <option value="phone">Phones</option>
+            <option value="laptop">Laptops</option>
+            <option value="tablet">Tablets</option>
+            <option value="desktop">Desktops</option>
+            <option value="gaming">Gaming</option>
+            <option value="accessory">Accessories</option>
+          </select>
+        </div>
+      </div>
+      <div id="dashProductGrid" class="dash-product-grid">
+        <p class="loading-msg">Loading products…</p>
+      </div>
+    </section>
+
+    <!-- ── ADD / EDIT PRODUCT TAB ── -->
+    <section class="dash-panel hidden" id="tab-add-product">
+      <h2 id="formTitle">Add New Product</h2>
+      <form id="productForm" class="product-form glass-card" enctype="multipart/form-data">
+        <input type="hidden" id="editingProductId">
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Product Name *</label>
+            <input type="text" id="pName" placeholder="e.g. iPhone 15 Pro Max" required>
+          </div>
+          <div class="form-group">
+            <label>Category *</label>
+            <select id="pCategory" required>
+              <option value="">Select…</option>
+              <option value="phone">Phone</option>
+              <option value="laptop">Laptop</option>
+              <option value="tablet">Tablet</option>
+              <option value="desktop">Desktop</option>
+              <option value="gaming">Gaming Console</option>
+              <option value="accessory">Accessory</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Condition *</label>
+            <select id="pCondition" required>
+              <option value="">Select…</option>
+              <option value="new">New</option>
+              <option value="used">Used (UK/US)</option>
+              <option value="refurbished">Refurbished</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Price (₦) *</label>
+            <input type="number" id="pPrice" placeholder="e.g. 1000000" min="0" required>
+          </div>
+          <div class="form-group">
+            <label>Quantity</label>
+            <input type="number" id="pQty" value="1" min="0">
+          </div>
+        </div>
+
+        <div class="form-group full-width">
+          <label>Specs / Description</label>
+          <textarea id="pSpecs" rows="4"
+            placeholder="RAM, Storage, Processor, Screen size, Battery, OS, Color, etc."></textarea>
+        </div>
+
+        <div class="form-group full-width">
+          <label>Search Keywords (comma-separated)</label>
+          <input type="text" id="pKeywords"
+            placeholder="e.g. apple, 16gb ram, 512gb, m3 chip, macbook">
+          <small>These power the site search. Be specific.</small>
+        </div>
+
+        <div class="form-group full-width">
+          <label>WhatsApp Order Link</label>
+          <input type="url" id="pWhatsapp"
+            value="https://wa.me/+2347039661343" placeholder="https://wa.me/…">
+        </div>
+
+        <div class="form-group full-width">
+          <label>Product Images * <small>(first image = primary, max 6)</small></label>
+          <div class="image-upload-zone" id="imageUploadZone">
+            <input type="file" id="pImages" accept="image/*" multiple>
+            <p>📷 Drag & drop or click to upload images</p>
+          </div>
+          <div id="imagePreviewRow" class="image-preview-row"></div>
+          <!-- Edit mode: existing images -->
+          <div id="existingImagesRow" class="image-preview-row"></div>
+        </div>
+
+        <div class="form-row">
+          <label class="toggle-label">
+            <input type="checkbox" id="pPublished" checked>
+            <span>Published (visible on homepage)</span>
+          </label>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" id="cancelEditBtn" class="btn-ghost hidden">Cancel</button>
+          <button type="submit" class="btn-primary" id="submitProductBtn">
+            Save Product
+          </button>
+        </div>
+        <p id="formMsg" class="form-msg hidden"></p>
+      </form>
+    </section>
+
+    <!-- ── USERS TAB (Super Admin only) ── -->
+    <section class="dash-panel hidden" id="tab-users">
+      <div class="panel-header">
+        <h2>User Management</h2>
+        <button id="addUserBtn" class="btn-primary">+ Add Admin</button>
+      </div>
+      <div id="userTable" class="user-table">
+        <p class="loading-msg">Loading users…</p>
+      </div>
+
+      <!-- Add User Modal -->
+      <div id="addUserModal" class="modal hidden">
+        <div class="modal-card glass-card">
+          <h3>Create New Admin</h3>
+          <form id="addUserForm">
+            <input type="text"     id="newUserName"     placeholder="Full Name" required>
+            <input type="email"    id="newUserEmail"    placeholder="Email"     required>
+            <input type="password" id="newUserPassword" placeholder="Password" required>
+            <select id="newUserRole">
+              <option value="admin">Admin</option>
+              <option value="super_admin">Super Admin</option>
+            </select>
+            <div class="modal-actions">
+              <button type="button" id="closeModalBtn" class="btn-ghost">Cancel</button>
+              <button type="submit" class="btn-primary">Create</button>
+            </div>
+            <p id="addUserMsg" class="form-msg hidden"></p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- /dashContent -->
+</main>
+
+<script type="module" src="dashboard.js"></script>
+</body>
+</html>

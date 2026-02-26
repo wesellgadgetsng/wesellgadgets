@@ -2,6 +2,8 @@ html {
   margin: 0;
   padding: 0;
   overflow-x: hidden; /* Prevents horizontal scroll on html too */
+  scroll-behavior: smooth;
+
 }
 
 
@@ -15,7 +17,17 @@ body {
   background-color: #121212;
   overflow-x: hidden; /* Prevents horizontal scroll */
 
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overscroll-behavior: contain;
+
+
+
   
+}
+
+html, body {
+  height: 100%;
 }
 
 p {
@@ -495,8 +507,8 @@ padding: 4px;
     rgba(251, 143, 13, 0.15) 0%,
     rgba(251, 143, 13, 0.05) 100%
   );
-  backdrop-filter: blur(10px) saturate(180%);
-  -webkit-backdrop-filter: blur(10px) saturate(180%);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
     
   color: #FB8F0D;
   font-weight: bold;
@@ -534,7 +546,7 @@ padding: 4px;
     transparent 65%
   );
   opacity: 0.7;
-  animation: shine-sweep 7s linear infinite;
+  animation: shine-sweep 7s linear 3;
   pointer-events: none;
   z-index: 1;
 
@@ -576,7 +588,7 @@ padding: 4px;
   flex-shrink: 0;
   align-items: center;
   text-align: center;
-  min-height: 100vh;
+  min-height: 100dvh;
   padding: 0 0 80px;
   box-sizing: border-box;
 
@@ -603,48 +615,61 @@ padding: 4px;
 
 .product-cards-wrapper {
   width: 95%;
-  margin: 0 auto !important;  
-  max-width: 1200px;     /* Limits width on massive monitors */
-  position: relative; /* For Masonry positioning */  
+  max-width: 1400px;
+  margin: 0 auto;
+  display: grid;
+  gap: 20px;
+}
+
+/* Mobile */
+@media (max-width: 320px) {
+  .product-cards-wrapper {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Small tablets */
+@media (min-width: 321px) and (max-width: 900px) {
+  .product-cards-wrapper {
+    grid-template-columns: repeat(2, 2fr);
+  }
+}
+
+/* Medium screens */
+@media (min-width: 901px) and (max-width: 1200px) {
+  .product-cards-wrapper {
+    grid-template-columns: repeat(3, 3fr);
+  }
+}
+
+/* Large screens */
+@media (min-width: 1201px) {
+  .product-cards-wrapper {
+    grid-template-columns: repeat(4, 4fr);
+  }
 }
 
 /* ==========================================
    PRODUCT CARD
    ========================================== */
 
-.product-card-container {
-  position: relative;
-  min-height: 300px; 
-  border-radius: 16px;
-  box-sizing: border-box;       /* Padding doesn't add to width */
-  display: flex;
-  flex-direction: column;            /* Stack image + info vertically */
-  overflow: hidden;               /* Prevents any internal overflow */
-
-  margin-bottom: 16px; /* Vertical spacing between cards in column */
-  will-change: transform, box-shadow;
-
-
-  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-
-
-    /* Crystal Clear Glass Base */
-    background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.03) 100%);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border: 1px solid rgba(255,255,255,0.1);
-
-    background-clip: padding-box;
-
-    /* Multi-layer Shadow for Depth */
-    box-shadow:
-      0 8px 32px rgba(0, 0, 0, 0.35),
-      0 2px 8px rgba(0, 0, 0, 0.2),
-      inset 0 1px 0 rgba(255, 255, 255, 0.2),
-      inset 0 -1px 0 rgba(0, 0, 0, 0.1);
-        
+   .product-card-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    border-radius: 16px;
+    overflow: hidden;
+    box-sizing: border-box;
+  
+    transition: transform 0.25s ease;
+    
+   /* Isolate each card from layout recalculation */
+    contain: layout paint style;
+    content-visibility: auto;
+    contain-intrinsic-size: 500px;
+  
   }
-
+  
     /* Glass Border Effect */
   .product-card-container::before {
     content: '';
@@ -668,7 +693,7 @@ padding: 4px;
 
   
   .product-card-container:hover {
-    transform: translateY(-1px);
+    transform: translateZ(0);
 
     background: linear-gradient(
       135deg,
@@ -686,47 +711,14 @@ padding: 4px;
   
   
 /* ==========================================
-   RESPONSIVE COLUMN WIDTHS
-   ========================================== */
-
-   /* Mobile: 1 column (below 480px) */
-@media (max-width: 330px) {
-  .product-card-container {
-    width: 100%;
-  }
-}
-
-/* Mobile/Small Tablet: 2 columns (321px - 867px) */
-@media (min-width: 331px) and (max-width: 867px) {
-  .product-card-container {
-    width: calc(50% - 8px);
-  }
-}
-
-/* Tablet: 3 columns (868px - 1023px) */
-@media (min-width: 868px) and (max-width: 1023px) {
-  .product-card-container {
-    width: calc(33.333% - 11px);
-  }
-}
-
-/* Desktop: 4 columns (1024px+) */
-@media (min-width: 1024px) {
-  .product-card-container {
-    width: calc(25% - 12px);
-  }
-}
-
-/* ==========================================
    MEDIA CONTAINER
    ========================================== */
 
 .product-media-container {
   width: 100%;    
-  height: 240px;
-  max-height: 360px;           
   flex-shrink: 0;                    /* Prevents image from shrinking */
   border-radius: 16px 16px 0px 0px;
+  aspect-ratio: 1 / 1;
   overflow: hidden;
   cursor: grab;                      /* Hand cursor when hovering */
   position: relative;
@@ -734,6 +726,7 @@ padding: 4px;
   touch-action: pan-y; /* Allows vertical page scroll, but takes over horizontal */
   background-size: cover;
   background-position: center;
+  will-change: transform;
 
 
 }
@@ -817,6 +810,7 @@ padding: 4px;
 .product-media-container::before {
   content: '';
   position: absolute;
+  inset: 0;
   top: 0;
   left: 0;
   width: 100%;
@@ -824,9 +818,9 @@ padding: 4px;
   background-image: inherit;     /* Will be set by JS */
   background-size: cover;
   background-position: center;
-  filter: blur(40px);            /* Strong blur for soft edges */
+  filter: blur(20px);            /* Strong blur for soft edges */
   transform: scale(1.1);         /* Slightly larger to cover edges */
-  opacity: 0.8;                  /* Semi-transparent for depth */
+  opacity: 0.9;                  /* Semi-transparent for depth */
   z-index: 1;
   border-radius: 16px 16px 0 0;
   transition: background-image 0.6s ease;
@@ -1112,7 +1106,7 @@ padding: 4px;
   flex-grow: 1;
 
   background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.03) 100%);
-  backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
 
 
@@ -1434,6 +1428,8 @@ box-shadow:
   inset: 0;
   z-index: -2; 
   overflow: hidden;
+  contain: paint;
+
 }
 
 .background-image {
@@ -1444,6 +1440,9 @@ box-shadow:
   object-fit: cover;
   object-position: center;
   filter: brightness(0.4) saturate(1.1);
+  will-change: transform;
+  transform: translateZ(0);
+
 }
 
 /* The frosted glass layer — this creates the thick blur effect */
@@ -1453,8 +1452,9 @@ box-shadow:
   z-index: 1;
   
   /* Core thick frost effect */
-  backdrop-filter: blur(48px) saturate(180%);
-  -webkit-backdrop-filter: blur(148px) saturate(180%);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  background: rgba(10, 14, 23, 0.65);
   
   /* Tint to control transparency & mood */
   background: rgba(10, 14, 23, 0.55);
@@ -1472,6 +1472,8 @@ box-shadow:
 * {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  backface-visibility: hidden;
+
 }
 
 .hidden {
@@ -2162,4 +2164,86 @@ box-shadow:
     cursor: pointer;
     border-radius: 8px;
     font-weight: bold;
+}
+
+.spec-modal {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 8px;
+
+}
+
+.spec-modal.active {
+  display: flex;
+}
+
+.spec-modal-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(6px);
+
+}
+
+.spec-modal-content {
+  position: relative;
+  background: #1f1f1f;
+  padding: 30px;
+  border-radius: 16px;
+  max-width: 500px;
+  width: 90%;
+  z-index: 2;
+  animation: modalFade 0.2s ease;
+}
+
+.spec-modal-close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: white;
+  cursor: pointer;
+}
+
+@keyframes modalFade {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* ==========================================
+   CSS-ONLY IMAGE ZOOM
+========================================== */
+
+.product-media-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.product-media-image {
+  transition: transform 0.3s ease;
+  cursor: zoom-in;
+}
+
+/* Desktop hover zoom */
+@media (hover: hover) {
+  .product-media-container:hover .product-media-image {
+    transform: scale(1.4);
+  }
+}
+
+/* Mobile tap zoom */
+.product-media-image.zoomed {
+  transform: scale(1.6);
+  cursor: zoom-out;
+}
+
+/* Disable transitions during resize */
+.is-resizing * {
+  transition: none !important;
 }
