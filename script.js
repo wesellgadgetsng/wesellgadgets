@@ -266,9 +266,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     cards.forEach(card => {
-        initializeProductCard(card);
-    });
-
+        if (!card.dataset.initialized) {
+          initializeProductCard(card);
+          card.dataset.initialized = 'true';
+        }
+      });
 
     // --- PAGINATION FUNCTION ---
     window.updatePagination = function() {
@@ -317,11 +319,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchSuggestions = document.getElementById('search-suggestions');
     const noResults = document.getElementById('no-results');
     const searchQueryDisplay = document.getElementById('search-query-display');
-    const productCards = Array.from(document.querySelectorAll('.product-card-container'));    const clearSearchBtn = document.getElementById('clear-search-btn');
+    const clearSearchBtn = document.getElementById('clear-search-btn');
 
-    if (!searchInput || productCards.length === 0) return;
+    if (!searchInput) return;
 
     let searchTimeout;
+
+    let products = [];
 
     const icons = {
         category: '<svg class="suggestion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>',
@@ -338,33 +342,6 @@ document.addEventListener('DOMContentLoaded', () => {
             .replace(/s$/, '');
     }
 
-    // ==============================
-    // BUILD SEARCH INDEX
-    // ==============================
-    const products = Array.from(productCards).map(card => {
-        const name = card.querySelector('.product-name')?.textContent?.trim().toLowerCase() || '';
-        const brand = card.querySelector('.brand.keyword')?.textContent?.trim().toLowerCase() || '';
-        
-        const categories = [];
-        if (card.classList.contains('laptop') || card.classList.contains('laptops')) categories.push('laptop', 'laptops');
-        if (card.classList.contains('phone') || card.classList.contains('phones')) categories.push('phone', 'phones');
-        if (card.classList.contains('tablet') || card.classList.contains('tablets')) categories.push('tablet', 'tablets');
-        if (card.classList.contains('watch') || card.classList.contains('watches')) categories.push('watch', 'watches');
-
-        const textContent = card.innerText.toLowerCase();
-        const rawTokens = `${name} ${brand} ${categories.join(' ')} ${textContent}`.split(/\s+/).filter(Boolean);
-        const stemmedTokens = rawTokens.map(t => stemWord(t));
-        const allTokens = [...new Set([...rawTokens, ...stemmedTokens])];
-
-        return {
-            element: card,
-            name,
-            brand,
-            mainCategory: categories[0] || '',
-            tokens: allTokens,
-            fullText: textContent
-        };
-    });
 
     // ==============================
     // CORE SEARCH LOGIC
@@ -402,7 +379,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         updateResultsCount(visibleCount, searchTerm);
-        visibleCount === 0 ? showNoResults(searchTerm) : hideNoResults();
+        if (visibleCount === 0) {
+            showNoResults(searchTerm);
+        } else {
+            hideNoResults();
+        }
+        
         if (hideSuggestionsFlag) hideSuggestions();
     }
 
@@ -548,7 +530,48 @@ document.addEventListener('DOMContentLoaded', () => {
             hideNoResults();
             performSearch('', true);
         });
-    }
+
+
+}
+
+      // ── Expose re-indexer for dynamic card loading ──────────
+
+        window.reinitSearch = function () {
+        const liveCards = Array.from(document.querySelectorAll('.product-card-container'));
+        products.length = 0;
+
+        liveCards.forEach(card => {
+            const name = card.querySelector('.product-name')?.textContent?.trim().toLowerCase() || '';
+            const brand = card.querySelector('.brand.keyword')?.textContent?.trim().toLowerCase() || '';
+
+            const categories = [];
+            if (card.classList.contains('laptop') || card.classList.contains('laptops')) categories.push('laptop','laptops');
+            if (card.classList.contains('phone') || card.classList.contains('phones')) categories.push('phone','phones');
+            if (card.classList.contains('tablet') || card.classList.contains('tablets')) categories.push('tablet','tablets');
+            if (card.classList.contains('watch') || card.classList.contains('watches')) categories.push('watch','watches');
+
+            const textContent = card.innerText.toLowerCase();
+            const rawTokens = `${name} ${brand} ${categories.join(' ')} ${textContent}`
+            .split(/\s+/)
+            .filter(Boolean);
+
+            const stemmedTokens = rawTokens.map(t => stemWord(t));
+            const allTokens = [...new Set([...rawTokens, ...stemmedTokens])];
+
+            products.push({
+            element: card,
+            name,
+            brand,
+            mainCategory: categories[0] || '',
+            tokens: allTokens,
+            fullText: textContent
+            });
+        });
+        };
+
+  // ────────────────────────────────────────────────────────
+
+
     
     document.addEventListener('click', e => {
         if (!searchInput.contains(e.target) && !searchSuggestions.contains(e.target)) hideSuggestions();

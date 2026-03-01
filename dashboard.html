@@ -13,8 +13,10 @@
 <!-- ── NAV ─────────────────────────────────────── -->
 <header class="dash-header">
   <a href="index.html" class="dash-logo">
-    <img src="media/logo.png" alt="WeSellGadgets">
-  </a>
+    <div id="logo">
+      <p id="logo-text">wesell<span>gadgets</span></p>
+  </div>
+</a>
   <nav class="dash-nav">
     <button class="dash-tab active" data-tab="products">Products</button>
     <button class="dash-tab" data-tab="add-product" id="addProductTab">+ Add Product</button>
@@ -71,7 +73,7 @@
 
     <!-- ── ADD / EDIT PRODUCT TAB ── -->
     <section class="dash-panel hidden" id="tab-add-product">
-      <h2 id="formTitle">Add New Product</h2>
+        <h2 id="formTitle">Add New Product</h2>
       <form id="productForm" class="product-form glass-card" enctype="multipart/form-data">
         <input type="hidden" id="editingProductId">
 
@@ -101,7 +103,7 @@
             <select id="pCondition" required>
               <option value="">Select…</option>
               <option value="new">New</option>
-              <option value="used">Used (UK/US)</option>
+              <option value="used">Used (UK/US/NG)</option>
               <option value="refurbished">Refurbished</option>
             </select>
           </div>
@@ -133,6 +135,68 @@
           <input type="url" id="pWhatsapp"
             value="https://wa.me/+2347039661343" placeholder="https://wa.me/…">
         </div>
+
+        <!-- ── PRODUCT SPECIFICATIONS ── -->
+        <p class="form-section-title">Product Specifications</p>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Brand</label>
+            <input type="text" id="pBrand" placeholder="e.g. Dell, Apple, Samsung">
+          </div>
+          <div class="form-group">
+            <label>RAM</label>
+            <input type="text" id="pRam" placeholder="e.g. 16GB">
+          </div>
+          <div class="form-group">
+            <label>Processor / Core</label>
+            <input type="text" id="pProcessor" placeholder="e.g. Intel Core i7">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Storage</label>
+            <input type="text" id="pStorage" placeholder="e.g. 512GB SSD">
+          </div>
+          <div class="form-group">
+            <label>Screen Size</label>
+            <input type="text" id="pScreenSize" placeholder="e.g. 14 inches">
+          </div>
+          <div class="form-group">
+            <label>Operating System</label>
+            <input type="text" id="pOs" placeholder="e.g. Windows 11 Pro">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Supplier</label>
+            <input type="text" id="pSupplier" placeholder="e.g. Realmsoft">
+          </div>
+          <div class="form-group full-width">
+            <label>Video URL <small>(optional)</small></label>
+            <input type="url" id="pVideoUrl" placeholder="https://…  (mp4 link)">
+          </div>
+        </div>
+
+        <!-- ── PRODUCT ID ── -->
+        <p class="form-section-title">Product ID</p>
+
+        <div class="form-group full-width">
+          <label>Custom Product ID
+            <small>(auto-generated — edit if needed)</small>
+          </label>
+          <div style="display:flex;gap:8px;align-items:center;margin-top:4px">
+            <input type="text" id="pCustomId"
+                  placeholder="Will be generated when you fill Name + Category"
+                  style="font-family:monospace;letter-spacing:1px">
+            <button type="button" id="regenIdBtn" class="btn-ghost"
+                    style="white-space:nowrap;height:40px">↺ Regenerate</button>
+          </div>
+          <div id="productIdPreview" class="product-id-preview" style="display:none"></div>
+        </div>
+
 
         <div class="form-group full-width">
           <label>Product Images * <small>(first image = primary, max 6)</small></label>
