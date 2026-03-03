@@ -103,14 +103,18 @@ function buildProductCard(p, images) {
 
       <div class="product-pagination" data-pagination></div>
 
-      <button data-fullscreen-toggle class="fullscreen-button" aria-label="Toggle fullscreen">
-        <svg width="24" height="24" viewBox="0 0 24 24" class="enter-icon">
-          <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>
-        </svg>
-        <svg width="24" height="24" viewBox="0 0 24 24" class="exit-icon" style="display:none;">
-          <path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm1-8h-3v2h5V5h-2v3z"/>
-        </svg>
-      </button>
+    <button data-fullscreen-toggle class="fullscreen-button" aria-label="Toggle fullscreen">
+      <svg width="24" height="24" viewBox="0 0 24 24" class="enter-icon">
+        <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>
+      </svg>
+
+      <svg width="24" height="24" viewBox="0 0 24 24" class="exit-icon" fill="currentColor">
+        <path d="M5 9h3V6h2v5H5V9z"/>
+        <path d="M5 15h3v3h2v-5H5v2z"/>
+        <path d="M19 9h-3V6h-2v5h5V9z"/>
+        <path d="M19 15h-3v3h-2v-5h5v2z"/>
+      </svg>
+    </button>
 
       <button class="add-to-cart">
         <img src="media/add-to-cart.svg" alt="add-to-cart-image">

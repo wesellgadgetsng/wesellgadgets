@@ -981,25 +981,41 @@ padding: 4px;
 
 }
 
-.fullscreen-button svg {
-  fill: #FB8F0D;
-}
-
-.fullscreen-button.fullscreen .enter-icon {
-  display: block;
-}
-
-.fullscreen-button.fullscreen .exit-icon {
+/* Base icon state */
+.fullscreen-button .exit-icon {
   display: none;
 }
 
-/* Full-screen container adjustments */
-:fullscreen .product-media-container {
-  height: 100vh !important;
-  max-height: none !important;
-  background: #000; /* Black background to handle letterboxing */
+.fullscreen-button .enter-icon {
+  display: block;
 }
 
+/* Swapped state when active */
+.fullscreen-button.is-fullscreen .enter-icon {
+  display: none;
+}
+
+.fullscreen-button.is-fullscreen .exit-icon {
+  display: block;
+}
+
+/* Ensure icons are colored correctly */
+.fullscreen-button svg {
+  fill: #FB8F0D;
+  width: 24px;
+  height: 24px;
+}
+
+/* Fullscreen container adjustments */
+:fullscreen .product-media-container {
+  width: 100vw !important;
+  height: 100vh !important;
+  max-height: none !important;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .add-to-cart {
   position: absolute;
   top: 8px;
@@ -1011,7 +1027,7 @@ padding: 4px;
   cursor: pointer;
   transition: background 0.3s;
   z-index: 10; /* Increased for visibility above all layers */
-  display: block; /* Ensure always shown */
+  display: none; /* Ensure always shown */
   background: linear-gradient(
     135deg,
     rgba(255, 255, 255, 0.15) 0%,
@@ -1024,6 +1040,7 @@ padding: 4px;
   box-shadow:
     0 4px 15px rgba(0, 0, 0, 0.3),
     inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    
 
 
 }
@@ -1067,6 +1084,8 @@ padding: 4px;
   pointer-events: none;
   min-width: 32px;
   text-align: center;
+
+  display: none;
 }
 
 .badge-new.pulse {
