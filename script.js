@@ -200,8 +200,8 @@ function initializeProductCard(card) {
 // ==========================================
 // LOAD MORE + BADGE LOGIC
 // ==========================================
-let currentLimit = 20; // Initial number of cards to show
-const increment = 20;  // How many to show on "Load More" click
+let currentLimit = 200; // Initial number of cards to show
+const increment = 200;  // How many to show on "Load More" click
 
 document.addEventListener('DOMContentLoaded', () => {
     const grid = document.querySelector('.product-cards-wrapper');
@@ -372,7 +372,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        currentLimit = 20; 
+        currentLimit = 200; 
 
         if (typeof updatePagination === 'function') {
             updatePagination();

@@ -175,7 +175,8 @@ function initMasonry(wrapper) {
 function initAllCards(wrapper) {
   const allCards = Array.from(wrapper.querySelectorAll('.product-card-container'));
   const loadMoreBtn = document.getElementById('load-more-btn');
-  let currentLimit = 20;
+  let currentLimit = 200;
+  const increment = 200;
 
   // 1. Per-card initialisation (gallery, zoom, video, fullscreen)
   allCards.forEach(card => {
@@ -194,20 +195,32 @@ function initAllCards(wrapper) {
 
   // 2. Override pagination to use live card list
   window.updatePagination = function () {
-    const live = Array.from(wrapper.querySelectorAll('.product-card-container'));
-    const visible = live.filter(c => !c.classList.contains('hidden'));
-    visible.forEach((c, i) =>
-      c.classList.toggle('paginated-hidden', i >= currentLimit));
-    if (loadMoreBtn)
-      loadMoreBtn.style.display = visible.length > currentLimit ? 'block' : 'none';
+
+    const liveCards = Array.from(
+      wrapper.querySelectorAll('.product-card-container')
+    );
+  
+    const visibleCards = liveCards.filter(
+      c => !c.classList.contains('hidden')
+    );
+  
+    visibleCards.forEach((card, index) => {
+  
+      if (index < currentLimit) {
+        card.classList.remove('paginated-hidden');
+      } else {
+        card.classList.add('paginated-hidden');
+      }
+  
+    });
+  
+    if (loadMoreBtn) {
+      loadMoreBtn.style.display =
+        visibleCards.length > currentLimit ? 'block' : 'none';
+    }
+  
   };
 
-  if (loadMoreBtn) {
-    loadMoreBtn.addEventListener('click', () => {
-      currentLimit += 20;
-      window.updatePagination();
-    });
-  }
   window.updatePagination();
 
   // 3. Re-index search (add to script.js — see note below)
