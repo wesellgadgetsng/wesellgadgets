@@ -222,6 +222,7 @@ display: block;
 justify-items: center;
 padding: 0 24px;  /* Horizontal padding */
 font-size: 12px;
+font-weight: medium;
 color: #FBDDB8;
 text-align: center;
 background-color: #2A2A2A;
@@ -242,7 +243,7 @@ font-weight: bold;
 }
 
 .top-banner span {
-  color: #FB8F0D;
+  color: #F4F4F2;
   text-decoration: none;
   font-weight: bold;
   }
@@ -625,7 +626,7 @@ padding: 4px;
   max-width: 1400px;
   margin: 0 auto;
   display: grid;
-  gap: 16px;
+  gap: 20px;
   
 }
 
@@ -1634,6 +1635,82 @@ box-shadow:
     background: rgba(251, 143, 13, 0.1);
     border-bottom: 1px solid rgba(251, 143, 13, 0.2);
   }
+
+  /* ── Load More Button ─────────────────────────────────────── */
+
+  .load-more-btn-cont {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .load-more-btn {
+    display: none; /* JS controls visibility */
+    margin: 40px 0;
+    padding: 14px 40px;
+  
+    background: linear-gradient(
+      135deg,
+      rgba(251, 143, 13, 0.15) 0%,
+      rgba(251, 143, 13, 0.05) 100%
+    );
+  
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  
+    border: 1px solid rgba(251, 143, 13, 0.5);
+    border-radius: 999px;
+  
+    color: #FB8F0D;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  
+    cursor: pointer;
+    transition: all 0.3s ease;
+  
+    width: fit-content;
+  }
+
+.load-more-btn:hover {
+  background: rgba(251, 143, 13, 0.2);
+  box-shadow: 0 0 24px rgba(251, 143, 13, 0.35);
+}
+
+.load-more-btn:active {
+  transform: translateX(-50%) translateY(0) scale(0.98);
+}
+
+/* ── Fix: sr-only (replaces .hidden for keyword elements) ─── */
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* ── Fix: paginated-hidden must override grid display ─────── */
+.product-card-container.paginated-hidden {
+  display: none !important;
+  visibility: hidden !important;  /* belt-and-suspenders for grid */
+}
+
+/* ── Fix: search-hidden (separate class from .hidden) ──────── */
+.product-card-container.search-hidden {
+  display: none !important;
+}
+
+/* ── Loading message spans full grid width ─────────────────── */
+.loading-msg {
+  grid-column: 1 / -1;
+}
+
   
 
 /* ==========================================
@@ -2188,17 +2265,6 @@ box-shadow:
     display: none !important;
 }
 
-#load-more-btn {
-    display: none; /* Hidden by default, JS will show it */
-    margin: 40px auto;
-    padding: 12px 30px;
-    background: #000;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-    border-radius: 8px;
-    font-weight: bold;
-}
 
 .spec-modal {
   position: fixed;

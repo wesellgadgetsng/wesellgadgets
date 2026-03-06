@@ -71,7 +71,6 @@
                   src="media/background.jpg" 
                   alt="background image by Sebastiaan Chia on Unsplash" 
                   class="background-image"
-                  loading="lazy" 
                   loading="eager"
                   
                 >
@@ -79,7 +78,7 @@
             </div>
 
 
-            <div class="top-banner"><p>Good meals 🍲 take time, our web store is still in progress, <span><a href="https://wa.me/2347039661343" target="_blank" rel="noopener noreferrer" >Message us on WhatsApp</a></span> to meet your gadget needs. <span>Free delivery for orders ₦200,000 and above.</span></p></div>
+            <div class="top-banner"><p> Enjoy free delivery on all orders of ₦200,000 and above.</p></div>
 
 
 
@@ -99,7 +98,6 @@
                             type="search" 
                             inputmode="search"
                             id="product-search" 
-                            autocomplete="one-time-code"
                             name="q"
                             spellcheck="false"
                             autocorrect="off"
@@ -131,6 +129,14 @@
                         <!-- Cards are injected dynamically by homepage-products.js -->
                     </div>
 
+                    <!-- Load More Button — shown/hidden by homepage-products.js -->
+                    <div class="load-more-btn-cont">
+                        <button id="load-more-btn" class="load-more-btn" style="display:none;">
+                        Load More Products
+                        </button>
+                    </div>
+
+
                     <div class="no-results" id="no-results" style="display: none;">
                         <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#FB8F0D" stroke-width="1.5">
                             <circle cx="11" cy="11" r="8"></circle>
@@ -141,7 +147,8 @@
                         <h3>No Products Found</h3>
                         <p>We couldn't find any products matching "<span id="search-query-display"></span>", check for misspellings </p>
                         <button class="button-2" id="clear-search-btn">Clear Search</button>
-                    </div>
+                    </div>                    
+                    
 
                       
 
@@ -160,62 +167,6 @@
             </section>
 
 
-            <footer>
-                <div id="logo">
-                    <div id="logo-circle">
-                    <div id="logo-bar"></div>
-                    </div>
-                    <p id="logo-text">wesell<span>gadgets</span></p>
-                </div>
-
-                <P class="footer-summary">We offer high-quality new and pre-owned gadgets; phones, laptops, gaming consoles, accessories, and more — delivered anywhere in Nigeria.
-
-                </P>
-
-                <P class="footer-disclaimer">Disclaimer: All trademarks and logos belong to their respective owners. We are an independent retailer and are not affiliated with any listed brands.</P>
-                
-                <div class="social-icon-container">
-                    <a class="x" href="https://x.com/WeSellGadgetsng?t=sSGZJEBamef6u05BIMBuiw&s=09" target="_blank" rel="noopener noreferrer">
-                        <div class="social-icon"><img class="social-icon-img" src="media/x-icon.svg" alt="Follow us on X"></div>
-                    </a>
-                    
-                    <a class="facebook" href="https://www.facebook.com/wesellgadgets.2025" target="_blank" rel="noopener noreferrer">
-                        <div class="social-icon"><img class="social-icon-img" src="media/facebook-icon.svg" alt="Follow us on Facebook"></div>
-                    </a>
-                    
-                    <a class="instagram" href="https://www.instagram.com/wesellgadgets.ng?igsh=bWhneGxjYmVseThq" target="_blank" rel="noopener noreferrer">
-                        <div class="social-icon"><img class="social-icon-img" src="media/instagram-icon.svg" alt="Follow us on Instagram"></div>
-                    </a>
-                    
-                    <a class="threads" href="https://www.threads.com/@wesellgadgets.ng" target="_blank" rel="noopener noreferrer">
-                        <div class="social-icon"><img class="social-icon-img" src="media/threads-icon.svg" alt="Follow us on Threads"></div>
-                    </a>
-                    
-                    <a class="tiktok" href="https://www.tiktok.com/@wesellgadgets.ng" target="_blank" rel="noopener noreferrer">
-                        <div class="social-icon"><img class="social-icon-img" src="media/tiktok-icon.svg" alt="Follow us on TikTok"></div>
-                    </a>
-                    
-                    <a class="whatsapp" href="https://wa.me/+2347039661343" target="_blank" rel="noopener noreferrer">
-                        <div class="social-icon"><img class="social-icon-img" src="media/whatsapp-icon.svg" alt="Contact us on WhatsApp"></div>
-                    </a>
-
-                </div>
-
-                <div class="footer-links">
-                    <a href="about.html" class="active">About</a>
-                    <a href="contact.html">Contact</a>
-                    <a href="#">Reviews</a>
-                    <a href="#">Terms and Conditions</a>
-                    <a href="index.html" class="feed">Home</a>
-                </div>
-
-
-
-                
-                <p id="copyright">© wesellgadgetsng 2025 - present</p>
-                    
-            
-            </footer>
 
 
             <div class="to-top"><a href="#top">Top</a></div>
@@ -237,7 +188,7 @@
         </div>
 
         
-        <script src="script.js"></script>
+        <script src="script.js" defer></script>
         <script type="module" src="supabase-config.js"></script>
         <script type="module" src="homepage-products.js"></script>
 

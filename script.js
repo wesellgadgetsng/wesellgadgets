@@ -129,18 +129,19 @@ function initializeProductCard(card) {
     // BACKGROUND BLENDER
     // ==========================================
     const firstImg = container.querySelector('.product-media-image');
+
     if (firstImg) {
-        const applyBackground = () => {
-            container.style.backgroundImage = `url(${firstImg.src})`;
-        };
-
-        if (firstImg.complete && firstImg.naturalWidth) {
-            applyBackground();
-        } else {
-            firstImg.onload = applyBackground;
-        }
+      const applyBackground = () => {
+        container.style.backgroundImage = `url("${firstImg.src}")`;
+      };
+    
+      if (firstImg.complete) {
+        applyBackground();
+      } else {
+        firstImg.addEventListener("load", applyBackground, { once: true });
+      }
     }
-
+    
     // ==========================================
     // VIDEO CONTROLS
     // ==========================================
@@ -197,116 +198,6 @@ function initializeProductCard(card) {
 }
 
 
-// ==========================================
-// LOAD MORE + BADGE LOGIC
-// ==========================================
-let currentLimit = 200; // Initial number of cards to show
-const increment = 200;  // How many to show on "Load More" click
-
-document.addEventListener('DOMContentLoaded', () => {
-    const grid = document.querySelector('.product-cards-wrapper');
-    const loadMoreBtn = document.getElementById('load-more-btn'); // Ensure this ID exists in your HTML
-    if (!grid) return;
-
-    let cards = Array.from(grid.querySelectorAll('.product-card-container'));
-
-    // --- DYNAMIC PERIOD BADGE LOGIC (Shortened for brevity) ---
-    const now = new Date();
-    const seventyTwoHoursInMs = 72 * 60 * 60 * 1000; // Threshold for pulse animation
-    
-    cards.forEach(card => {
-        const postDateStr = card.getAttribute('data-date');
-        if (postDateStr) {
-            const postDate = new Date(postDateStr);
-            const timeDiff = now - postDate;
-    
-            if (timeDiff > 0) {
-                const mediaContainer = card.querySelector('.product-media-container');
-                if (mediaContainer && !mediaContainer.querySelector('.badge-new')) {
-                    
-                    let badgeText = '';
-                    const sec = 1000;
-                    const min = sec * 60;
-                    const hr = min * 60;
-                    const day = hr * 24;
-                    const wk = day * 7;
-                    const mnth = day * 30.44;
-                    const yr = day * 365.25;
-    
-                    // Determine Badge Text
-                    if (timeDiff >= yr) badgeText = `${Math.floor(timeDiff / yr)}Y`;
-                    else if (timeDiff >= mnth) badgeText = `${Math.floor(timeDiff / mnth)}MN`;
-                    else if (timeDiff >= wk) badgeText = `${Math.floor(timeDiff / wk)}W`;
-                    else if (timeDiff >= day) badgeText = `${Math.floor(timeDiff / day)}D`;
-                    else if (timeDiff >= hr) badgeText = `${Math.floor(timeDiff / hr)}H`;
-                    else if (timeDiff >= min) badgeText = `${Math.floor(timeDiff / min)}M`;
-                    else badgeText = `${Math.floor(timeDiff / sec)}S`;
-    
-                    const badge = document.createElement('div');
-                    badge.className = 'badge-new';
-                    badge.innerText = badgeText;
-    
-                    // Only add pulse if item is less than 72 hours old
-                    if (timeDiff < seventyTwoHoursInMs) {
-                        badge.classList.add('pulse');
-                    }
-    
-                    mediaContainer.appendChild(badge);
-                }
-            }
-        }
-    });
-    
-    // --- REVERSE ORDER & PREPARE FOR PAGINATION ---
-    cards.sort((a, b) => {
-        return new Date(b.dataset.date) - new Date(a.dataset.date);
-    }).forEach(card => {
-        grid.appendChild(card);
-        card.classList.add('paginated-hidden');
-    });
-
-    cards.forEach(card => {
-        if (!card.dataset.initialized) {
-          initializeProductCard(card);
-          card.dataset.initialized = 'true';
-        }
-      });
-
-    // --- PAGINATION FUNCTION ---
-    window.updatePagination = function() {
-        // Find cards that aren't hidden by SEARCH
-        const searchableCards = cards.filter(card => !card.classList.contains('hidden'));
-        
-        searchableCards.forEach((card, index) => {
-            if (index < currentLimit) {
-                card.classList.remove('paginated-hidden');
-            } else {
-                card.classList.add('paginated-hidden');
-            }
-        });
-
-        // Toggle "Load More" Button Visibility
-        if (loadMoreBtn) {
-            if (searchableCards.length > currentLimit) {
-                loadMoreBtn.style.display = 'block';
-            } else {
-                loadMoreBtn.style.display = 'none';
-            }
-        }
-
-    };
-
-    // --- BUTTON CLICK EVENT ---
-    if (loadMoreBtn) {
-        loadMoreBtn.addEventListener('click', () => {
-            currentLimit += increment;
-            updatePagination();
-        });
-    }
-
-    // Run pagination on start
-    updatePagination();
-});
 
 
 // ==========================================
@@ -349,45 +240,55 @@ document.addEventListener('DOMContentLoaded', () => {
     function performSearch(query, hideSuggestionsFlag = false) {
         const searchTerm = query.toLowerCase().trim();
         const searchWords = searchTerm.split(/\s+/).filter(Boolean);
-
+    
         if (searchTerm === '') {
-            products.forEach(p => p.element.classList.remove('hidden'));
+            products.forEach(p => {
+                p.element.classList.remove('hidden');
+                p.element.classList.remove('search-hidden'); // ← ADD THIS LINE
+            });
             updateResultsCount(0, '');
             hideNoResults();
+            // ↓ ADD: reset pagination to show all cards on clear
+            if (typeof window.resetPaginationLimit === 'function') {
+                window.resetPaginationLimit();
+            }
             return;
         }
-
+    
         let visibleCount = 0;
         products.forEach(product => {
             const isMatch = searchWords.every(word => {
                 const stemmedSearch = stemWord(word);
-                return product.tokens.some(token => token.includes(word) || token.includes(stemmedSearch));
+                return product.tokens.some(token =>
+                    token.includes(word) || token.includes(stemmedSearch)
+                );
             });
-
+    
             if (isMatch) {
                 product.element.classList.remove('hidden');
+                product.element.classList.remove('search-hidden'); // ← ADD
                 visibleCount++;
             } else {
                 product.element.classList.add('hidden');
+                product.element.classList.add('search-hidden');   // ← ADD
             }
         });
-
-        currentLimit = 200; 
-
-        if (typeof updatePagination === 'function') {
-            updatePagination();
+    
+        // ↓ ADD: reset to page 1 of results after every search
+        if (typeof window.resetPaginationLimit === 'function') {
+            window.resetPaginationLimit();
         }
-
+    
         updateResultsCount(visibleCount, searchTerm);
         if (visibleCount === 0) {
             showNoResults(searchTerm);
         } else {
             hideNoResults();
         }
-        
+    
         if (hideSuggestionsFlag) hideSuggestions();
     }
-
+    
     // ==============================
     // SUGGESTIONS (MAX 10 ITEMS)
     // ==============================
@@ -536,39 +437,72 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // ── Expose re-indexer for dynamic card loading ──────────
 
-        window.reinitSearch = function () {
-        const liveCards = Array.from(document.querySelectorAll('.product-card-container'));
+      window.reinitSearch = function () {
+        const liveCards = Array.from(
+            document.querySelectorAll('.product-card-container')
+        );
         products.length = 0;
-
+    
         liveCards.forEach(card => {
-            const name = card.querySelector('.product-name')?.textContent?.trim().toLowerCase() || '';
-            const brand = card.querySelector('.brand.keyword')?.textContent?.trim().toLowerCase() || '';
-
+            /* Read from data-* first (most reliable for dynamic cards),
+               fall back to text content for static cards */
+            const name     = (card.dataset.name     || card.querySelector('.product-name')?.textContent  || '').trim().toLowerCase();
+            const brand    = (card.dataset.brand    || card.querySelector('.brand.keyword')?.textContent || '').trim().toLowerCase();
+            const category = (card.dataset.category || '').trim().toLowerCase();
+            const price    = (card.dataset.price    || '').trim();
+    
+            /* Spec fields from hidden keyword elements */
+            const ram      = card.querySelector('.ram.keyword')?.textContent?.trim().toLowerCase()     || '';
+            const core     = card.querySelector('.core.keyword')?.textContent?.trim().toLowerCase()    || '';
+            const storage  = card.querySelector('.storage.keyword')?.textContent?.trim().toLowerCase() || '';
+            const os       = card.querySelector('.os.keyword')?.textContent?.trim().toLowerCase()      || '';
+            const screen   = card.querySelector('.screen.keyword')?.textContent?.trim().toLowerCase()  || '';
+            const supplier = card.querySelector('.supplier.keyword')?.textContent?.trim().toLowerCase()|| '';
+            const pid      = card.querySelector('.pid.keyword')?.textContent?.trim().toLowerCase()     || '';
+    
+            /* Category variants (singular + plural) */
             const categories = [];
-            if (card.classList.contains('laptop') || card.classList.contains('laptops')) categories.push('laptop','laptops');
-            if (card.classList.contains('phone') || card.classList.contains('phones')) categories.push('phone','phones');
-            if (card.classList.contains('tablet') || card.classList.contains('tablets')) categories.push('tablet','tablets');
-            if (card.classList.contains('watch') || card.classList.contains('watches')) categories.push('watch','watches');
-
+            const catVariants = {
+                laptop:  ['laptop','laptops'],
+                phone:   ['phone','phones'],
+                tablet:  ['tablet','tablets'],
+                watch:   ['watch','watches'],
+                console: ['console','consoles'],
+            };
+            Object.entries(catVariants).forEach(([key, vals]) => {
+                if (card.classList.contains(key) || card.classList.contains(key+'s') ||
+                    category.includes(key)) {
+                    categories.push(...vals);
+                }
+            });
+    
+            /* Build full text token pool */
             const textContent = card.innerText.toLowerCase();
-            const rawTokens = `${name} ${brand} ${categories.join(' ')} ${textContent}`
-            .split(/\s+/)
-            .filter(Boolean);
-
+            const rawTokens   = `${name} ${brand} ${categories.join(' ')} ${ram} ${core} ${storage} ${os} ${screen} ${supplier} ${pid} ${price} ${textContent}`
+                .split(/\s+/)
+                .filter(t => t.length >= 2);
+    
             const stemmedTokens = rawTokens.map(t => stemWord(t));
-            const allTokens = [...new Set([...rawTokens, ...stemmedTokens])];
-
+            const allTokens     = [...new Set([...rawTokens, ...stemmedTokens])];
+    
             products.push({
-            element: card,
-            name,
-            brand,
-            mainCategory: categories[0] || '',
-            tokens: allTokens,
-            fullText: textContent
+                element:      card,
+                name,
+                brand,
+                mainCategory: categories[0] || category,
+                tokens:       allTokens,
+                fullText:     textContent,
             });
         });
-        };
-
+    
+        console.log(`[WSG Search] Re-indexed ${products.length} cards.`);
+    
+        /* After re-indexing, update pagination counts */
+        if (typeof window.updatePagination === 'function') {
+            window.updatePagination();
+        }
+    };
+    
   // ────────────────────────────────────────────────────────
 
 
@@ -616,3 +550,5 @@ document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") closeModal();
 });
 
+// expose to modules
+window.initializeProductCard = initializeProductCard;
