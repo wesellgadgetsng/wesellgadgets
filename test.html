@@ -1,118 +1,643 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
+// ==========================================
+// SMART RESIZE HANDLING
+// ==========================================
+let resizeTimer;
 
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+window.addEventListener("resize", () => {
+  document.body.classList.add("is-resizing");
 
-        <title>We sell high quality gadgets in Nigeria and deliver Nationwide</title>
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() => {
+    document.body.classList.remove("is-resizing");
+  }, 150);
+});
+
+// ==========================================
+// Hamburger
+// ==========================================
+const hamburger = document.querySelector(".hamburger");
+const navLinks = document.querySelector(".nav-links");
+
+if (hamburger && navLinks) {
+    hamburger.addEventListener("click", () => {
+        hamburger.classList.toggle("active");
+        navLinks.classList.toggle("active");
+    });
+}
+
+
+// ==========================================
+// PRODUCT CARD INITIALIZATION
+// ==========================================
+function initializeProductCard(card) {
+    const wrapper = card.querySelector('[data-gallery]');
+    const container = card.querySelector('.product-media-container');
+    const pagination = card.querySelector('[data-pagination]');
+    const fullscreenBtn = card.querySelector('[data-fullscreen-toggle]');
+    
+    // State for this specific card
+    let zoomState = {
+        active: false,
+        image: null,
+        scale: 1,
+        translateX: 0,
+        translateY: 0,
+        startX: 0,
+        startY: 0,
+        startTranslateX: 0,
+        startTranslateY: 0,
+        isPanning: false,
+        isPinching: false,
+        isMouseDown: false
+    };
+
+    let tapState = {
+        lastTime: 0,
+        lastX: 0,
+        lastY: 0,
+        lastTarget: null
+    };
+
+    let touchStartData = {
+        time: 0,
+        x: 0,
+        y: 0,
+        moved: false,
+        startDist: 0,
+        lastDist: 0
+    };
+
+
+    // ==========================================
+    // PAGINATION
+    // ==========================================
+    const images = wrapper.querySelectorAll('.product-media');
+    const numImages = images.length;
+
+    for (let i = 0; i < numImages; i++) {
+        const dot = document.createElement('span');
+        dot.classList.add('dot');
+        dot.dataset.index = i;
+        dot.addEventListener('click', () => {
+            wrapper.scrollTo({ left: i * wrapper.clientWidth, behavior: 'smooth' });
+        });
+        pagination.appendChild(dot);
+    }
+
+    function updateActiveDot() {
+        if (zoomState.active) return;
+        const index = Math.round(wrapper.scrollLeft / wrapper.clientWidth);
+        pagination.querySelectorAll('.dot').forEach((dot, i) => {
+            dot.classList.toggle('active', i === index);
+        });
+    }
+
+    let ticking = false;
+
+    wrapper.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          updateActiveDot();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }, { passive: true });
+    
+    updateActiveDot();
+
+    // ==========================================
+    // FULLSCREEN
+    // ==========================================
+
+// Keep these at the top of your script (Global Scope)
+const mediaModal = document.getElementById("media-modal");
+const mediaModalBody = document.querySelector(".media-modal-body");
+let activeMediaContainer = null;
+let originalParent = null;
+let originalNextSibling = null;
+let isProcessing = false; // Prevents the "5-click" loop
+
+document.addEventListener("click", function (e) {
+    if (isProcessing) return; // Ignore clicks if we are already switching states
+
+    const fullBtn = e.target.closest(".fullscreen-button");
+    const closeBtn = e.target.closest(".media-modal-close");
+    const overlay = e.target.closest(".media-modal-overlay");
+    const isModalActive = mediaModal.classList.contains("active");
+
+    // Handle Closing (X button OR Overlay OR clicking the Fullscreen button while modal is open)
+    if (closeBtn || overlay || (fullBtn && isModalActive)) {
+        e.preventDefault();
+        e.stopPropagation();
+        isProcessing = true;
+        closeMediaModal();
+        setTimeout(() => { isProcessing = false; }, 300); // 300ms cooldown
+        return;
+    }
+
+    // Handle Opening
+    if (fullBtn && !isModalActive) {
+        e.preventDefault();
+        e.stopPropagation();
+        isProcessing = true;
+        openMediaModal(fullBtn);
+        setTimeout(() => { isProcessing = false; }, 300);
+    }
+});
+
+function openMediaModal(btn) {
+    const card = btn.closest(".product-card-container");
+    const mediaContainer = card.querySelector(".product-media-container");
+    if (!mediaContainer) return;
+
+    activeMediaContainer = mediaContainer;
+    originalParent = mediaContainer.parentNode;
+    originalNextSibling = mediaContainer.nextSibling;
+
+    mediaModalBody.appendChild(mediaContainer);
+    mediaModal.classList.add("active");
+    btn.classList.add("is-fullscreen");
+    document.body.style.overflow = "hidden";
+}
+
+function closeMediaModal() {
+    if (!activeMediaContainer) return;
+
+    // 1. Reset icon state
+    activeMediaContainer.querySelectorAll(".fullscreen-button").forEach(btn => {
+        btn.classList.remove("is-fullscreen");
+    });
+
+    // 2. Put the media back where it belongs
+    if (originalNextSibling) {
+        originalParent.insertBefore(activeMediaContainer, originalNextSibling);
+    } else {
+        originalParent.appendChild(activeMediaContainer);
+    }
+
+    // 3. Hide Modal
+    mediaModal.classList.remove("active");
+    document.body.style.overflow = "";
+
+    // 4. Cleanup
+    activeMediaContainer = null;
+    originalParent = null;
+    originalNextSibling = null;
+}
+
+mediaModalOverlay.addEventListener("click", closeMediaModal);
+
+document.addEventListener("keydown", function (e) {
+  if (e.key === "Escape") closeMediaModal();
+});
+
+
+    // ==========================================
+    // BACKGROUND BLENDER
+    // ==========================================
+    const firstImg = container.querySelector('.product-media-image');
+    if (firstImg) {
+        const applyBackground = () => {
+            container.style.backgroundImage = `url(${firstImg.src})`;
+        };
+
+        if (firstImg.complete && firstImg.naturalWidth) {
+            applyBackground();
+        } else {
+            firstImg.onload = applyBackground;
+        }
+    }
+
+    // ==========================================
+    // VIDEO CONTROLS
+    // ==========================================
+    const video = card.querySelector('[data-video]');
+    const playBtn = card.querySelector('[data-play-toggle]');
+    const timeDisplay = card.querySelector('[data-time-display]');
+    const videoControls = card.querySelector('[data-video-controls]');
+    const videoContainer = card.querySelector('.video-container');
+
+    if (video && playBtn) {
+        const playIcon = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
+        const pauseIcon = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>';
+
+        function togglePlay(e) {
+            if (e) e.stopPropagation();
+            if (video.paused || video.ended) {
+                video.play();
+            } else {
+                video.pause();
+            }
+        }
+
+        function updatePlayButton() {
+            if (video.paused) {
+                playBtn.innerHTML = playIcon;
+                videoContainer.classList.add('paused');
+            } else {
+                playBtn.innerHTML = pauseIcon;
+                videoContainer.classList.remove('paused');
+            }
+        }
+
+        function formatTime(seconds) {
+            const m = Math.floor(seconds / 60);
+            const s = Math.floor(seconds % 60);
+            return `${m}:${s < 10 ? '0' : ''}${s}`;
+        }
+
+        function updateProgress() {
+            const current = formatTime(video.currentTime);
+            const total = formatTime(video.duration || 0);
+            timeDisplay.textContent = `${current} / ${total}`;
+        }
+
+        playBtn.addEventListener('click', togglePlay);
+        video.addEventListener('click', togglePlay);
+        video.addEventListener('play', updatePlayButton);
+        video.addEventListener('pause', updatePlayButton);
+        video.addEventListener('timeupdate', updateProgress);
+
+        videoControls.addEventListener('mousedown', (e) => e.stopPropagation());
+        videoControls.addEventListener('touchstart', (e) => e.stopPropagation());
+    }
+}
+
+
+// ==========================================
+// LOAD MORE LOGIC
+// ==========================================
+let currentLimit = 20; // Initial number of cards to show
+const increment = 20;  // How many to show on "Load More" click
+
+document.addEventListener('DOMContentLoaded', () => {
+    const grid = document.querySelector('.product-cards-wrapper');
+    const loadMoreBtn = document.getElementById('load-more-btn'); // Ensure this ID exists in your HTML
+    if (!grid) return;
+
+    let cards = Array.from(grid.querySelectorAll('.product-card-container'));
+
+
+
+    // --- REVERSE ORDER & PREPARE FOR PAGINATION ---
+    cards.sort((a, b) => {
+        return new Date(b.dataset.date) - new Date(a.dataset.date);
+    }).forEach(card => {
+        grid.appendChild(card);
+        card.classList.add('paginated-hidden');
+    });
+
+    cards.forEach(card => {
+        if (!card.dataset.initialized) {
+          initializeProductCard(card);
+          card.dataset.initialized = 'true';
+        }
+      });
+
+    // --- PAGINATION FUNCTION ---
+    window.updatePagination = function() {
+        // Find cards that aren't hidden by SEARCH
+        const searchableCards = cards.filter(card => !card.classList.contains('hidden'));
         
-        <link rel="stylesheet" href="normalize.css">
-        <link rel="stylesheet" href="styles.css">
+        searchableCards.forEach((card, index) => {
+            if (index < currentLimit) {
+                card.classList.remove('paginated-hidden');
+            } else {
+                card.classList.add('paginated-hidden');
+            }
+        });
 
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap" rel="stylesheet">
+        // Toggle "Load More" Button Visibility
+        if (loadMoreBtn) {
+            if (searchableCards.length > currentLimit) {
+                loadMoreBtn.style.display = 'block';
+            } else {
+                loadMoreBtn.style.display = 'none';
+            }
+        }
 
-    </head>
-    <body>
+    };
+
+    // --- BUTTON CLICK EVENT ---
+    if (loadMoreBtn) {
+        loadMoreBtn.addEventListener('click', () => {
+            currentLimit += increment;
+            updatePagination();
+        });
+    }
+
+    // Run pagination on start
+    updatePagination();
+});
+
+
+
+
+// ==========================================
+// PROFESSIONAL ECOMMERCE SEARCH ENGINE (V7)
+// ==========================================
+(function initProductSearch() {
+    const searchInput = document.getElementById('product-search');
+    const searchClear = document.getElementById('search-clear');
+    const searchResultsCount = document.getElementById('search-results-count');
+    const searchSuggestions = document.getElementById('search-suggestions');
+    const noResults = document.getElementById('no-results');
+    const searchQueryDisplay = document.getElementById('search-query-display');
+    const clearSearchBtn = document.getElementById('clear-search-btn');
+
+    if (!searchInput) return;
+
+    let searchTimeout;
+
+    let products = [];
+
+    const icons = {
+        category: '<svg class="suggestion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>',
+        brand: '<svg class="suggestion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>',
+        product: '<svg class="suggestion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>',
+        search: '<svg class="suggestion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>'
+    };
+
+    function stemWord(word) {
+        if (!word || word.length < 3) return word;
+        return word.toLowerCase()
+            .replace(/ies$/, 'y')
+            .replace(/es$/, '')
+            .replace(/s$/, '');
+    }
+
+
+    // ==============================
+    // CORE SEARCH LOGIC
+    // ==============================
+    function performSearch(query, hideSuggestionsFlag = false) {
+        const searchTerm = query.toLowerCase().trim();
+        const searchWords = searchTerm.split(/\s+/).filter(Boolean);
+
+        if (searchTerm === '') {
+            products.forEach(p => p.element.classList.remove('hidden'));
+            updateResultsCount(0, '');
+            hideNoResults();
+            return;
+        }
+
+        let visibleCount = 0;
+        products.forEach(product => {
+            const isMatch = searchWords.every(word => {
+                const stemmedSearch = stemWord(word);
+                return product.tokens.some(token => token.includes(word) || token.includes(stemmedSearch));
+            });
+
+            if (isMatch) {
+                product.element.classList.remove('hidden');
+                visibleCount++;
+            } else {
+                product.element.classList.add('hidden');
+            }
+        });
+
+        currentLimit = 20; 
+
+        if (typeof updatePagination === 'function') {
+            updatePagination();
+        }
+
+        updateResultsCount(visibleCount, searchTerm);
+        if (visibleCount === 0) {
+            showNoResults(searchTerm);
+        } else {
+            hideNoResults();
+        }
         
+        if (hideSuggestionsFlag) hideSuggestions();
+    }
 
-        <div id="body-container">
-            <nav class="nav-bar">
-            <!-- Logo on the Left -->
-            <div id="logo">
-                <div id="logo-circle">
-                <div id="logo-bar"></div>
-                </div>
-                <p id="logo-text">wesell<span>gadgets</span></p>
+    // ==============================
+    // SUGGESTIONS (MAX 10 ITEMS)
+    // ==============================
+    function generateSuggestions(query) {
+        const val = query.toLowerCase().trim();
+        const stemmedVal = stemWord(val);
+        if (val.length < 1) { hideSuggestions(); return; }
+
+        const catSuggestions = [];
+        const brandSuggestions = [];
+        const prodSuggestions = [];
+        const seenBrands = new Set();
+        const seenProds = new Set();
+        
+        const MAX_TOTAL = 10;
+
+        // 1. Find Categories
+        const cats = ['Laptops', 'Phones', 'Tablets', 'Watches'];
+        cats.forEach(c => {
+            const singular = stemWord(c);
+            if (c.toLowerCase().includes(val) || singular.includes(stemmedVal)) {
+                const count = products.filter(p => p.mainCategory === singular).length;
+                if (count > 0) catSuggestions.push({ type: 'category', text: c, query: c, count });
+            }
+        });
+
+        // 2. Find Brands
+        products.forEach(p => {
+            if (p.brand && (p.brand.includes(val) || stemWord(p.brand).includes(stemmedVal)) && !seenBrands.has(p.brand)) {
+                const count = products.filter(x => x.brand === p.brand).length;
+                brandSuggestions.push({ type: 'brand', text: p.brand.toUpperCase(), query: p.brand, count });
+                seenBrands.add(p.brand);
+            }
+        });
+
+        // 3. Find Products
+        products.forEach(p => {
+            if ((p.name.includes(val) || stemWord(p.name).includes(stemmedVal)) && !seenProds.has(p.name)) {
+                prodSuggestions.push({ type: 'product', text: p.name, query: p.name, count: 1 });
+                seenProds.add(p.name);
+            }
+        });
+
+        // ==============================
+        // ENFORCE LIMIT: 10 total
+        // ==============================
+        const finalCats = catSuggestions.slice(0, MAX_TOTAL);
+        const remainingAfterCats = MAX_TOTAL - finalCats.length;
+        
+        const finalBrands = brandSuggestions.slice(0, remainingAfterCats);
+        const remainingAfterBrands = MAX_TOTAL - (finalCats.length + finalBrands.length);
+        
+        const finalProds = prodSuggestions.slice(0, remainingAfterBrands);
+
+        displaySuggestions(val, finalCats, finalBrands, finalProds);
+    }
+
+    function displaySuggestions(currentInput, cats, brands, prods) {
+        let html = `
+            <div class="suggestion-item search-finalize-btn" data-query="${currentInput}">
+                ${icons.search}
+                <span class="suggestion-text">Search for "<strong>${currentInput}</strong>"</span>
             </div>
-        
-            <!-- Right Side: Links + Hamburger -->
-            <div class="nav-right">
-                
-                <!-- Navigation Links -->
-                <div class="nav-links">
-                <a href="#" class="active">Home</a>
-                <a href="#" class="feed">Feed</a>
-                <a href="#">About</a>
-                <a href="#">Contact</a>
-                <a href="https://wa.me/2348012345678" target="_blank">Order on WhatsApp</a>
-                </div>
-        
-                <!-- Hamburger Menu (always on far right) -->
-                <div class="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-                </div>
-            </div>          
-            </nav>
+        `;
 
-            <div class="top-banner"><p>Good meals 🍲 take time, our web store is still in progress, <span><a href="https://wa.me/2348012345678" target="_blank"">Message us on WhatsApp</a></span> to solve all your gadget needs.</p></div>
+        if (cats.length) {
+            html += `<div class="suggestion-category">Categories</div>`;
+            cats.forEach(s => html += renderSuggestionItem(s));
+        }
+        if (brands.length) {
+            html += `<div class="suggestion-category">Brands</div>`;
+            brands.forEach(s => html += renderSuggestionItem(s));
+        }
+        if (prods.length) {
+            html += `<div class="suggestion-category">Products</div>`;
+            prods.forEach(s => html += renderSuggestionItem(s));
+        }
 
-            <section id="hero-section">
-                <div id="hero-content">
-                    <video 
-                    src="media/herovideo.mp4" 
-                    type="video/mp4"
-                    autoplay 
-                    loop 
-                    muted 
-                    playsinline 
-                    class="hero-video">
-                    </video>
+        searchSuggestions.innerHTML = html;
+        searchSuggestions.style.display = 'block';
 
-                    <h1>Your <span>trusted</span> source for <span>quality</span> gadgets in Nigeria</h1>
-                    <p>Phones, Laptops, Gaming Accessories – Delivered Nationwide</p>
+        searchSuggestions.querySelectorAll('.suggestion-item').forEach(item => {
+            item.onclick = () => {
+                searchInput.value = item.dataset.query;
+                performSearch(item.dataset.query, true);
+            };
+        });
+    }
 
-                    <button class="button-1">Order on WhatsApp</button>
-                </div>
+    function renderSuggestionItem(sug) {
+        return `
+            <div class="suggestion-item" data-query="${sug.query}">
+                ${icons[sug.type]}
+                <span class="suggestion-text">${sug.text}</span>
+                <span class="suggestion-count">${sug.count}</span>
+            </div>
+        `;
+    }
+
+    // ==============================
+    // UTILITIES & EVENTS
+    // ==============================
+
+    function updateResultsCount(count, query) {
+        if (!query) { searchResultsCount.classList.remove('visible'); return; }
+        searchResultsCount.innerHTML = `Found <strong>${count}</strong> items for "<strong>${query}</strong>"`;
+        searchResultsCount.classList.add('visible');
+    }
+
+    function showNoResults(q) { searchQueryDisplay.textContent = q; noResults.style.display = 'block'; }
+    function hideNoResults() { noResults.style.display = 'none'; }
+    function hideSuggestions() { searchSuggestions.style.display = 'none'; }
+
+    searchInput.addEventListener('input', e => {
+        const val = e.target.value;
+        searchClear.style.display = val ? 'flex' : 'none';
+        generateSuggestions(val);
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(() => performSearch(val, false), 400);
+    });
+
+    searchInput.addEventListener('keydown', e => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            performSearch(searchInput.value, true);
+        }
+        if (e.key === 'Escape') hideSuggestions();
+    });
+
+    searchClear.addEventListener('click', () => {
+        searchInput.value = '';
+        searchClear.style.display = 'none';
+        performSearch('', true);
+    });
+
+    if (clearSearchBtn) {
+        clearSearchBtn.addEventListener('click', () => {
+            searchInput.value = '';
+            searchClear.style.display = 'none';
+            hideNoResults();
+            performSearch('', true);
+        });
 
 
-            </section>
+}
+
+      // ── Expose re-indexer for dynamic card loading ──────────
+
+        window.reinitSearch = function () {
+        const liveCards = Array.from(document.querySelectorAll('.product-card-container'));
+        products.length = 0;
+
+        liveCards.forEach(card => {
+            const name = card.querySelector('.product-name')?.textContent?.trim().toLowerCase() || '';
+            const brand = card.querySelector('.brand.keyword')?.textContent?.trim().toLowerCase() || '';
+
+            const categories = [];
+            if (card.classList.contains('laptop') || card.classList.contains('laptops')) categories.push('laptop','laptops');
+            if (card.classList.contains('phone') || card.classList.contains('phones')) categories.push('phone','phones');
+            if (card.classList.contains('tablet') || card.classList.contains('tablets')) categories.push('tablet','tablets');
+            if (card.classList.contains('watch') || card.classList.contains('watches')) categories.push('watch','watches');
+
+            const textContent = card.innerText.toLowerCase();
+            const rawTokens = `${name} ${brand} ${categories.join(' ')} ${textContent}`
+            .split(/\s+/)
+            .filter(Boolean);
+
+            const stemmedTokens = rawTokens.map(t => stemWord(t));
+            const allTokens = [...new Set([...rawTokens, ...stemmedTokens])];
+
+            products.push({
+            element: card,
+            name,
+            brand,
+            mainCategory: categories[0] || '',
+            tokens: allTokens,
+            fullText: textContent
+            });
+        });
+        };
+
+  // ────────────────────────────────────────────────────────
 
 
-            <section class="product-feed">
-                <h3>Explore our product Feed</h3>
-                <p>See our lightening deals</p>
-
-                <a href="product-feed.html"><button class="button-2">Explore</button></a>
-            </section>
-
-            <footer>
-                <div id="logo">
-                    <div id="logo-circle">
-                    <div id="logo-bar"></div>
-                    </div>
-                    <p id="logo-text">wesell<span>gadgets</span></p>
-                </div>
-
-                <P class="footer-summary">What we do is simple, we sell high quality new and used gadgets; phones, laptops, gaming, accessories and more. We deliver nationwide.</P>
-
-                <P class="footer-disclaimer">Disclaimer: All product information, logos, and other trademarked items are properties of their respective brands, we only provide retail services and are not affiliated to these brands.</P>
     
-                <div class="footer-links">
-                    <a href="#">How we serve you</a>
-                    <a href="#">About</a>
-                    <a href="#">Contact</a>
-                    <a href="#">Reviews</a>
-                    <a href="#">Terms and Conditions</a>
-                    <a href="#" class="feed">Feed</a>
-                </div>
+    document.addEventListener('click', e => {
+        if (!searchInput.contains(e.target) && !searchSuggestions.contains(e.target)) hideSuggestions();
+    });
+})();
 
-                <p id="to-top"><a href="#body-container">Back to Top</a></p>
 
-                <hr>
-                
-                <p id="copyright">© wesellgadgetsng 2025</p>
-                    
-            
-            </footer>
-    
-    
-        </div>
+    // ==========================================
+    // SHOW MORE/LESS
+    // ==========================================
 
-    </body>
+const modal = document.getElementById("spec-modal");
+const modalOverlay = document.querySelector(".spec-modal-overlay");
+const modalClose = document.querySelector(".spec-modal-close");
+const modalTitle = document.getElementById("modal-product-name");
+const modalSpecs = document.getElementById("modal-specs-text");
 
-</html>
+document.addEventListener("click", function(e) {
+    const btn = e.target.closest("[data-show-more-toggle]");
+    if (!btn) return;
+
+    const card = btn.closest(".product-card-container");
+    const title = card.querySelector(".product-name").textContent;
+    const specs = card.querySelector("[data-specs-text]").textContent;
+
+    modalTitle.textContent = title;
+    modalSpecs.textContent = specs;
+
+    modal.classList.add("active");
+    document.body.style.overflow = "hidden";
+});
+
+function closeModal() {
+  modal.classList.remove("active");
+  document.body.style.overflow = "";
+}
+
+modalClose.addEventListener("click", closeModal);
+modalOverlay.addEventListener("click", closeModal);
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") closeModal();
+});
+

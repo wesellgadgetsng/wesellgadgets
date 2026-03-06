@@ -241,6 +241,13 @@ text-decoration: underline;
 font-weight: bold;
 }
 
+.top-banner span {
+  color: #FB8F0D;
+  text-decoration: none;
+  font-weight: bold;
+  }
+  
+
 #hero-section {
 
   padding: 24px;  
@@ -1145,6 +1152,13 @@ padding: 4px;
   font-size: 14px;
   font-weight: medium;
   color: #FFFFFF;
+  overflow: hidden;              /* Cuts off anything that tries to escape */
+  word-break: break-word;        /* Breaks very long words (e.g., URLs) */
+  display: -webkit-box;
+  -webkit-line-clamp: 1;             /* Show only 2 lines */
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;       
+
   
 }
 
