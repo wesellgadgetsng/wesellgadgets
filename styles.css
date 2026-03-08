@@ -394,6 +394,10 @@ padding: 4px;
   color: #FB8F0D;
 }
 
+.trustpilot-widget {
+  border-radius: 30px;
+}
+
 .to-top {
   position: fixed;      /* Fixed to viewport, follows scroll */
   bottom: 20px;         /* Distance from bottom edge */
@@ -1255,6 +1259,224 @@ box-shadow:
 
 }
 
+/* ================================================================
+   ORDER NOW — action row layout
+   ================================================================ */
+   .product-action-row {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+    margin-top: auto;
+    align-items: stretch;
+  }
+  
+  /* Order Now takes all remaining width */
+  .product-action-row .order-now-btn {
+    flex: 1;
+    gap: 8px; /* space between WhatsApp icon and text */
+  }
+  
+  /* Share button — square icon button */
+  .share-link-btn {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.08) 0%,
+      rgba(255, 255, 255, 0.03) 100%
+    );
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: rgba(255, 255, 255, 0.6);
+    cursor: pointer;
+    transition: all 0.25s ease;
+    padding: 0;
+    font-size: 12px;
+    font-weight: 700;
+    font-family: inherit;
+  }
+  
+  .share-link-btn:hover {
+    background: rgba(251, 143, 13, 0.15);
+    border-color: rgba(251, 143, 13, 0.5);
+    color: #FB8F0D;
+    transform: scale(1.08);
+  }
+  
+  .share-link-btn.copy-success {
+    background: rgba(37, 211, 102, 0.2);
+    border-color: rgba(37, 211, 102, 0.6);
+    color: #25D366;
+    width: auto;
+    padding: 0 12px;
+    border-radius: 20px;
+    font-size: 11px;
+  }
+  
+  /* ================================================================
+     CARD HIGHLIGHTED — deep-link arrival animation
+     ================================================================ */
+  
+  /* The animation runs in 4 phases:
+     0–10%   → snap glow in
+     10–80%  → breathe / pulse
+     80–100% → fade out cleanly                                      */
+  
+  @keyframes cardHighlightPulse {
+    0% {
+      box-shadow:
+        0 0 0 0 rgba(251, 143, 13, 0),
+        0 0 0 0 rgba(251, 143, 13, 0);
+      outline: 2px solid transparent;
+    }
+    8% {
+      box-shadow:
+        0 0 0 4px  rgba(251, 143, 13, 0.9),
+        0 0 40px 8px rgba(251, 143, 13, 0.45),
+        0 0 80px 16px rgba(251, 143, 13, 0.2);
+      outline: 2px solid rgba(251, 143, 13, 0.8);
+      transform: scale(1.02);
+    }
+    30% {
+      box-shadow:
+        0 0 0 3px  rgba(251, 143, 13, 0.7),
+        0 0 30px 6px rgba(251, 143, 13, 0.3),
+        0 0 60px 12px rgba(251, 143, 13, 0.15);
+      outline: 2px solid rgba(251, 143, 13, 0.6);
+      transform: scale(1.01);
+    }
+    55% {
+      box-shadow:
+        0 0 0 4px  rgba(251, 143, 13, 0.8),
+        0 0 35px 8px rgba(251, 143, 13, 0.35),
+        0 0 70px 14px rgba(251, 143, 13, 0.18);
+      outline: 2px solid rgba(251, 143, 13, 0.7);
+      transform: scale(1.015);
+    }
+    80% {
+      box-shadow:
+        0 0 0 2px  rgba(251, 143, 13, 0.5),
+        0 0 20px 4px rgba(251, 143, 13, 0.2),
+        0 0 40px 8px rgba(251, 143, 13, 0.1);
+      outline: 2px solid rgba(251, 143, 13, 0.4);
+      transform: scale(1.005);
+    }
+    100% {
+      box-shadow:
+        0 0 0 0 rgba(251, 143, 13, 0),
+        0 0 0 0 rgba(251, 143, 13, 0);
+      outline: 2px solid transparent;
+      transform: scale(1);
+    }
+  }
+  
+  .product-card-container.card-highlighted {
+    animation: cardHighlightPulse 5.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    position: relative;
+    z-index: 10;          /* lift above sibling cards */
+    border-radius: 16px;  /* match card border-radius */
+  }
+  
+  /* ── Arrow indicator pointing at highlighted card ── */
+  .product-card-container.card-highlighted::after {
+    content: '👈 This product was shared with you';
+    position: absolute;
+    top: -36px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, #FB8F0D, #FF6B35);
+    color: #121212;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 6px 14px;
+    border-radius: 20px;
+    white-space: nowrap;
+    z-index: 20;
+    box-shadow: 0 4px 12px rgba(251, 143, 13, 0.5);
+    animation: badgeBounceIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s both;
+    pointer-events: none;
+  }
+  
+  @keyframes badgeBounceIn {
+    from { opacity: 0; transform: translateX(-50%) translateY(-8px) scale(0.8); }
+    to   { opacity: 1; transform: translateX(-50%) translateY(0)    scale(1);   }
+  }
+  
+  /* ================================================================
+     DEEP-LINK TOAST NOTIFICATION
+     ================================================================ */
+  .deeplink-toast {
+    position: fixed;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: linear-gradient(
+      135deg,
+      rgba(30, 30, 40, 0.97) 0%,
+      rgba(20, 20, 30, 0.97) 100%
+    );
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(37, 211, 102, 0.4);
+    border-radius: 40px;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #F4F4F2;
+    font-size: 13px;
+    font-family: inherit;
+    font-weight: 500;
+    z-index: 99999;
+    box-shadow:
+      0 8px 32px rgba(0, 0, 0, 0.5),
+      0 0 20px rgba(37, 211, 102, 0.15);
+    opacity: 0;
+    transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    pointer-events: none;
+    white-space: nowrap;
+    max-width: calc(100vw - 48px);
+  }
+  
+  .deeplink-toast.toast-visible {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  
+  .deeplink-toast strong {
+    color: #FB8F0D;
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: inline-block;
+    vertical-align: bottom;
+  }
+  
+  /* Mobile: move toast above the "To Top" button */
+  @media (max-width: 480px) {
+    .deeplink-toast {
+      bottom: 90px;
+      font-size: 12px;
+      padding: 10px 16px;
+    }
+  
+    .product-card-container.card-highlighted::after {
+      font-size: 10px;
+      top: -30px;
+      white-space: nowrap;
+      max-width: 90vw;
+      overflow: hidden;
+    }
+  }
+  
+
 /* ==========================================
    SEARCH CONTAINER
    ========================================== */
@@ -1638,50 +1860,43 @@ box-shadow:
 
   /* ── Load More Button ─────────────────────────────────────── */
 
-  .load-more-btn-cont {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-  }
-  
   .load-more-btn {
     display: none; /* JS controls visibility */
-    margin: 40px 0;
+    margin: 40px auto;
     padding: 14px 40px;
-  
     background: linear-gradient(
       135deg,
       rgba(251, 143, 13, 0.15) 0%,
       rgba(251, 143, 13, 0.05) 100%
     );
-  
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-  
     border: 1px solid rgba(251, 143, 13, 0.5);
     border-radius: 999px;
-  
     color: #FB8F0D;
     font-size: 15px;
     font-weight: 700;
+    font-family: inherit;
     letter-spacing: 0.5px;
-  
     cursor: pointer;
-    transition: all 0.3s ease;
-  
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    /* Center it outside the grid */
     width: fit-content;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
   }
-
-.load-more-btn:hover {
-  background: rgba(251, 143, 13, 0.2);
-  box-shadow: 0 0 24px rgba(251, 143, 13, 0.35);
-}
-
-.load-more-btn:active {
-  transform: translateX(-50%) translateY(0) scale(0.98);
-}
-
+  
+  .load-more-btn:hover {
+    background: rgba(251, 143, 13, 0.2);
+    box-shadow: 0 0 24px rgba(251, 143, 13, 0.35);
+    transform: translateX(-50%) translateY(-2px);
+  }
+  
+  .load-more-btn:active {
+    transform: translateX(-50%) translateY(0) scale(0.98);
+  }
+  
 /* ── Fix: sr-only (replaces .hidden for keyword elements) ─── */
 .sr-only {
   position: absolute !important;

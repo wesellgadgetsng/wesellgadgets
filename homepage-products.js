@@ -65,6 +65,12 @@
        cat, cat + 's',           // e.g. "laptop laptops"
        brand, cond, pid,
      ].filter(Boolean).join(' ');
+
+     /* Unique DOM id — used by deep-link URL system */
+    if (pid) {
+      el.id = 'p-' + pid.replace(/[^a-zA-Z0-9_-]/g, '-');
+    }
+
    
      /* data attributes (read by reinitSearch & badge) */
      el.dataset.date = p.post_date || '';
@@ -80,9 +86,7 @@
      /* Image slides */
      const slidesHTML = imgs.map((img, i) => `
        <img ${i === 0 ? 'loading="eager"' : 'loading="lazy"'}
-            decoding="async"
             class="product-media-image product-media"
-            crossorigin="anonymous"
             alt="${esc(p.name)} image ${i + 1}"
             src="${esc(img.public_url)}">`
      ).join('');
@@ -147,10 +151,47 @@
          <p class="show-more" data-show-more-toggle>Show more</p>
    
          <p class="price keyword">${priceDisplay}</p>
-         <a href="${esc(waLink)}"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="button-3">Order Now</a>
+        <div class="product-action-row">
+          <button class="button-3 order-now-btn"
+                  type="button"
+                  data-action="order"
+                  aria-label="Order ${esc(p.name)} via WhatsApp">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"
+                aria-hidden="true" style="flex-shrink:0">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099
+                      -.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199
+                      -.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475
+                      -.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458
+                      .13-.606.134-.133.298-.347.446-.52.149-.174.198-.298
+                      .298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612
+                      -.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01
+                      -.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04
+                      2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2
+                      5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195
+                      1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248
+                      -1.289.173-1.413-.074-.124-.272-.198-.57-.347z
+                      M12 0C5.373 0 0 5.373 0 12c0 2.123.553 4.116 1.522 5.847
+                      L.057 23.882l6.204-1.625A11.946 11.946 0 0 0 12 24
+                      c6.627 0 12-5.373 12-12S18.627 0 12 0z"/>
+            </svg>
+            Order Now
+          </button>
+
+          <button class="share-link-btn"
+                  type="button"
+                  data-action="share"
+                  aria-label="Copy product link"
+                  title="Copy shareable link">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" aria-hidden="true">
+              <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/>
+              <circle cx="18" cy="19" r="3"/>
+              <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+              <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+            </svg>
+          </button>
+        </div>
    
          <!-- Hidden keyword fields — read by search tokeniser -->
          <p class="ram      keyword sr-only">${esc(p.ram              || '')}</p>
@@ -394,6 +435,8 @@
    
      /* ── Init cards, search index, pagination ── */
      initAllCards(wrapper);
+     checkUrlForProductHighlight();
+
 
      if (window.reinitSearch) {
        window.reinitSearch();
@@ -406,3 +449,86 @@
    /* Modules are deferred — DOM is ready */
    loadHomepageProducts();
    
+
+/* ================================================================
+   DEEP-LINK / URL HIGHLIGHT SYSTEM
+   Reads ?pid= from URL, finds the matching card, forces it visible,
+   scrolls to it, and plays a highlight animation.
+   ================================================================ */
+
+   function checkUrlForProductHighlight() {
+    const params = new URLSearchParams(window.location.search);
+    const pid    = params.get('pid');
+    if (!pid) return;
+  
+    /* Find card by DOM id or data-product-id attribute */
+    const safeId = 'p-' + pid.replace(/[^a-zA-Z0-9_-]/g, '-');
+    const card   = document.getElementById(safeId) ||
+                   Array.from(document.querySelectorAll('[data-product-id]'))
+                     .find(el => el.dataset.productId === pid);
+  
+    if (!card) {
+      console.warn(`[WSG Deep-link] No card found for pid: "${pid}"`);
+      return;
+    }
+  
+    /* ── Force card visible regardless of pagination state ── */
+    card.classList.remove('paginated-hidden', 'search-hidden', 'hidden');
+  
+    /* If the card is beyond the current pagination limit, extend it */
+    if (PAGE.allCards.length) {
+      const idx = PAGE.allCards.indexOf(card);
+      if (idx >= 0 && idx >= PAGE.limit) {
+        PAGE.limit = idx + 1;          /* expose just enough cards */
+        updatePagination();
+      }
+    }
+  
+    /* ── Scroll + highlight after brief paint delay ── */
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        /* Scroll navbar height into account */
+        const navH   = document.querySelector('.nav-bar')?.offsetHeight || 72;
+        const cardTop = card.getBoundingClientRect().top + window.scrollY - navH - 24;
+        window.scrollTo({ top: cardTop, behavior: 'smooth' });
+  
+        /* Trigger highlight */
+        card.classList.add('card-highlighted');
+  
+        /* Show a subtle toast so user knows which product was linked */
+        showDeepLinkToast(card);
+  
+        /* Remove highlight class after animation completes (5s) */
+        setTimeout(() => card.classList.remove('card-highlighted'), 5200);
+      }, 250);
+    });
+  }
+  
+  function showDeepLinkToast(card) {
+    const name = card.dataset.name ||
+                 card.querySelector('.product-name')?.textContent || 'Product';
+    const toast = document.createElement('div');
+    toast.className  = 'deeplink-toast';
+    toast.innerHTML  = `
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+           stroke="#25D366" stroke-width="2.5" aria-hidden="true">
+        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+        <polyline points="22 4 12 14.01 9 11.01"/>
+      </svg>
+      <span>Showing: <strong>${name}</strong></span>`;
+    document.body.appendChild(toast);
+  
+    /* Animate in → hold → animate out */
+    requestAnimationFrame(() => {
+      toast.classList.add('toast-visible');
+      setTimeout(() => {
+        toast.classList.remove('toast-visible');
+        setTimeout(() => toast.remove(), 400);
+      }, 3500);
+    });
+  }
+  
+  /* Run after cards are injected — called inside loadHomepageProducts() */
+  /* Make sure this line is inside loadHomepageProducts() after initAllCards(): */
+  /*   checkUrlForProductHighlight();                                           */
+  

@@ -25,6 +25,164 @@ if (hamburger && navLinks) {
     });
 }
 
+/* ================================================================
+   WHATSAPP ORDER SYSTEM
+   ================================================================ */
+
+   const WA_NUMBER = '+2347039661343';   // ← your WhatsApp number
+
+   /**
+    * Build the canonical product page URL for a given product ID.
+    * Works on both GitHub Pages and custom domain.
+    */
+   function buildProductUrl(pid) {
+     const base = window.location.origin + window.location.pathname;
+     return `${base}?pid=${encodeURIComponent(pid)}`;
+   }
+   
+   /**
+    * Extract all product info from a card element.
+    * Reads data-* attributes first (reliable for dynamic cards),
+    * falls back to visible text for static cards.
+    */
+   function extractCardData(card) {
+     const txt = sel => card.querySelector(sel)?.textContent?.trim() || '';
+     const dt  = key => card.dataset[key] || '';
+   
+     return {
+       name:      dt('name')      || txt('.product-name'),
+       brand:     dt('brand')     || txt('.brand.keyword'),
+       category:  dt('category')  || txt('.product.keyword'),
+       price:     dt('price')     || '',
+       condition: txt('.condition.keyword'),
+       quantity:  txt('.quantity.keyword'),
+       specs:     txt('[data-specs-text]'),
+       ram:       txt('.ram.keyword'),
+       processor: txt('.core.keyword'),
+       storage:   txt('.storage.keyword'),
+       os:        txt('.os.keyword'),
+       screen:    txt('.screen.keyword'),
+       supplier:  txt('.supplier.keyword'),
+       pid:       dt('productId') || txt('.pid.keyword'),
+     };
+   }
+   
+   /**
+    * Format price as ₦ XXX,XXX
+    */
+   function formatPriceNGN(rawPrice) {
+     const n = parseFloat(String(rawPrice).replace(/[^\d.]/g, ''));
+     if (!n && n !== 0) return 'Contact for price';
+     return '₦' + n.toLocaleString('en-NG');
+   }
+   
+   /**
+    * Build the full pre-filled WhatsApp message for a product card.
+    * Returns { message: string, url: string, waHref: string }
+    */
+   function buildWhatsAppPayload(card) {
+     const d   = extractCardData(card);
+     const pid = d.pid;
+     const url = pid ? buildProductUrl(pid) : window.location.href;
+   
+     /* ── Spec lines (only include fields that have data) ── */
+     const specItems = [
+       d.ram       && `• RAM: ${d.ram}`,
+       d.storage   && `• Storage: ${d.storage}`,
+       d.processor && `• Processor: ${d.processor}`,
+       d.os        && `• OS: ${d.os}`,
+       d.screen    && `• Screen: ${d.screen}`,
+     ].filter(Boolean);
+   
+     /* ── Free-text specs block (from admin's specs field) ── */
+     const specsBlock = d.specs && !specItems.length
+       ? `📋 *Details:*\n${d.specs}`
+       : specItems.length
+         ? `📋 *Specifications:*\n${specItems.join('\n')}`
+         : '';
+   
+     /* ── Condition badge ── */
+     const condLine = d.condition ? `📦 *Condition:* ${d.condition}` : '';
+   
+     /* ── Assemble message (WhatsApp bold = *text*) ── */
+     const lines = [
+       `🛒 *Order Enquiry — WeSellGadgetsNG*`,
+       ``,
+       `━━━━━━━━━━━━━━━━━━━━━`,
+       `📱 *${d.name}*`,
+       d.brand   ? `🏷️  *Brand:* ${d.brand}`     : null,
+       condLine  || null,
+       d.quantity ? `📦 *Stock:* ${d.quantity}`   : null,
+       ``,
+       `💰 *Price: ${formatPriceNGN(d.price)}*`,
+       `━━━━━━━━━━━━━━━━━━━━━`,
+       specsBlock || null,
+       specsBlock ? `` : null,          /* blank line after specs block */
+       pid ? `🔢 *Product ID:* ${pid}` : null,
+       ``,
+       `🔗 *View this product on our store:*`,
+       url,
+       ``,
+       `━━━━━━━━━━━━━━━━━━━━━`,
+       `_Hi! I'm interested in ordering the product above._`,
+       `_Please confirm availability and delivery options._`,
+     ]
+     .filter(line => line !== null)    /* remove nulls (missing fields) */
+     .join('\n');
+   
+     const waHref = `https://wa.me/${WA_NUMBER.replace(/[^0-9]/g, '')}` +
+                    `?text=${encodeURIComponent(lines)}`;
+   
+     return { message: lines, url, waHref };
+   }
+   
+   /**
+    * Open WhatsApp with the pre-filled message for a card.
+    * Called by initializeProductCard's Order Now click handler.
+    */
+   function openWhatsApp(card) {
+     const { waHref } = buildWhatsAppPayload(card);
+     window.open(waHref, '_blank', 'noopener,noreferrer');
+   }
+   
+   /**
+    * Copy the product's shareable link to clipboard.
+    * Shows a brief visual confirmation on the button.
+    */
+   async function copyProductLink(card, btn) {
+     const d   = extractCardData(card);
+     const url = d.pid ? buildProductUrl(d.pid) : window.location.href;
+   
+     try {
+       await navigator.clipboard.writeText(url);
+       showCopyFeedback(btn, '✓ Copied!');
+     } catch {
+       /* Fallback for older browsers / non-HTTPS */
+       const ta = document.createElement('textarea');
+       ta.value = url;
+       ta.style.cssText = 'position:fixed;opacity:0;pointer-events:none';
+       document.body.appendChild(ta);
+       ta.select();
+       document.execCommand('copy');
+       ta.remove();
+       showCopyFeedback(btn, '✓ Copied!');
+     }
+   }
+   
+   function showCopyFeedback(btn, msg) {
+     if (!btn) return;
+     const orig = btn.innerHTML;
+     btn.innerHTML  = msg;
+     btn.classList.add('copy-success');
+     btn.disabled   = true;
+     setTimeout(() => {
+       btn.innerHTML  = orig;
+       btn.classList.remove('copy-success');
+       btn.disabled   = false;
+     }, 2000);
+   }
+   
+
 
 // ==========================================
 // PRODUCT CARD INITIALIZATION
@@ -132,8 +290,11 @@ function initializeProductCard(card) {
 
     if (firstImg) {
       const applyBackground = () => {
-        container.style.backgroundImage = `url("${firstImg.src}")`;
-      };
+        if (firstImg && firstImg.src) {
+            container.style.backgroundImage = `url(${firstImg.src})`;
+          }
+        
+    };
     
       if (firstImg.complete) {
         applyBackground();
@@ -195,6 +356,27 @@ function initializeProductCard(card) {
         videoControls.addEventListener('mousedown', (e) => e.stopPropagation());
         videoControls.addEventListener('touchstart', (e) => e.stopPropagation());
     }
+
+    // ── Order Now button ──────────────────────────────────────────
+    const orderBtn = card.querySelector('.order-now-btn, [data-action="order"]');
+    if (orderBtn) {
+        orderBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            openWhatsApp(card);
+        });
+    }
+
+    // ── Share / Copy-link button ──────────────────────────────────
+    const shareBtn = card.querySelector('.share-link-btn, [data-action="share"]');
+    if (shareBtn) {
+        shareBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            copyProductLink(card, shareBtn);
+        });
+    }
+
 }
 
 
@@ -266,11 +448,11 @@ function initializeProductCard(card) {
     
             if (isMatch) {
                 product.element.classList.remove('hidden');
-                product.element.classList.remove('search-hidden'); // ← ADD
+                product.element.classList.remove('search-hidden'); 
                 visibleCount++;
             } else {
                 product.element.classList.add('hidden');
-                product.element.classList.add('search-hidden');   // ← ADD
+                product.element.classList.add('search-hidden');  
             }
         });
     
