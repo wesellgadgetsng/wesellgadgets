@@ -218,9 +218,7 @@
       PAGE.limit += PAGE.increment;
       updatePagination();
     
-    });
-    
-    
+      
       const firstNew = wrapper.querySelectorAll(
         '.product-card-container:not(.paginated-hidden):not(.hidden)'
       )[PAGE.limit - PAGE.increment];
