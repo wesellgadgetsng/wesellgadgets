@@ -552,3 +552,28 @@ document.addEventListener("keydown", (e) => {
 
 // expose to modules
 window.initializeProductCard = initializeProductCard;
+
+// ==========================================
+// GOOGLE ANALYTICS TRACKING (Track product clicks (interactions))
+// ==========================================
+
+    document.querySelectorAll(".product-card-container").forEach(card => {
+    card.addEventListener("click", () => {
+  
+      gtag('event', 'product_click', {
+        product_name: card.dataset.name,
+        product_id: card.dataset.productId
+      });
+  
+    });
+  });
+
+// Track search usage
+document.querySelector("#product-search")
+.addEventListener("change", e => {
+
+  gtag('event', 'search', {
+    search_term: e.target.value
+  });
+
+});

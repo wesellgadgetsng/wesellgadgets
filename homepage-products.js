@@ -210,9 +210,17 @@
     btn.onclick = null;
   
     btn.addEventListener('click', () => {
+
+      if (window.gtag) {
+        gtag('event', 'load_more_clicked');
+      }
+    
       PAGE.limit += PAGE.increment;
       updatePagination();
-  
+    
+    });
+    
+    
       const firstNew = wrapper.querySelectorAll(
         '.product-card-container:not(.paginated-hidden):not(.hidden)'
       )[PAGE.limit - PAGE.increment];
