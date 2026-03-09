@@ -36,10 +36,9 @@ if (hamburger && navLinks) {
     * Works on both GitHub Pages and custom domain.
     */
    function buildProductUrl(pid) {
-     const base = window.location.origin + window.location.pathname;
-     return `${base}?pid=${encodeURIComponent(pid)}`;
-   }
-   
+    return `${window.location.origin}/?pid=${encodeURIComponent(pid)}`;
+  }
+     
    /**
     * Extract all product info from a card element.
     * Reads data-* attributes first (reliable for dynamic cards),

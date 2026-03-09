@@ -1377,8 +1377,9 @@ box-shadow:
   }
   
   .product-card-container.card-highlighted {
-    animation: cardHighlightPulse 5.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-    position: relative;
+    animation: cardHighlightPulse 20.2s ease-in-out infinite;
+    outline: 2px solid rgba(251,143,13,0.8);
+      position: relative;
     z-index: 10;          /* lift above sibling cards */
     border-radius: 16px;  /* match card border-radius */
   }

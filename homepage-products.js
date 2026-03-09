@@ -85,12 +85,14 @@
    
      /* Image slides */
      const slidesHTML = imgs.map((img, i) => `
-       <img ${i === 0 ? 'loading="eager"' : 'loading="lazy"'}
-            class="product-media-image product-media"
-            alt="${esc(p.name)} image ${i + 1}"
-            src="${esc(img.public_url)}">`
-     ).join('');
-   
+     <img
+       ${i < 2 ? 'loading="eager"' : 'loading="lazy"'}
+       class="product-media-image product-media"
+       draggable="false"
+       alt="${esc(p.name)} image ${i + 1}"
+       src="${esc(img.public_url)}">
+     `).join('');
+             
      /* Optional video slide */
      const videoHTML = p.video_url ? `
        <div class="video-container product-media">
@@ -435,8 +437,10 @@
    
      /* ── Init cards, search index, pagination ── */
      initAllCards(wrapper);
-     checkUrlForProductHighlight();
 
+     setTimeout(() => {
+       checkUrlForProductHighlight();
+     }, 400);
 
      if (window.reinitSearch) {
        window.reinitSearch();
@@ -489,9 +493,28 @@
       setTimeout(() => {
         /* Scroll navbar height into account */
         const navH   = document.querySelector('.nav-bar')?.offsetHeight || 72;
-        const cardTop = card.getBoundingClientRect().top + window.scrollY - navH - 24;
-        window.scrollTo({ top: cardTop, behavior: 'smooth' });
-  
+        card.scrollIntoView({
+          behavior: "smooth",
+          block: "center"
+        });  
+
+        window.scrollBy({
+          top: -navH - 20,
+          behavior: "smooth"
+        });
+        
+        card.scrollIntoView({
+          behavior: "smooth",
+          block: "center"
+        });
+        
+        setTimeout(() => {
+          window.scrollBy({
+            top: -navH - 20,
+            behavior: "smooth"
+          });
+        }, 300);
+        
         /* Trigger highlight */
         card.classList.add('card-highlighted');
   
@@ -499,7 +522,6 @@
         showDeepLinkToast(card);
   
         /* Remove highlight class after animation completes (5s) */
-        setTimeout(() => card.classList.remove('card-highlighted'), 5200);
       }, 250);
     });
   }
