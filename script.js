@@ -378,7 +378,201 @@ function initializeProductCard(card) {
 
 }
 
+/* ================================================================
+   PRICE FILTER — state lives here, updated by calibratePriceFilter
+   ================================================================ */
+   const PF = {
+    min:        0,
+    max:        Infinity,
+    absMin:     0,
+    absMax:     0,
+    active:     false,    // true only when user has narrowed range
+    ready:      false,    // true once calibrated from real data
+    inputMin:   null,
+    inputMax:   null,
+    fillEl:     null,
+    minLabel:   null,
+    maxLabel:   null,
+    resetBtn:   null,
+    filterEl:   null,
+  };
+  
+  /* Expose so homepage-products.js can read PF.min / PF.max */
+  window.priceFilter = PF;
+  
+  /* ── Calibrate once products are loaded ── */
+  window.calibratePriceFilter = function (prices) {
+    const valid = prices.filter(p => typeof p === 'number' && p > 0).sort((a, b) => a - b);
+    if (!valid.length) return;
+  
+    PF.absMin = valid[0];
+    PF.absMax = valid[valid.length - 1];
+    PF.min    = PF.absMin;
+    PF.max    = PF.absMax;
+    PF.ready  = true;
+  
+    /* Smart step: ~100 stops across the range, snaps to ₦1,000 */
+    const rawStep = Math.ceil((PF.absMax - PF.absMin) / 100);
+    const step    = Math.ceil(rawStep / 1000) * 1000 || 1000;
+  
+    [PF.inputMin, PF.inputMax].forEach((inp, i) => {
+      if (!inp) return;
+      inp.min   = PF.absMin;
+      inp.max   = PF.absMax;
+      inp.value = i === 0 ? PF.absMin : PF.absMax;
+      inp.step  = step;
+    });
+  
+    _updatePriceDisplay();
+    _updateFill();
+  
+    if (PF.filterEl) {
+      PF.filterEl.style.display = 'block';
+      /* Animate in */
+      requestAnimationFrame(() => PF.filterEl.classList.add('pf-visible'));
+    }
+  };
+  
+  /* ── Internal helpers ── */
+  function _updatePriceDisplay() {
+    const fmt = n => '₦' + Math.round(n).toLocaleString('en-NG');
+    if (PF.minLabel) PF.minLabel.textContent = fmt(PF.min);
+    if (PF.maxLabel) PF.maxLabel.textContent = fmt(PF.max);
+  
+    PF.active = (PF.min > PF.absMin) || (PF.max < PF.absMax);
+    if (PF.resetBtn) PF.resetBtn.style.display = PF.active ? 'inline-flex' : 'none';
+  
+    /* Highlight the value labels when filter is active */
+    [PF.minLabel, PF.maxLabel].forEach(el => {
+      if (!el) return;
+      el.classList.toggle('price-val--active', PF.active);
+    });
+  }
+  
+  function _updateFill() {
+    if (!PF.fillEl) return;
+  
+    const range = PF.absMax - PF.absMin;
+    if (range === 0) {
+      PF.fillEl.style.cssText = 'left:0%;width:100%';
+      return;
+    }
+  
+    const l = ((PF.min - PF.absMin) / range) * 100;
+    const r = ((PF.max - PF.absMin) / range) * 100;
+  
+    /* Apple-style smooth animation */
+    PF.fillEl.style.transition = 'left .18s cubic-bezier(.4,0,.2,1), width .18s cubic-bezier(.4,0,.2,1)';
+  
+    PF.fillEl.style.left  = l + '%';
+    PF.fillEl.style.width = (r - l) + '%';
+  }
 
+  /* ── Init (wires DOM elements once they exist) ── */
+  function initPriceFilter() {
+    PF.filterEl  = document.getElementById('price-filter');
+    PF.inputMin  = document.getElementById('price-range-min');
+    PF.inputMax  = document.getElementById('price-range-max');
+    PF.fillEl    = document.getElementById('price-track-fill');
+    PF.minLabel  = document.getElementById('price-min-display');
+    PF.maxLabel  = document.getElementById('price-max-display');
+    PF.resetBtn  = document.getElementById('price-reset');
+
+    /* ── Tap anywhere on track to move slider (desktop + mobile) ── */
+    const track = document.querySelector('.price-slider-wrap');
+    
+    if (track) {
+    track.addEventListener('pointerdown', (e) => {
+        const rect = track.getBoundingClientRect();
+        const pct = (e.clientX - rect.left) / rect.width;
+
+        const value = PF.absMin + pct * (PF.absMax - PF.absMin);
+
+        /* move nearest handle */
+        const distMin = Math.abs(value - PF.min);
+        const distMax = Math.abs(value - PF.max);
+
+        if (distMin < distMax) {
+        PF.min = Math.min(value, PF.max);
+        PF.inputMin.value = PF.min;
+        } else {
+        PF.max = Math.max(value, PF.min);
+        PF.inputMax.value = PF.max;
+        }
+
+        _updatePriceDisplay();
+        _updateFill();
+        _applyPriceFilter();
+    });
+    }
+  
+    if (!PF.inputMin || !PF.inputMax) return;
+  
+    /* Debounce so rapid dragging doesn't thrash the search */
+    let pfTimer;
+    const debouncedApply = () => {
+      clearTimeout(pfTimer);
+      pfTimer = setTimeout(_applyPriceFilter, 80);
+    };
+  
+    PF.inputMin.addEventListener('input', () => {
+      /* Prevent min crossing max */
+      if (+PF.inputMin.value > +PF.inputMax.value) {
+        PF.inputMin.value = PF.inputMax.value;
+      }
+      PF.min = +PF.inputMin.value;
+      _updatePriceDisplay();
+      _updateFill();
+      debouncedApply();
+    });
+
+    PF.inputMin.addEventListener('change', () => {
+        PF.min = +PF.inputMin.value;
+        _updatePriceDisplay();
+        _updateFill();
+        _applyPriceFilter();
+      });
+
+  
+    PF.inputMax.addEventListener('input', () => {
+      /* Prevent max crossing min */
+      if (+PF.inputMax.value < +PF.inputMin.value) {
+        PF.inputMax.value = PF.inputMin.value;
+      }
+      PF.max = +PF.inputMax.value;
+      _updatePriceDisplay();
+      _updateFill();
+      debouncedApply();
+    });
+
+    PF.inputMax.addEventListener('change', () => {
+        PF.max = +PF.inputMax.value;
+        _updatePriceDisplay();
+        _updateFill();
+        _applyPriceFilter();
+      });
+  
+    if (PF.resetBtn) {
+      PF.resetBtn.addEventListener('click', () => {
+        PF.min = PF.absMin;
+        PF.max = PF.absMax;
+        PF.inputMin.value = PF.absMin;
+        PF.inputMax.value = PF.absMax;
+        _updatePriceDisplay();
+        _updateFill();
+        _applyPriceFilter();
+      });
+    }
+  }
+  
+  function _applyPriceFilter() {
+    /* Call into search IIFE via exposed window.performSearch */
+    const q = document.getElementById('product-search')?.value || '';
+    if (typeof window.performSearch === 'function') {
+      window.performSearch(q, true);
+    }
+  }
+  
 
 
 // ==========================================
@@ -415,6 +609,8 @@ function initializeProductCard(card) {
     }
 
 
+    
+
     // ==============================
     // CORE SEARCH LOGIC
     // ==============================
@@ -423,27 +619,44 @@ function initializeProductCard(card) {
         const searchWords = searchTerm.split(/\s+/).filter(Boolean);
     
         if (searchTerm === '') {
+            /* If price filter is active, still filter by price on empty text query */
+            const pf = window.priceFilter;
+            if (pf?.active) {
+                products.forEach(product => {
+                    const inRange = product.priceValue >= pf.min && product.priceValue <= pf.max;
+                    product.element.classList.toggle('hidden',        !inRange);
+                    product.element.classList.toggle('search-hidden', !inRange);
+                });
+                const count = products.filter(p => !p.element.classList.contains('search-hidden')).length;
+                updateResultsCount(count, `₦${Math.round(pf.min).toLocaleString()} – ₦${Math.round(pf.max).toLocaleString()}`);
+                if (typeof window.resetPaginationLimit === 'function') window.resetPaginationLimit();
+                return;
+            }
             products.forEach(p => {
-                p.element.classList.remove('hidden');
-                p.element.classList.remove('search-hidden'); // ← ADD THIS LINE
+                p.element.classList.remove('hidden', 'search-hidden');
             });
             updateResultsCount(0, '');
             hideNoResults();
-            // ↓ ADD: reset pagination to show all cards on clear
-            if (typeof window.resetPaginationLimit === 'function') {
-                window.resetPaginationLimit();
-            }
+            if (typeof window.resetPaginationLimit === 'function') window.resetPaginationLimit();
             return;
         }
-    
+            
         let visibleCount = 0;
         products.forEach(product => {
-            const isMatch = searchWords.every(word => {
+            /* ── Price gate ── */
+            const pf = window.priceFilter;
+            const inPriceRange = !pf?.active ||
+            (product.priceValue >= pf.min && product.priceValue <= pf.max);
+
+            /* ── Text gate ── */
+            const inTextSearch = !searchWords.length || searchWords.every(word => {
                 const stemmedSearch = stemWord(word);
                 return product.tokens.some(token =>
                     token.includes(word) || token.includes(stemmedSearch)
                 );
             });
+
+            const isMatch = inPriceRange && inTextSearch;
     
             if (isMatch) {
                 product.element.classList.remove('hidden');
@@ -673,6 +886,8 @@ function initializeProductCard(card) {
                 mainCategory: categories[0] || category,
                 tokens:       allTokens,
                 fullText:     textContent,
+                priceValue:   parseFloat(card.dataset.price || '0'),
+                
             });
         });
     
@@ -691,6 +906,9 @@ function initializeProductCard(card) {
     document.addEventListener('click', e => {
         if (!searchInput.contains(e.target) && !searchSuggestions.contains(e.target)) hideSuggestions();
     });
+
+    window.performSearch = performSearch;
+
 })();
 
 
@@ -738,23 +956,25 @@ window.initializeProductCard = initializeProductCard;
 // GOOGLE ANALYTICS TRACKING (Track product clicks (interactions))
 // ==========================================
 
-    document.querySelectorAll(".product-card-container").forEach(card => {
-    card.addEventListener("click", () => {
-  
-      gtag('event', 'product_click', {
-        product_name: card.dataset.name,
-        product_id: card.dataset.productId
-      });
-  
+document.addEventListener('DOMContentLoaded', () => {
+    initPriceFilter();
+
+    /* Fix: null-guard GA search tracking */
+    const gaSearchInput = document.querySelector('#product-search');
+    if (gaSearchInput && typeof gtag !== 'undefined') {
+        gaSearchInput.addEventListener('change', e => {
+            gtag('event', 'search', { search_term: e.target.value });
+        });
+    }
+
+    /* Fix: GA product click tracking — event delegation */
+    document.addEventListener('click', e => {
+        const card = e.target.closest('.product-card-container');
+        if (card && typeof gtag !== 'undefined') {
+            gtag('event', 'product_click', {
+                product_name: card.dataset.name,
+                product_id: card.dataset.productId,
+            });
+        }
     });
-  });
-
-// Track search usage
-document.querySelector("#product-search")
-.addEventListener("change", e => {
-
-  gtag('event', 'search', {
-    search_term: e.target.value
-  });
-
 });

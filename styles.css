@@ -682,6 +682,10 @@ padding: 4px;
     contain-intrinsic-size: 500px;
   
   }
+
+  .product-card-container {
+    scroll-margin-top: 90px;
+  }
   
     /* Glass Border Effect */
   .product-card-container::before {
@@ -758,6 +762,7 @@ padding: 4px;
   scroll-snap-type: x mandatory;
   scrollbar-width: none; /* Firefox */
   -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
 }
 
 .product-media-wrapper::-webkit-scrollbar {
@@ -784,11 +789,12 @@ padding: 4px;
   flex: 0 0 100%; /* Each image takes 100% width */
   width: 100%;
   height: 100%;
-  scroll-snap-align: center;
+  scroll-snap-align: start;
   pointer-events: auto;
   -webkit-user-select: none;
   -webkit-user-drag: none;
   position: relative; /* Important for proper transform origin */
+  scroll-snap-stop: always; /* Prevents skipping cards on fast swipes */
 
 }
 
@@ -973,6 +979,8 @@ padding: 4px;
   transition: background 0.3s;
   z-index: 10; /* Increased for visibility above all layers */
   display: block; /* Ensure always shown */
+  -webkit-tap-highlight-color: transparent;
+    outline: none;
 }
 
 :fullscreen .fullscreen-button {
@@ -1008,7 +1016,7 @@ padding: 4px;
 }
 
 .fullscreen-button.is-fullscreen .exit-icon {
-  display: block;
+  display: block !important;
 }
 
 /* Ensure icons are colored correctly */
@@ -1927,6 +1935,250 @@ box-shadow:
   grid-column: 1 / -1;
 }
 
+    
+  /* ================================================================
+     PRICE RANGE FILTER
+     ================================================================ */
+  .price-filter {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto 20px;
+    padding: 16px 20px;
+    box-sizing: border-box;
+    border-radius: 16px;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.06) 0%,
+      rgba(255, 255, 255, 0.02) 100%
+    );
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(251, 143, 13, 0.2);
+  
+    /* Animate in when JS adds .pf-visible */
+    opacity: 0;
+    transform: translateY(-8px);
+    transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  
+  .price-filter.pf-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  /* ── Header row ── */
+  .price-filter-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+  }
+  
+  .price-filter-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #B1B1B1;
+    letter-spacing: 0.3px;
+    flex-shrink: 0;
+  }
+  
+  .price-filter-values {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-left: auto;
+    flex-shrink: 0;
+  }
+  
+  .price-val {
+    font-size: 14px;
+    font-weight: 700;
+    color: #F4F4F2;
+    min-width: 80px;
+    text-align: center;
+    padding: 4px 10px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: color 0.2s ease, border-color 0.2s ease;
+  }
+  
+  .price-val--active {
+    color: #FB8F0D;
+    border-color: rgba(251, 143, 13, 0.4);
+  }
+  
+  .price-dash {
+    color: #707070;
+    font-size: 14px;
+  }
+  
+  .price-filter-reset {
+    display: none; /* shown by JS when filter is active */
+    align-items: center;
+    gap: 4px;
+    padding: 5px 12px;
+    border-radius: 20px;
+    border: 1px solid rgba(251, 143, 13, 0.4);
+    background: rgba(251, 143, 13, 0.08);
+    color: #FB8F0D;
+    font-size: 12px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+  }
+  
+  .price-filter-reset:hover {
+    background: rgba(251, 143, 13, 0.18);
+    border-color: #FB8F0D;
+  }
+  
+  /* ── Dual-range slider ── */
+  .price-slider-wrap {
+    position: relative;
+    height: 20px;            /* tall enough for thumb touch target */
+    display: flex;
+    align-items: center;
+    padding: 0 8px;
+  }
+  
+  /* Background track */
+  .price-track-bg {
+    position: absolute;
+    left: 8px;
+    right: 8px;
+    height: 4px;
+    border-radius: 2px;
+    background: rgba(255, 255, 255, 0.12);
+    overflow: visible;
+    pointer-events: auto;
+    cursor: pointer;
+    }
+  
+  /* Orange fill between min and max thumbs */
+  .price-track-fill {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    background: linear-gradient(90deg, #FB8F0D, #FF9F2E);
+    border-radius: 2px;
+    pointer-events: none;
+  }
+  
+  /* Both range inputs overlap exactly */
+  .price-range-input {
+    position: absolute;
+    left: 8px;
+    right: 8px;
+    width: calc(100% - 16px);
+    height: 4px;
+    background: transparent;
+    pointer-events: none;      /* only the thumb receives events */
+    -webkit-appearance: none;
+    appearance: none;
+    outline: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  /* ── Thumb — WebKit / Blink (Chrome, Safari, Edge) ── */
+  .price-range-input::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    pointer-events: all;       /* re-enable for just the thumb */
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #FB8F0D;
+    border: 2.5px solid #121212;
+    box-shadow:
+      0 0 0 2px rgba(251, 143, 13, 0.35),
+      0 2px 8px rgba(0, 0, 0, 0.4);
+    cursor: grab;
+    transition: box-shadow 0.2s ease, transform 0.15s ease;
+  }
+  
+  .price-range-input::-webkit-slider-thumb:hover {
+    box-shadow:
+      0 0 0 4px rgba(251, 143, 13, 0.45),
+      0 2px 12px rgba(0, 0, 0, 0.5);
+    transform: scale(1.15);
+  }
+  
+  .price-range-input::-webkit-slider-thumb:active {
+    cursor: grabbing;
+    transform: scale(1.2);
+    box-shadow:
+      0 0 0 6px rgba(251, 143, 13, 0.3),
+      0 2px 16px rgba(0, 0, 0, 0.5);
+  }
+  
+  /* ── Thumb — Firefox ── */
+  .price-range-input::-moz-range-thumb {
+    pointer-events: all;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #FB8F0D;
+    border: 2.5px solid #121212;
+    box-shadow: 0 0 0 2px rgba(251, 143, 13, 0.35);
+    cursor: grab;
+    transition: box-shadow 0.2s ease;
+  }
+  
+  .price-range-input::-moz-range-thumb:hover {
+    box-shadow: 0 0 0 4px rgba(251, 143, 13, 0.45);
+  }
+  
+  /* Firefox track (keep transparent — we draw our own) */
+  .price-range-input::-moz-range-track {
+    background: transparent;
+  }
+  
+  /* ── Z-index swap: ensure whichever thumb is at an extreme
+        can still be dragged ── */
+  #price-range-min { z-index: 3; }
+  #price-range-max { z-index: 4; }
+  
+  /* When min is at max position, bring it on top */
+  #price-range-min::-webkit-slider-thumb { position: relative; z-index: 3; }
+  #price-range-max::-webkit-slider-thumb { position: relative; z-index: 4; }
+
+  #price-range-min,
+  #price-range-max {
+    touch-action: manipulation;
+  }
+  
+  /* Mobile: slightly larger touch targets */
+  @media (max-width: 480px) {
+    .price-filter {
+      padding: 14px 16px;
+      border-radius: 12px;
+    }
+  
+    .price-range-input::-webkit-slider-thumb {
+      width: 24px;
+      height: 24px;
+    }
+  
+    .price-range-input::-moz-range-thumb {
+      width: 24px;
+      height: 24px;
+    }
+  
+    .price-val {
+      font-size: 12px;
+      min-width: 70px;
+      padding: 3px 8px;
+    }
+  }
   
 
 /* ==========================================

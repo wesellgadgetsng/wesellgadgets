@@ -5,12 +5,12 @@ export const SUPABASE_URL  = 'https://fezmwnerxgwghtatvway.supabase.co';
 export const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZlem13bmVyeGd3Z2h0YXR2d2F5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIxOTAzMzYsImV4cCI6MjA4Nzc2NjMzNn0.nlM6mJAZ3c39fwE54uicXj-PC3abs6PS21MjBcOqujI';
 
 export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON, {
-    auth: {
-      persistSession: true,
-      autoRefreshToken: true,
-      detectSessionInUrl: true
-    }
-  });
+  auth: {
+    persistSession: false,
+    autoRefreshToken: false,
+    detectSessionInUrl: false
+  }
+});
   
   /** Returns the current user's profile row (includes role) */
   export async function getMyProfile() {

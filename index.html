@@ -142,7 +142,60 @@
 
                     <div class="search-results-count" id="search-results-count"></div>
 
-                    
+                    <!-- PRICE RANGE FILTER — shown by JS after products load -->
+                    <div class="price-filter" id="price-filter" style="display:none;"
+                    role="group" aria-label="Filter by price">
+
+                    <div class="price-filter-header">
+                    <span class="price-filter-label">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <line x1="12" y1="1" x2="12" y2="23"/>
+                    <path d="M17 5H9.5a3.5 3.5 0 1 0 0 7h5a3.5 3.5 0 1 1 0 7H6"/>
+                    </svg>
+                    Price Range
+                    </span>
+
+                    <div class="price-filter-values">
+                    <span id="price-min-display" class="price-val">₦0</span>
+                    <span class="price-dash">—</span>
+                    <span id="price-max-display" class="price-val">₦0</span>
+                    </div>
+
+                    <button class="price-filter-reset"
+                        id="price-reset"
+                        type="button"
+                        aria-label="Reset price filter"
+                        style="display:none;">
+                    Reset
+                    </button>
+                    </div>
+
+                    <!-- Dual-range slider -->
+                    <div class="price-slider-wrap">
+                    <!-- Coloured fill between the two thumbs -->
+                    <div class="price-track-bg">
+                    <div class="price-track-fill" id="price-track-fill"></div>
+                    </div>
+
+                    <!-- Min handle -->
+                    <input type="range"
+                        id="price-range-min"
+                        class="price-range-input"
+                        min="0" max="100" value="0" step="1"
+                        aria-label="Minimum price">
+
+                    <!-- Max handle -->
+                    <input type="range"
+                        id="price-range-max"
+                        class="price-range-input"
+                        min="0" max="100" value="100" step="1"
+                        aria-label="Maximum price">
+                    </div>
+
+                    </div>
+
+
                 </div>
                 
                 <div class="product-grid-container" data-product-id="123">
@@ -168,7 +221,7 @@
                             <line x1="11" y1="16" x2="11.01" y2="16"></line>
                         </svg>
                         <h3>No Products Found</h3>
-                        <p>We couldn't find any products matching "<span id="search-query-display"></span>", check for misspellings </p>
+                        <p>We couldn't find any matching products for "<span id="search-query-display"></span>"</p>
                         <button class="button-2" id="clear-search-btn">Clear Search</button>
                     </div>                    
                     
