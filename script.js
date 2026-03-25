@@ -281,26 +281,6 @@ function initializeProductCard(card) {
             img.style.transform = img.style.transform;
         });
     });
-
-    // ==========================================
-    // BACKGROUND BLENDER
-    // ==========================================
-    const firstImg = container.querySelector('.product-media-image');
-
-    if (firstImg) {
-      const applyBackground = () => {
-        if (firstImg && firstImg.src) {
-            container.style.backgroundImage = `url(${firstImg.src})`;
-          }
-        
-    };
-    
-      if (firstImg.complete) {
-        applyBackground();
-      } else {
-        firstImg.addEventListener("load", applyBackground, { once: true });
-      }
-    }
     
     // ==========================================
     // VIDEO CONTROLS
